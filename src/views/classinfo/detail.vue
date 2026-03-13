@@ -5,6 +5,9 @@
       <el-button :icon="ArrowLeft" @click="router.back()">返回</el-button>
       <span class="page-title">项目标注列表</span>
       <span class="page-sub">共 {{ list.length }} 张图片，已标注 {{ annotatedCount }} 张</span>
+      <el-button type="primary" class="add-btn" @click="goToAnnotationNew">
+        新增标注图片
+      </el-button>
     </div>
 
     <!-- 加载中 -->
@@ -15,13 +18,13 @@
         v-for="item in list"
         :key="item.id"
         class="image-card"
+        @click="goToAnnotationDetail(item.id)"
       >
         <!-- 图片区域 -->
         <div class="image-wrap">
           <el-image
             :src="item.imageUrl"
-            :preview-src-list="previewList"
-            :initial-index="list.indexOf(item)"
+            :preview-disabled="true"
             fit="cover"
             loading="lazy"
             class="image"
@@ -33,7 +36,7 @@
             </template>
             <template #error>
               <div class="image-slot error">
-                <el-icon><BrokenImage /></el-icon>
+                <el-icon><PictureFilled /></el-icon>
                 <span>加载失败</span>
               </div>
             </template>
@@ -64,7 +67,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
-import { ArrowLeft, Loading, BrokenImage } from "@element-plus/icons-vue";
+import { ArrowLeft, Loading, PictureFilled  } from "@element-plus/icons-vue";
 import { getAnnotationList, type AnnotationItem } from "@/api/user";
 
 defineOptions({ name: "classinfoDetail" });
@@ -79,6 +82,14 @@ const projectId = route.params.projectId as string;
 
 const annotatedCount = computed(() => list.value.filter(i => i.annotated).length);
 const previewList = computed(() => list.value.map(i => i.imageUrl));
+
+function goToAnnotationNew() {
+  router.push(`/classinfo/detail/${projectId}/annotation/new`);
+}
+
+function goToAnnotationDetail(id: string) {
+  router.push(`/classinfo/detail/${projectId}/annotation/${id}`);
+}
 
 async function fetchList() {
   loading.value = true;
@@ -123,6 +134,10 @@ onMounted(() => fetchList());
   margin-left: 4px;
 }
 
+.add-btn {
+  margin-left: auto;
+}
+
 .image-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -155,7 +170,7 @@ onMounted(() => fetchList());
   inset: 0;
   width: 100%;
   height: 100%;
-  cursor: zoom-in;
+  cursor: pointer;
 }
 
 .image-slot {

@@ -26,25 +26,5 @@ export default [
         component: () => import("@/layout/redirect.vue")
       }
     ]
-  },
-  {
-    path: "/classinfo/detail",
-    component: Layout,
-    meta: {
-      title: "项目详情",
-      showLink: false,
-      rank: 103
-    },
-    children: [
-      {
-        path: "/classinfo/detail/:projectId",
-        name: "classinfoDetail",
-        component: () => import("@/views/classinfo/detail.vue"),
-        meta: {
-          title: "项目详情",
-          showLink: false
-        }
-      }
-    ]
   }
 ] satisfies Array<RouteConfigsTable>;

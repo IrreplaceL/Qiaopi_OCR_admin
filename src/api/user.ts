@@ -121,3 +121,30 @@ export const getAnnotationList = (projectId: string | number) => {
     params: { projectId }
   });
 };
+
+// ---- 标注详情 ----
+
+export type AnnotationDetailItem = {
+  id: string;
+  imageUrl: string;
+  ocrRawJson: string;
+  manualAnnotationJson: string | null;
+  projectId: string;
+  annotatorId: string;
+  status: string;
+  createTime: string;
+  updateTime: string;
+};
+
+export type AnnotationDetailResult = {
+  code: number;
+  msg: string;
+  data: AnnotationDetailItem;
+};
+
+/** 获取单条标注详情 */
+export const getAnnotationDetail = (annotationId: string | number) => {
+  return http.request<AnnotationDetailResult>("get", "/annotation/detail", {
+    params: { annotationId }
+  });
+};

@@ -9,12 +9,15 @@
     <!-- 项目卡片列表 -->
     <div v-loading="loading" class="project-grid">
       <el-empty v-if="!loading && projectList.length === 0" description="暂无项目组，快去创建吧" />
-      <el-card
+      <div
         v-for="item in projectList"
         :key="item.id"
+        class="project-card-wrapper"
+        @click="goToDetail(item.id)"
+      >
+      <el-card
         shadow="hover"
         class="project-card"
-        @click="router.push(`/classinfo/detail/${item.id}`)"
       >
         <template #header>
           <div class="card-header">
@@ -30,6 +33,7 @@
           </span>
         </div>
       </el-card>
+      </div>
     </div>
 
     <!-- 创建项目对话框 -->
@@ -88,6 +92,10 @@ const dialogVisible = ref(false);
 const formRef = ref<FormInstance>();
 const projectList = ref([]);
 
+function goToDetail(id: string | number) {
+  console.log('跳转id:', id)  // 看看id是否为空/undefined
+  router.push(`/classinfo/detail/${id}`)
+}
 const form = reactive({
   projectName: "",
   description: ""
@@ -177,8 +185,11 @@ onMounted(() => fetchProjects());
   min-height: 200px;
 }
 
+.project-card-wrapper {
+  cursor: pointer;
+}
+
 .project-card {
-  cursor: default;
   transition: transform 0.2s;
 }
 
