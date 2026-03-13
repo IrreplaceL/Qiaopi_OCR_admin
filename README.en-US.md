@@ -1,47 +1,81 @@
-<h1>vue-pure-admin Lite Edition（no i18n version）</h1>
+# Qiaopi Image Annotation Admin
 
-[![license](https://img.shields.io/github/license/pure-admin/vue-pure-admin.svg)](LICENSE)
+> A Vue 3 based admin frontend for OCR-assisted annotation of Qiaopi historical documents.
 
-**English** | [中文](./README.md)
+[中文](./README.md) | **English**
 
-## Introduce
+## Overview
+This repository is a graduation project frontend built on top of [pure-admin-thin](https://github.com/pure-admin/pure-admin-thin). It focuses on document annotation workflows for Qiaopi images, including OCR result visualization, manual correction, and annotation management.
 
-The simplified version is based on the shelf extracted from [vue-pure-admin](https://github.com/pure-admin/vue-pure-admin), which contains main functions and is more suitable for actual project development. The packaged size is introduced globally [element-plus](https://element-plus.org) is still below `2.3MB`, and the full version of the code will be permanently synchronized. After enabling `brotli` compression and `cdn` to replace the local library mode, the package size is less than `350kb`
+## Implemented Features
+- User authentication (login/register/basic permissions)
+- Project group management
+- Annotation list per project (card view)
+- Create annotation by uploading image and calling OCR API
+- Open existing annotation detail by `annotationId`
+- Manual text correction and save
+- Loading animations during OCR and save requests
 
-## `js` version
+## Annotation Routes
+Defined in `src/router/modules/classinfo.ts`:
+- `/classinfo/detail/:projectId/annotation/new` for creating a new annotation
+- `/classinfo/detail/:projectId/annotation/:annotationId` for annotation detail
 
-[Click me to view js version](https://pure-admin.github.io/pure-admin-doc/pages/js/)
+Entry points in `src/views/classinfo/detail.vue`:
+- `Add Annotation Image` button
+- Click on an annotation card
 
-## `max` version
+Detailed module documentation:
+- `src/other/README.md`
 
-[Click me to view the max version](https://github.com/pure-admin/vue-pure-admin-max)
+## Tech Stack
+- Vue 3
+- TypeScript
+- Vite
+- Element Plus
+- Tailwind CSS
+- Pinia
+- Vue Router
+- Axios
 
-## Supporting video
+## Setup
+Requirements:
+- Node.js `^18.18.0 || ^20.9.0 || >=21.1.0`
+- pnpm `>=9`
 
-[Click me to view UI design](https://www.bilibili.com/video/BV17g411T7rq)  
-[Click me to view the rapid development tutorial](https://www.bilibili.com/video/BV1kg411v7QT)
+Install dependencies:
+```bash
+pnpm install
+```
 
-## Nanny-level documents
+Run in development:
+```bash
+pnpm dev
+```
 
-[Click me to view vue-pure-admin documentation](https://pure-admin.github.io/pure-admin-doc)  
-[Click me to view @pureadmin/utils documentation](https://pure-admin-utils.netlify.app)
+Build for production:
+```bash
+pnpm build
+```
 
-## Quality service, software outsourcing, sponsorship support
+Preview build:
+```bash
+pnpm preview
+```
 
-[Click me to view details](https://pure-admin.github.io/pure-admin-doc/pages/service/)
+## API Summary (Annotation)
+- `POST /ocr/upload`
+- `GET /annotation/detail`
+- `POST /annotation/save`
 
-## Preview
-
-[Click me to view the preview station](https://pure-admin-thin.netlify.app/#/login)
-
-## Maintainer
-
-[xiaoxian521](https://github.com/xiaoxian521)
-
-## ⚠️ Attention
-
-The Lite version does not accept any issues and prs. If you have any questions, please go to the full version [issues](https://github.com/pure-admin/vue-pure-admin/issues/new/choose) to mention, thank you!
+Notes:
+- `manualAnnotationJson` keeps the same structure as `ocrRawJson`.
+- On save, the frontend preserves the OCR JSON structure and replaces `rec_texts` with corrected texts.
 
 ## License
+MIT License.
 
-[MIT © 2020-present, pure-admin](./LICENSE)
+- Original template: pure-admin-thin (MIT)
+- Secondary development: Qiaopi Image Annotation System (2026)
+
+See `LICENSE` for details.
