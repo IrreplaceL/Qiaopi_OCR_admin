@@ -182,8 +182,8 @@
   }
 }
 
-/* 主内容区域 */
-.main-content {
+/* 主内容区域 - 三栏布局 */
+.main-content-three-columns {
   flex: 1;
   display: flex;
   overflow: hidden;
@@ -193,10 +193,28 @@
   position: relative;
 }
 
+/* 三栏：左侧图像、中间标注、右侧信息 */
+.column-left {
+  width: 40%;
+  min-width: 350px;
+}
+
+.column-middle {
+  width: 40%;
+  min-width: 350px;
+  border-left: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+}
+
+.column-right {
+  width: 20%;
+  min-width: 220px;
+  background: #f9fafb;
+}
+
 /* 图像面板和标注面板 */
 .image-panel,
 .annotation-panel {
-  width: 50%;
   background: white;
   display: flex;
   flex-direction: column;
@@ -250,7 +268,7 @@
   padding: 24px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* 改为顶部对齐 */
   background: #f9fafb;
   position: relative;
   cursor: grab;
@@ -457,32 +475,33 @@
 
 .item-text {
   font-family: "SimSun", "宋体", serif;
-  line-height: 1.1;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: normal;
   color: #1f2937;
   overflow: hidden;
-  word-break: break-all;
+  word-wrap: break-word;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
-  height: 90%;
+  width: 85%;
+  height: 85%;
   text-align: center;
+  padding: 2px;
 }
 
 .item-text.vertical-text {
   writing-mode: vertical-rl;
   text-orientation: upright;
-  font-size: min(90cqh, 90cqw);
+  /* 字体大小由 JavaScript 动态计算 */
 }
 
 .item-text.horizontal-text {
   writing-mode: horizontal-tb;
-  font-size: min(90cqh, 90cqw);
+  /* 字体大小由 JavaScript 动态计算 */
 }
 
 .item-text .text-char {
@@ -757,4 +776,158 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #a1a1a1;
+}
+
+/* ===== 右侧信息面板样式 ===== */
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.info-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.info-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.info-content::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+.info-section {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.info-section.warning-section {
+  background: #fef3c7;
+  border-color: #fbbf24;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.info-item {
+  display: flex;
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #6b7280;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.info-value {
+  color: #1f2937;
+  flex: 1;
+}
+
+.info-text {
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.info-text.small {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+/* 文言词汇样式 */
+.term-item {
+  margin-bottom: 12px;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 6px;
+  border-left: 3px solid #3b82f6;
+}
+
+.term-item:last-child {
+  margin-bottom: 0;
+}
+
+.term-word {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 6px;
+  font-family: "KaiTi", "楷体", serif;
+}
+
+.term-explanation {
+  display: block;
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+/* 方言注释样式 */
+.dialect-item {
+  margin-bottom: 12px;
+  padding: 10px;
+  background: #eff6ff;
+  border-radius: 6px;
+  border-left: 3px solid #10b981;
+}
+
+.dialect-item:last-child {
+  margin-bottom: 0;
+}
+
+.dialect-word {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 6px;
+  font-family: "KaiTi", "楷体", serif;
+}
+
+.dialect-note {
+  display: block;
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+/* 复核项目样式 */
+.review-item {
+  padding: 10px 12px;
+  background: white;
+  border-radius: 6px;
+  border-left: 3px solid #f59e0b;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: #92400e;
+  line-height: 1.6;
+}
+
+.review-item:last-child {
+  margin-bottom: 0;
 }

@@ -42,8 +42,8 @@
       </div>
     </header>
 
-    <!-- 主内容区域 -->
-    <main class="main-content">
+    <!-- 三栏主内容区域 -->
+    <main class="main-content-three-columns">
       <div v-if="isUploading || isSaving" class="loading-overlay">
         <div class="loading-card">
           <div class="loading-rings" aria-hidden="true">
@@ -57,7 +57,7 @@
       </div>
 
       <!-- 左侧：图像显示区 -->
-      <section class="image-panel">
+      <section class="image-panel column-left">
         <div class="panel-header">
           <h3>侨批图像</h3>
           <span class="text-direction">{{ textDirection === 'vertical' ? '竖排文字' : '横排文字' }}</span>
@@ -96,16 +96,16 @@
             >
               <g
                 v-for="item in annotationData"
-                :key="item.line_id"
+                :key="item.colId"
               >
                 <rect
                   :x="item.bbox[0] * scaleRatio"
                   :y="item.bbox[1] * scaleRatio"
                   :width="(item.bbox[2] - item.bbox[0]) * scaleRatio"
                   :height="(item.bbox[3] - item.bbox[1]) * scaleRatio"
-                  :class="['bbox-rect', { 'bbox-active': highlightedLineId === item.line_id }]"
+                  :class="['bbox-rect', { 'bbox-active': highlightedLineId === item.colId }]"
                   @click.stop="handleBboxClick(item)"
-                  @mouseenter="handleBboxHover(item.line_id)"
+                  @mouseenter="handleBboxHover(item.colId)"
                   @mouseleave="handleBboxLeave"
                 />
                 <text
@@ -113,7 +113,7 @@
                   :y="item.bbox[1] * scaleRatio + 15"
                   class="bbox-label"
                 >
-                  {{ item.line_id }}
+                  {{ item.colId }}
                 </text>
               </g>
             </svg>
@@ -122,19 +122,10 @@
       </section>
 
       <!-- 右侧：标注区域 -->
-      <section class="annotation-panel">
+      <section class="annotation-panel column-middle">
         <div class="panel-header">
           <h3>OCR识别结果</h3>
-          <div class="entity-types">
-            <span
-              v-for="entityType in entityTypes"
-              :key="entityType.type"
-              class="entity-tag"
-              :style="{ backgroundColor: entityType.color + '20', color: entityType.color }"
-            >
-              {{ entityType.label }}
-            </span>
-          </div>
+          <span class="text-direction">{{ textDirection === 'vertical' ? '竖排文字' : '横排文字' }}</span>
         </div>
 
         <!-- 文本显示区域：使用坐标布局 -->
@@ -157,9 +148,9 @@
           >
             <div
               v-for="item in annotationData"
-              :key="item.line_id"
-              :data-line-id="item.line_id"
-              :class="['text-canvas-item', { 'item-active': highlightedLineId === item.line_id }]"
+              :key="item.colId"
+              :data-line-id="item.colId"
+              :class="['text-canvas-item', { 'item-active': highlightedLineId === item.colId }]"
               :style="{
                 left: item.bbox[0] * scaleRatio + 'px',
                 top: item.bbox[1] * scaleRatio + 'px',
@@ -167,21 +158,16 @@
                 height: (item.bbox[3] - item.bbox[1]) * scaleRatio + 'px'
               }"
               @click="handleLineClick(item)"
-              @mouseenter="handleLineHover(item.line_id)"
+              @mouseenter="handleLineHover(item.colId)"
               @mouseleave="handleLineLeave"
             >
               <div class="canvas-item-content">
-                <span class="item-number">{{ item.line_id }}</span>
-                <div :class="['item-text', textDirection === 'vertical' ? 'vertical-text' : 'horizontal-text']">
-                  <span
-                    v-for="(char, index) in item.corrected_text.split('')"
-                    :key="index"
-                    :class="['text-char', getCharClass(item, index)]"
-                    :style="getCharStyle(item, index)"
-                    :title="getCharTitle(item, index)"
-                  >
-                    {{ char }}
-                  </span>
+                <span class="item-number">{{ item.colId }}</span>
+                <div 
+                  :class="['item-text', textDirection === 'vertical' ? 'vertical-text' : 'horizontal-text']"
+                  :style="{ fontSize: getTextFontSize(item) }"
+                >
+                  {{ item.content }}
                 </div>
               </div>
             </div>
@@ -191,36 +177,148 @@
         <!-- 编辑面板 -->
         <div v-if="selectedLine" class="edit-panel">
           <div class="edit-header">
-            <h4>编辑第 {{ selectedLine.line_id }} 行</h4>
+            <h4>编辑第 {{ selectedLine.colId }} 列</h4>
             <button class="btn-close" @click="selectedLine = null">×</button>
           </div>
           <div class="edit-body">
             <div class="form-group">
               <label>OCR原文：</label>
-              <div class="text-display">{{ selectedLine.ocr_text }}</div>
+              <div class="text-display">{{ selectedLine.content }}</div>
             </div>
             <div class="form-group">
               <label>校正文本：</label>
               <input
-                v-model="selectedLine.corrected_text"
+                v-model="selectedLine.contentChange"
                 class="form-control"
                 @input="updateText"
               />
             </div>
             <div class="form-group">
-              <label>识别置信度：</label>
-              <div class="confidence-wrap">
-                <div class="confidence-track">
-                  <div
-                    class="confidence-fill"
-                    :style="{
-                      width: (selectedLine.score * 100).toFixed(1) + '%',
-                      background: confidenceColor(selectedLine.score)
-                    }"
-                  ></div>
-                </div>
-                <span class="confidence-value">{{ (selectedLine.score * 100).toFixed(1) }}%</span>
+              <label>不确定说明：</label>
+              <textarea
+                v-model="selectedLine.uncertainNote"
+                class="form-control"
+                rows="2"
+                placeholder="如有不确定的字或内容，请在此说明"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label>坐标信息：</label>
+              <div class="text-display">
+                X: {{ selectedLine.bbox[0] }} - {{ selectedLine.bbox[2] }}, 
+                Y: {{ selectedLine.bbox[1] }} - {{ selectedLine.bbox[3] }}
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 右侧：结构化信息面板 -->
+      <section class="info-panel column-right">
+        <div class="panel-header">
+          <h3>结构化信息</h3>
+        </div>
+        
+        <div class="info-content">
+          <!-- 基础信息 -->
+          <div v-if="structuredInfo" class="info-section">
+            <div class="section-title">📋 基础元数据</div>
+            <div class="info-item">
+              <span class="info-label">寄件人：</span>
+              <span class="info-value">{{ structuredInfo.sender || '未提及' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">收件人：</span>
+              <span class="info-value">{{ structuredInfo.receiver || '未提及' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">寄件地：</span>
+              <span class="info-value">{{ structuredInfo.sendPlace || '未提及' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">收件地：</span>
+              <span class="info-value">{{ structuredInfo.receivePlace || '未提及' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">原文日期：</span>
+              <span class="info-value">{{ structuredInfo.originalDate || '未提及' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">公历日期：</span>
+              <span class="info-value">{{ structuredInfo.gregorianDate || '未提及' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">侨汇信息：</span>
+              <span class="info-value">{{ structuredInfo.remittanceInfo || '未提及' }}</span>
+            </div>
+          </div>
+
+          <!-- 核心事件 -->
+          <div v-if="structuredInfo?.coreEvent" class="info-section">
+            <div class="section-title">📝 核心内容摘要</div>
+            <div class="info-text">{{ structuredInfo.coreEvent }}</div>
+          </div>
+
+          <!-- 文言词汇解释 -->
+          <div v-if="classicalTerms?.length" class="info-section">
+            <div class="section-title">📖 文言词汇解释</div>
+            <div v-for="term in classicalTerms" :key="term.id" class="term-item">
+              <span class="term-word">{{ term.term }}</span>
+              <span class="term-explanation">{{ term.explanation }}</span>
+            </div>
+          </div>
+
+          <!-- 方言注释 -->
+          <div v-if="dialectNotes?.length" class="info-section">
+            <div class="section-title">🗣️ 方言俗字注释</div>
+            <div v-for="note in dialectNotes" :key="note.id" class="dialect-item">
+              <span class="dialect-word">{{ note.original }}</span>
+              <span class="dialect-note">{{ note.note }}</span>
+            </div>
+          </div>
+
+          <!-- 需要复核的项目 -->
+          <div v-if="needReviewItems?.length" class="info-section warning-section">
+            <div class="section-title">⚠️ 需要人工复核</div>
+            <div v-for="item in needReviewItems" :key="item.id" class="review-item">
+              {{ item.item }}
+            </div>
+          </div>
+
+          <!-- 置信度信息 -->
+          <div v-if="structuredInfo?.confidence" class="info-section">
+            <div class="section-title">📊 识别置信度</div>
+            <div class="confidence-wrap">
+              <div class="confidence-track">
+                <div
+                  class="confidence-fill"
+                  :style="{
+                    width: (structuredInfo.confidence * 100) + '%',
+                    background: confidenceColor(structuredInfo.confidence)
+                  }"
+                ></div>
+              </div>
+              <span class="confidence-value">{{ (structuredInfo.confidence * 100).toFixed(1) }}%</span>
+            </div>
+            <div v-if="structuredInfo.confidenceCalculation" class="info-text small">
+              {{ structuredInfo.confidenceCalculation }}
+            </div>
+          </div>
+
+          <!-- Token 使用情况 -->
+          <div v-if="tokenUsage" class="info-section">
+            <div class="section-title">💰 Token 使用情况</div>
+            <div class="info-item">
+              <span class="info-label">提示词：</span>
+              <span class="info-value">{{ tokenUsage.promptTokens }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">生成内容：</span>
+              <span class="info-value">{{ tokenUsage.completionTokens }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">总计：</span>
+              <span class="info-value">{{ tokenUsage.totalTokens }}</span>
             </div>
           </div>
         </div>
@@ -233,7 +331,6 @@
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStoreHook } from '@/store/modules/user'
-import { entityTypes } from '../mockData1.js'
 import { processImage, saveAnnotation, getAnnotationDetail } from '../http/api.js'
 
 // 响应式数据
@@ -267,6 +364,13 @@ const textScrollStart = ref({ x: 0, y: 0 })
 const route = useRoute()
 const userStore = useUserStoreHook()
 
+// 新增：结构化信息
+const structuredInfo = ref(null)
+const classicalTerms = ref([])
+const dialectNotes = ref([])
+const needReviewItems = ref([])
+const tokenUsage = ref(null)
+
 const projectId = computed(() => route.params.projectId)
 const userId = computed(() => userStore.userId)
 const annotationId = computed(() => route.params.annotationId)
@@ -294,6 +398,29 @@ const textDirection = computed(() => {
 
   return verticalCount > horizontalCount ? 'vertical' : 'horizontal'
 })
+
+// 计算文字的字体大小（基于框的大小和字数）
+const getTextFontSize = (item) => {
+  if (!item.bbox) return '12px'
+  
+  const width = (item.bbox[2] - item.bbox[0]) * scaleRatio.value
+  const height = (item.bbox[3] - item.bbox[1]) * scaleRatio.value
+  const charCount = item.content.length
+  
+  if (textDirection.value === 'vertical') {
+    // 竖排文字：宽度决定字体大小，高度决定能放几个字
+    // 字体大小 = 框宽度 * 0.7（留一些边距）
+    // 但不能超过 (框高度 * 0.85) / 字数
+    const maxByWidth = width * 0.7
+    const maxByHeight = (height * 0.85) / charCount
+    return Math.max(6, Math.min(maxByWidth, maxByHeight, 20)) + 'px'
+  } else {
+    // 横排文字：高度决定字体大小，宽度决定能放几个字
+    const maxByHeight = height * 0.7
+    const maxByWidth = (width * 0.85) / charCount
+    return Math.max(6, Math.min(maxByHeight, maxByWidth, 20)) + 'px'
+  }
+}
 
 // 文件上传相关
 const triggerFileUpload = () => {
@@ -332,10 +459,42 @@ const uploadAndProcess = async (file) => {
       userId: userId.value
     })
 
-    annotationData.value = result.annotationData || []
-    rawData.value = result.rawData || null
-    if (result.imageUrl) {
-      imageUrl.value = result.imageUrl
+    // 适配新的数据结构
+    if (result.data) {
+      const annotation = result.data.annotation
+      
+      // 转换 columnAnnotations 为标注数据数组
+      // 后端坐标是基于 1000x1000 的标准化坐标系统
+      const COORD_SYSTEM_SIZE = 1000
+      
+      annotationData.value = (annotation?.columnAnnotations || []).map(col => {
+        // 先转换为相对坐标（0-1之间）
+        const relX1 = col.coordX1 / COORD_SYSTEM_SIZE
+        const relY1 = col.coordY1 / COORD_SYSTEM_SIZE
+        const relX2 = col.coordX2 / COORD_SYSTEM_SIZE
+        const relY2 = col.coordY2 / COORD_SYSTEM_SIZE
+        
+        return {
+          ...col,
+          // 保存相对坐标，等图片加载后再转换为绝对坐标
+          relativeCoords: [relX1, relY1, relX2, relY2],
+          bbox: [col.coordX1, col.coordY1, col.coordX2, col.coordY2] // 临时使用原始坐标
+        }
+      })
+      
+      // 保存结构化信息
+      structuredInfo.value = annotation?.structuredInfo || null
+      classicalTerms.value = annotation?.classicalTerms || []
+      dialectNotes.value = annotation?.dialectNotes || []
+      needReviewItems.value = annotation?.needReviewItems || []
+      tokenUsage.value = result.data.tokenUsage || null
+      
+      // 保存图片 URL
+      if (result.data.imageInput) {
+        imageUrl.value = result.data.imageInput
+      }
+      
+      rawData.value = result.data
     }
 
     console.log('标注数据加载成功：', annotationData.value)
@@ -352,7 +511,11 @@ const uploadAndProcess = async (file) => {
 // 图片加载相关
 const onImageLoad = () => {
   if (imageRef.value) {
-    updateImageDimensions()
+    console.log('图片加载完成，开始更新尺寸')
+    // 使用 nextTick 确保 DOM 已更新
+    nextTick(() => {
+      updateImageDimensions()
+    })
   }
 }
 
@@ -369,63 +532,57 @@ const updateImageDimensions = () => {
     imageDisplayHeight.value = displayHeight
     scaleRatio.value = displayWidth / naturalWidth
     imageLoaded.value = true
-  }
-}
-
-// 实体标注相关
-const getEntityForChar = (item, index) => {
-  return item.entities.find(entity =>
-    index >= entity.start && index < entity.end
-  )
-}
-
-const getCharClass = (item, index) => {
-  const entity = getEntityForChar(item, index)
-  return entity ? 'highlighted' : ''
-}
-
-const getCharStyle = (item, index) => {
-  const entity = getEntityForChar(item, index)
-  if (entity) {
-    const color = getEntityColor(entity.type)
-    return {
-      backgroundColor: color + '30',
-      borderLeftColor: textDirection.value === 'vertical' ? color : 'transparent',
-      borderTopColor: textDirection.value === 'horizontal' ? color : 'transparent'
+    
+    console.log('图片尺寸信息:', {
+      natural: { width: naturalWidth, height: naturalHeight },
+      display: { width: displayWidth, height: displayHeight },
+      scaleRatio: scaleRatio.value
+    })
+    
+    // 重要：图片加载后，将相对坐标转换为基于实际图片尺寸的绝对坐标
+    if (annotationData.value.length > 0 && annotationData.value[0].relativeCoords) {
+      console.log('开始转换相对坐标为实际坐标...')
+      annotationData.value = annotationData.value.map(item => {
+        const [relX1, relY1, relX2, relY2] = item.relativeCoords
+        const actualBbox = [
+          relX1 * naturalWidth,
+          relY1 * naturalHeight,
+          relX2 * naturalWidth,
+          relY2 * naturalHeight
+        ]
+        return {
+          ...item,
+          bbox: actualBbox
+        }
+      })
+      
+      console.log('坐标转换完成！')
+      console.log('第一个bbox实际坐标:', annotationData.value[0].bbox)
+      console.log('缩放后坐标:', {
+        x: annotationData.value[0].bbox[0] * scaleRatio.value,
+        y: annotationData.value[0].bbox[1] * scaleRatio.value,
+        width: (annotationData.value[0].bbox[2] - annotationData.value[0].bbox[0]) * scaleRatio.value,
+        height: (annotationData.value[0].bbox[3] - annotationData.value[0].bbox[1]) * scaleRatio.value
+      })
     }
   }
-  return {}
-}
-
-const getCharTitle = (item, index) => {
-  const entity = getEntityForChar(item, index)
-  if (entity) {
-    const type = entityTypes.find(t => t.type === entity.type)
-    return `${type?.label}: ${entity.text}`
-  }
-  return ''
-}
-
-const getEntityColor = (type) => {
-  const entityType = entityTypes.find(t => t.type === type)
-  return entityType?.color || '#999'
 }
 
 // 交互事件处理
 const handleBboxClick = (item) => {
   selectedLine.value = item
-  highlightedLineId.value = item.line_id
-  scrollToLine(item.line_id)
+  highlightedLineId.value = item.colId
+  scrollToLine(item.colId)
 }
 
 const handleLineClick = (item) => {
   selectedLine.value = item
-  highlightedLineId.value = item.line_id
+  highlightedLineId.value = item.colId
 }
 
-const handleBboxHover = (lineId) => {
+const handleBboxHover = (colId) => {
   if (!selectedLine.value) {
-    highlightedLineId.value = lineId
+    highlightedLineId.value = colId
   }
 }
 
@@ -435,9 +592,9 @@ const handleBboxLeave = () => {
   }
 }
 
-const handleLineHover = (lineId) => {
+const handleLineHover = (colId) => {
   if (!selectedLine.value) {
-    highlightedLineId.value = lineId
+    highlightedLineId.value = colId
   }
 }
 
@@ -451,10 +608,10 @@ const handleImageClick = () => {
   // 点击空白区域不做处理
 }
 
-const scrollToLine = (lineId) => {
+const scrollToLine = (colId) => {
   nextTick(() => {
     if (textCanvasRef.value) {
-      const lineElement = textCanvasRef.value.querySelector(`[data-line-id="${lineId}"]`)
+      const lineElement = textCanvasRef.value.querySelector(`[data-line-id="${colId}"]`)
       if (lineElement) {
         lineElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }
@@ -464,14 +621,14 @@ const scrollToLine = (lineId) => {
 
 // 缩放控制
 const zoomIn = () => {
-  if (zoomLevel.value < 3) {
-    zoomLevel.value = Math.min(3, zoomLevel.value + 0.25)
+  if (zoomLevel.value < 5) {
+    zoomLevel.value = Math.min(5, zoomLevel.value + 0.1)
   }
 }
 
 const zoomOut = () => {
-  if (zoomLevel.value > 0.5) {
-    zoomLevel.value = Math.max(0.5, zoomLevel.value - 0.25)
+  if (zoomLevel.value > 0.3) {
+    zoomLevel.value = Math.max(0.3, zoomLevel.value - 0.1)
   }
 }
 
@@ -485,11 +642,12 @@ const handleWheel = (event) => {
 
   event.preventDefault()
 
-  const delta = -event.deltaY / 1000
+  // 增加灵敏度：从 1000 改为 500
+  const delta = -event.deltaY / 500
   const newZoom = zoomLevel.value + delta
 
-  // 限制缩放范围
-  zoomLevel.value = Math.max(0.5, Math.min(3, newZoom))
+  // 扩大缩放范围：0.3 ~ 5
+  zoomLevel.value = Math.max(0.3, Math.min(5, newZoom))
 }
 
 // 鼠标拖动功能
@@ -600,16 +758,36 @@ const confidenceColor = (score) => {
 }
 
 const save = async () => {
-  if (!rawData.value?.id) {
+  if (!annotationData.value.length) {
+    alert('没有标注数据可以保存')
+    return
+  }
+  
+  if (!annotationId.value) {
     alert('无法获取标注 ID，请重新加载页面')
     return
   }
+  
   isSaving.value = true
   try {
-    await saveAnnotation(annotationData.value, {
-      annotationId: rawData.value.id,
+    // 转换回后端需要的数据格式
+    const columnAnnotations = annotationData.value.map(item => ({
+      id: item.id,
+      annotationId: item.annotationId,
+      colId: item.colId,
+      content: item.content,
+      contentChange: item.contentChange,
+      coordX1: item.bbox[0],
+      coordY1: item.bbox[1],
+      coordX2: item.bbox[2],
+      coordY2: item.bbox[3],
+      uncertainNote: item.uncertainNote
+    }))
+    
+    await saveAnnotation({
+      annotationId: annotationId.value,
       annotatorId: userId.value,
-      ocrRawJson: rawData.value.ocrRawJson
+      columnAnnotations: columnAnnotations
     })
     alert('标注结果已保存')
   } catch (error) {
@@ -623,13 +801,71 @@ const save = async () => {
 const loadExistingAnnotation = async (id) => {
   isUploading.value = true
   try {
+    console.log('开始加载标注详情，ID:', id)
     const result = await getAnnotationDetail(id)
-    annotationData.value = result.annotationData || []
-    rawData.value = result.rawData || null
-    if (result.imageUrl) {
-      imageUrl.value = result.imageUrl
+    console.log('API 返回数据：', result)
+    
+    // 适配新的数据结构
+    if (result.data) {
+      const annotation = result.data.annotation
+      console.log('解析 annotation:', annotation)
+      
+      // 转换 columnAnnotations 为标注数据数组
+      // 后端坐标是基于 1000x1000 的标准化坐标系统
+      const COORD_SYSTEM_SIZE = 1000
+      
+      annotationData.value = (annotation?.columnAnnotations || []).map(col => {
+        // 先转换为相对坐标（0-1之间）
+        const relX1 = col.coordX1 / COORD_SYSTEM_SIZE
+        const relY1 = col.coordY1 / COORD_SYSTEM_SIZE
+        const relX2 = col.coordX2 / COORD_SYSTEM_SIZE
+        const relY2 = col.coordY2 / COORD_SYSTEM_SIZE
+        
+        return {
+          ...col,
+          // 保存相对坐标，等图片加载后再转换为绝对坐标
+          relativeCoords: [relX1, relY1, relX2, relY2],
+          bbox: [col.coordX1, col.coordY1, col.coordX2, col.coordY2] // 临时使用原始坐标
+        }
+      })
+      
+      console.log('转换后的 annotationData:', annotationData.value)
+      
+      // 详细调试信息
+      console.log('=== 坐标调试信息 ===')
+      console.log('列数:', annotationData.value.length)
+      
+      // 找出X和Y的范围
+      const allX = annotationData.value.flatMap(col => [col.bbox[0], col.bbox[2]])
+      const allY = annotationData.value.flatMap(col => [col.bbox[1], col.bbox[3]])
+      console.log('X坐标范围:', Math.min(...allX), '-', Math.max(...allX))
+      console.log('Y坐标范围:', Math.min(...allY), '-', Math.max(...allY))
+      
+      // 打印每一列的信息
+      annotationData.value.forEach(col => {
+        console.log(`列${col.colId}: [${col.bbox[0]}, ${col.bbox[1]}, ${col.bbox[2]}, ${col.bbox[3]}] 宽=${col.bbox[2]-col.bbox[0]} 高=${col.bbox[3]-col.bbox[1]}`)
+      })
+      console.log('===================')
+      
+      // 保存结构化信息
+      structuredInfo.value = annotation?.structuredInfo || null
+      classicalTerms.value = annotation?.classicalTerms || []
+      dialectNotes.value = annotation?.dialectNotes || []
+      needReviewItems.value = annotation?.needReviewItems || []
+      tokenUsage.value = result.data.tokenUsage || null
+      
+      // 保存图片 URL
+      if (result.data.imageInput) {
+        imageUrl.value = result.data.imageInput
+        console.log('设置图片 URL:', imageUrl.value)
+      }
+      
+      rawData.value = result.data
+    } else {
+      console.warn('result.data 不存在:', result)
     }
-    console.log('已有标注数据加载成功：', annotationData.value)
+    
+    console.log('已有标注数据加载成功，annotationData:', annotationData.value)
   } catch (error) {
     console.error('加载标注详情失败：', error)
     alert(`加载标注失败：${error.message}`)

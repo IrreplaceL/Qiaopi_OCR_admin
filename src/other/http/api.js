@@ -155,7 +155,7 @@ export async function processImage(file, { projectId, userId }) {
 /**
  * 获取已有标注详情
  * @param {string|number} annotationId
- * @returns {Promise<{annotationData:Array,imageUrl:string|null,rawData:Object|null}>}
+ * @returns {Promise<Object>}
  */
 export async function getAnnotationDetail(annotationId) {
   const query = new URLSearchParams({ annotationId: String(annotationId) })
@@ -172,15 +172,8 @@ export async function getAnnotationDetail(annotationId) {
     throw new Error(result.msg || '获取标注详情失败')
   }
 
-  const data = result.data
-  // ocr_text 来自 ocrRawJson；corrected_text 来自 manualAnnotationJson（为空则回退到 ocrRawJson）
-  const parsedAnnotationData = normalizeLinesFromBoth(data?.ocrRawJson, data?.manualAnnotationJson)
-
-  return {
-    annotationData: parsedAnnotationData,
-    imageUrl: data?.imageUrl || null,
-    rawData: data
-  }
+  // 直接返回完整的响应数据，让组件自己处理
+  return result
 }
 
 /**
