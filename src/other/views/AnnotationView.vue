@@ -65,6 +65,7 @@
         <div class="image-container"
              ref="imageContainerRef"
              @wheel="handleWheel"
+             @scroll="handleImageScroll"
              @mousedown="handleMouseDown"
              @mousemove="handleMouseMove"
              @mouseup="handleMouseUp"
@@ -99,18 +100,18 @@
                 :key="item.colId"
               >
                 <rect
-                  :x="item.bbox[0] * scaleRatio"
-                  :y="item.bbox[1] * scaleRatio"
-                  :width="(item.bbox[2] - item.bbox[0]) * scaleRatio"
-                  :height="(item.bbox[3] - item.bbox[1]) * scaleRatio"
-                  :class="['bbox-rect', { 'bbox-active': highlightedLineId === item.colId }]"
+                  :x="getDisplayRect(item).x"
+                  :y="getDisplayRect(item).y"
+                  :width="getDisplayRect(item).width"
+                  :height="getDisplayRect(item).height"
+                  :class="['bbox-rect', getBoxColorClass(item.colId), { 'bbox-active': highlightedLineId === item.colId }]"
                   @click.stop="handleBboxClick(item)"
                   @mouseenter="handleBboxHover(item.colId)"
                   @mouseleave="handleBboxLeave"
                 />
                 <text
-                  :x="item.bbox[0] * scaleRatio + 5"
-                  :y="item.bbox[1] * scaleRatio + 15"
+                  :x="getDisplayRect(item).x + 5"
+                  :y="getDisplayRect(item).y + 15"
                   class="bbox-label"
                 >
                   {{ item.colId }}
@@ -132,6 +133,7 @@
         <div class="text-canvas-container"
              ref="textCanvasRef"
              @wheel="handleWheel"
+             @scroll="handleTextScroll"
              @mousedown="handleTextMouseDown"
              @mousemove="handleTextMouseMove"
              @mouseup="handleTextMouseUp"
@@ -150,12 +152,12 @@
               v-for="item in annotationData"
               :key="item.colId"
               :data-line-id="item.colId"
-              :class="['text-canvas-item', { 'item-active': highlightedLineId === item.colId }]"
+              :class="['text-canvas-item', getBoxColorClass(item.colId), { 'item-active': highlightedLineId === item.colId }]"
               :style="{
-                left: item.bbox[0] * scaleRatio + 'px',
-                top: item.bbox[1] * scaleRatio + 'px',
-                width: (item.bbox[2] - item.bbox[0]) * scaleRatio + 'px',
-                height: (item.bbox[3] - item.bbox[1]) * scaleRatio + 'px'
+                left: getDisplayRect(item).x + 'px',
+                top: getDisplayRect(item).y + 'px',
+                width: getDisplayRect(item).width + 'px',
+                height: getDisplayRect(item).height + 'px'
               }"
               @click="handleLineClick(item)"
               @mouseenter="handleLineHover(item.colId)"
@@ -214,12 +216,15 @@
       </section>
 
       <!-- 右侧：结构化信息面板 -->
-      <section class="info-panel column-right">
+      <section :class="['info-panel', 'column-right', { collapsed: isInfoCollapsed }]">
         <div class="panel-header">
           <h3>结构化信息</h3>
+          <button class="btn-collapse" @click="isInfoCollapsed = !isInfoCollapsed">
+            {{ isInfoCollapsed ? '展开' : '收起' }}
+          </button>
         </div>
         
-        <div class="info-content">
+        <div v-show="!isInfoCollapsed" class="info-content">
           <!-- 基础信息 -->
           <div v-if="structuredInfo" class="info-section">
             <div class="section-title">📋 基础元数据</div>
@@ -370,6 +375,8 @@ const classicalTerms = ref([])
 const dialectNotes = ref([])
 const needReviewItems = ref([])
 const tokenUsage = ref(null)
+const isInfoCollapsed = ref(false)
+const syncingScroll = ref(false)
 
 const projectId = computed(() => route.params.projectId)
 const userId = computed(() => userStore.userId)
@@ -419,6 +426,33 @@ const getTextFontSize = (item) => {
     const maxByHeight = height * 0.7
     const maxByWidth = (width * 0.85) / charCount
     return Math.max(6, Math.min(maxByHeight, maxByWidth, 20)) + 'px'
+  }
+}
+
+const getBoxColorClass = (colId) => {
+  const idx = (Number(colId) - 1) % 4
+  return ['tone-blue', 'tone-green', 'tone-purple', 'tone-yellow'][idx]
+}
+
+const getDisplayRect = (item) => {
+  const x1 = item.bbox[0]
+  const y1 = item.bbox[1]
+  const x2 = item.bbox[2]
+  const y2 = item.bbox[3]
+
+  const baseX = x1 * scaleRatio.value
+  const baseY = y1 * scaleRatio.value
+  const baseW = (x2 - x1) * scaleRatio.value
+  const baseH = (y2 - y1) * scaleRatio.value
+
+  // 视觉上留一点缝隙，避免框贴得太死
+  const gap = Math.max(1, Math.min(3, baseW * 0.06))
+
+  return {
+    x: baseX + gap / 2,
+    y: baseY + gap / 2,
+    width: Math.max(2, baseW - gap),
+    height: Math.max(2, baseH - gap)
   }
 }
 
@@ -619,6 +653,24 @@ const scrollToLine = (colId) => {
   })
 }
 
+const syncScroll = (sourceEl, targetEl) => {
+  if (!sourceEl || !targetEl || syncingScroll.value) return
+  syncingScroll.value = true
+  targetEl.scrollLeft = sourceEl.scrollLeft
+  targetEl.scrollTop = sourceEl.scrollTop
+  requestAnimationFrame(() => {
+    syncingScroll.value = false
+  })
+}
+
+const handleImageScroll = () => {
+  syncScroll(imageContainerRef.value, textCanvasRef.value)
+}
+
+const handleTextScroll = () => {
+  syncScroll(textCanvasRef.value, imageContainerRef.value)
+}
+
 // 缩放控制
 const zoomIn = () => {
   if (zoomLevel.value < 5) {
@@ -636,18 +688,27 @@ const resetZoom = () => {
   zoomLevel.value = 1
 }
 
-// 鼠标滚轮缩放
+// 鼠标滚轮：在图片/框上缩放；空白区域正常滚动（且双栏联动）
 const handleWheel = (event) => {
   if (!imageUrl.value) return
 
-  event.preventDefault()
-
-  // 增加灵敏度：从 1000 改为 500
-  const delta = -event.deltaY / 500
-  const newZoom = zoomLevel.value + delta
-
-  // 扩大缩放范围：0.3 ~ 5
-  zoomLevel.value = Math.max(0.3, Math.min(5, newZoom))
+  // 检查鼠标是否在图片或文本框上
+  const target = event.target
+  const isOnImage = target.closest('.qiaopi-image') || target.closest('.bbox-overlay')
+  const isOnTextArea = target.closest('.text-canvas-wrapper') || target.closest('.text-canvas-item')
+  
+  // 只有在图片或 OCR 框区域上才缩放，否则正常滚动
+  if (isOnImage || isOnTextArea) {
+    event.preventDefault()
+    
+    // 增加灵敏度
+    const delta = -event.deltaY / 500
+    const newZoom = zoomLevel.value + delta
+    
+    // 扩大缩放范围：0.3 ~ 5
+    zoomLevel.value = Math.max(0.3, Math.min(5, newZoom))
+  }
+  // 否则允许默认滚动，由 scroll 事件做双栏联动
 }
 
 // 鼠标拖动功能
@@ -895,4 +956,3 @@ onMounted(async () => {
 </script>
 
 <style scoped src="../styles/annotation.css"></style>
-
