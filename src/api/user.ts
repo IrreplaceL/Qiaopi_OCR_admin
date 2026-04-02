@@ -142,9 +142,55 @@ export type AnnotationDetailResult = {
   data: AnnotationDetailItem;
 };
 
+export type OcrUploadResult = {
+  code: number;
+  msg?: string;
+  data?: any;
+};
+
 /** 获取单条标注详情 */
 export const getAnnotationDetail = (annotationId: string | number) => {
   return http.request<AnnotationDetailResult>("get", "/annotation/detail", {
     params: { annotationId }
   });
+};
+
+/**
+ * 上传单张图片到 OCR 接口
+ * 说明：后端当前仅支持串行处理，因此批量上传需在调用端按顺序逐张调用此方法
+ */
+export const uploadOcrImage = async (
+  file: File,
+  params: { projectId: string | number; userId: string | number }
+) => {
+  const { projectId, userId } = params;
+  const query = new URLSearchParams({
+    projectId: String(projectId),
+    userId: String(userId)
+  });
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch(`http://127.0.0.1:1031/ocr/upload?${query.toString()}`, {
+    method: "POST",
+    body: formData
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const result = (await response.json()) as OcrUploadResult;
+  const topCode = Number(result?.code);
+  const nestedCode = Number((result?.data as any)?.code);
+  const topOk = topCode === 0 || topCode === 200;
+  const nestedOk = Number.isNaN(nestedCode) || nestedCode === 0 || nestedCode === 200;
+
+  if (!topOk || !nestedOk) {
+    const nestedMsg = (result?.data as any)?.msg;
+    throw new Error(nestedMsg || result?.msg || "OCR 处理失败");
+  }
+
+  return result;
 };

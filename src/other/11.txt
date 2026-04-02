@@ -1,0 +1,7217 @@
+logo
+侨批图像标注系统
+
+项目标注列表
+共 26 张图片，已标注 0 张
+
+未标注
+ID: 48
+2026-04-02 18:27:07
+
+未标注
+ID: 47
+2026-04-02 18:26:09
+
+未标注
+ID: 46
+2026-04-02 18:25:09
+
+未标注
+ID: 45
+2026-04-02 18:24:10
+
+未标注
+ID: 44
+2026-04-02 18:22:34
+
+未标注
+ID: 43
+2026-04-02 18:21:14
+
+未标注
+ID: 42
+2026-04-02 18:20:10
+
+未标注
+ID: 41
+2026-04-02 18:17:42
+
+未标注
+ID: 40
+2026-04-02 18:15:46
+
+未标注
+ID: 39
+2026-04-02 18:14:17
+
+未标注
+ID: 38
+2026-04-02 18:13:08
+
+未标注
+ID: 37
+2026-04-02 18:10:41
+
+未标注
+ID: 36
+2026-04-02 18:08:52
+
+未标注
+ID: 35
+2026-04-02 18:07:06
+
+未标注
+ID: 34
+2026-04-02 18:04:05
+
+未标注
+ID: 33
+2026-04-02 18:02:03
+
+未标注
+ID: 32
+2026-04-02 18:00:41
+
+未标注
+ID: 31
+2026-04-02 17:59:16
+
+未标注
+ID: 30
+2026-04-02 17:57:22
+
+未标注
+ID: 29
+2026-04-02 17:55:40
+
+未标注
+ID: 28
+2026-04-02 17:54:04
+
+未标注
+ID: 27
+2026-04-02 17:52:19
+
+未标注
+ID: 26
+2026-04-02 17:50:29
+
+未标注
+ID: 25
+2026-04-02 17:49:30
+
+未标注
+ID: 24
+2026-04-02 17:47:09
+
+未标注
+ID: 22
+2026-04-02 17:36:50
+进度: 27/27
+完成率: 100%
+成功: 25
+失败: 2
+累计耗时: 00:00.000
+ [17:45:56] 开始上传，项目ID=8，共 27 张图片（后端串行，前端将逐张等待响应）
+ [17:45:56] 开始处理第 1/27 张：image_55.jpg
+ [17:47:11] 第 1 张处理完成：image_55.jpg，耗时 01:14.910
+[17:47:11] 成功字段高亮 - image_55.jpg
+annotationId: 24
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/73d84749ac294a55a77c8aa5f16f0d3e.jpg
+parse_success: true
+confidence: -
+column_count: 9
+total_tokens: 6647
+单张耗时: 01:14.910
+ [17:47:11] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "24",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/73d84749ac294a55a77c8aa5f16f0d3e.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              840,
+              10,
+              950,
+              980
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "東坡此詩似李太白"
+          },
+          {
+            "coord": [
+              730,
+              10,
+              835,
+              980
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "猶恐太白有未到"
+          },
+          {
+            "coord": [
+              610,
+              10,
+              725,
+              980
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "處此書兼顏魯"
+          },
+          {
+            "coord": [
+              520,
+              10,
+              605,
+              980
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "公楊少師李西臺"
+          },
+          {
+            "coord": [
+              410,
+              10,
+              515,
+              980
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "筆意試使東坡"
+          },
+          {
+            "coord": [
+              330,
+              10,
+              405,
+              980
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "復為之未必及此它日"
+          },
+          {
+            "coord": [
+              230,
+              10,
+              325,
+              980
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "東坡或見此書應"
+          },
+          {
+            "coord": [
+              120,
+              10,
+              225,
+              980
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "笑我於無佛處"
+          },
+          {
+            "coord": [
+              30,
+              10,
+              115,
+              980
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "稱尊也"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 3675,
+        "prompt_tokens": 2972,
+        "total_tokens": 6647
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [17:47:11] 开始处理第 2/27 张：image_57.jpg
+ [17:49:31] 第 2 张处理完成：image_57.jpg，耗时 02:19.867
+[17:49:31] 成功字段高亮 - image_57.jpg
+annotationId: 25
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/87c638b2f70a4f7a9cb66958c54b2f9c.jpg
+parse_success: true
+confidence: -
+column_count: 10
+total_tokens: 8574
+单张耗时: 02:19.867
+ [17:49:31] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "25",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/87c638b2f70a4f7a9cb66958c54b2f9c.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              870,
+              10,
+              940,
+              980
+            ],
+            "col_id": 1,
+            "uncertain_note": "【曆】为“历”的繁体异体字，无其他存疑内容",
+            "content": "芾居厚曆子佯車"
+          },
+          {
+            "coord": [
+              770,
+              10,
+              860,
+              985
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "送去糧院欲推過他"
+          },
+          {
+            "coord": [
+              670,
+              10,
+              765,
+              990
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "人不任其責儻糧院知"
+          },
+          {
+            "coord": [
+              580,
+              10,
+              665,
+              990
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "於法吾礙即自勘使句"
+          },
+          {
+            "coord": [
+              510,
+              10,
+              575,
+              990
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "院自駁處即求直"
+          },
+          {
+            "coord": [
+              410,
+              10,
+              505,
+              990
+            ],
+            "col_id": 6,
+            "uncertain_note": "【辦】为“辨”的异体字，此处义为厘清、处理",
+            "content": "之端也度此事必辦"
+          },
+          {
+            "coord": [
+              320,
+              10,
+              405,
+              985
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "於上下乃幸"
+          },
+          {
+            "coord": [
+              220,
+              10,
+              315,
+              990
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "左右明察以文非得"
+          },
+          {
+            "coord": [
+              120,
+              10,
+              215,
+              990
+            ],
+            "col_id": 9,
+            "uncertain_note": "【倅】为宋代职官术语，指地方副职官员",
+            "content": "已也或携示倅佳"
+          },
+          {
+            "coord": [
+              50,
+              10,
+              115,
+              420
+            ],
+            "col_id": 10,
+            "uncertain_note": "【皇恐】为宋代尺牍常用谦辞，同“惶恐”",
+            "content": "芾皇恐"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5626,
+        "prompt_tokens": 2948,
+        "total_tokens": 8574
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [17:49:31] 开始处理第 3/27 张：image_58.jpg
+ [17:50:30] 第 3 张处理完成：image_58.jpg，耗时 00:59.077
+[17:50:30] 成功字段高亮 - image_58.jpg
+annotationId: 26
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/691c6571319b4841b40bfa7cfd2adace.jpg
+parse_success: true
+confidence: -
+column_count: 5
+total_tokens: 5848
+单张耗时: 00:59.077
+ [17:50:30] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "26",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/691c6571319b4841b40bfa7cfd2adace.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              771,
+              28,
+              886,
+              958
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "淡墨秋山畫遠"
+          },
+          {
+            "coord": [
+              625,
+              32,
+              740,
+              930
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "天暮霞還照"
+          },
+          {
+            "coord": [
+              486,
+              29,
+              595,
+              964
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "紫添烟故人好"
+          },
+          {
+            "coord": [
+              345,
+              27,
+              441,
+              978
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "在重攜手不到"
+          },
+          {
+            "coord": [
+              195,
+              33,
+              298,
+              896
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "平山謾五年"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 2886,
+        "prompt_tokens": 2962,
+        "total_tokens": 5848
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [17:50:30] 开始处理第 4/27 张：image_59.jpg
+ [17:52:19] 第 4 张处理完成：image_59.jpg，耗时 01:49.191
+[17:52:19] 成功字段高亮 - image_59.jpg
+annotationId: 27
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d521a113ac3f4f2980cec36c4d34f28c.jpg
+parse_success: true
+confidence: 0.91
+column_count: 14
+total_tokens: 8505
+单张耗时: 01:49.191
+ [17:52:19] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "27",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d521a113ac3f4f2980cec36c4d34f28c.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              901,
+              12,
+              957,
+              758
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "襄啓近曾朋仲及陳襄處奉"
+          },
+          {
+            "coord": [
+              842,
+              11,
+              898,
+              379
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "手教兩通伏審"
+          },
+          {
+            "coord": [
+              782,
+              10,
+              839,
+              757
+            ],
+            "col_id": 3,
+            "uncertain_note": "“八”字语境存疑，无法确认是否为衍字",
+            "content": "動靜安康門中各佳喜慰八至虹縣以汴"
+          },
+          {
+            "coord": [
+              722,
+              10,
+              779,
+              756
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "流斗涸遂寓居餘四十日今已作計至宿"
+          },
+          {
+            "coord": [
+              663,
+              10,
+              719,
+              756
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "州然道途勞頓不可勝言尚為說者云渠"
+          },
+          {
+            "coord": [
+              603,
+              11,
+              659,
+              755
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "水當有涯計亦不出一二日或有水即假輕舟"
+          },
+          {
+            "coord": [
+              544,
+              10,
+              600,
+              755
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "往來即無水便就驛道至都乃有期矣"
+          },
+          {
+            "coord": [
+              484,
+              11,
+              539,
+              754
+            ],
+            "col_id": 8,
+            "uncertain_note": "“般若”语境存疑，疑似“般暑”手写讹误",
+            "content": "閎吳大屏同行餘可想當般若留少時久處"
+          },
+          {
+            "coord": [
+              424,
+              10,
+              480,
+              754
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "京塵無乃有倦游之意耶路中誠可"
+          },
+          {
+            "coord": [
+              365,
+              10,
+              420,
+              753
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "防虞民飢鮮食流移東方然在處州縣"
+          },
+          {
+            "coord": [
+              305,
+              11,
+              360,
+              753
+            ],
+            "col_id": 11,
+            "uncertain_note": "无",
+            "content": "須假衛送老幼並平善秋涼伏惟"
+          },
+          {
+            "coord": [
+              246,
+              10,
+              301,
+              552
+            ],
+            "col_id": 12,
+            "uncertain_note": "无",
+            "content": "愛重不宣襄頓首"
+          },
+          {
+            "coord": [
+              186,
+              11,
+              241,
+              451
+            ],
+            "col_id": 13,
+            "uncertain_note": "无",
+            "content": "郎中尊兄足下謹空"
+          },
+          {
+            "coord": [
+              66,
+              671,
+              122,
+              920
+            ],
+            "col_id": 14,
+            "uncertain_note": "列14末尾字字迹模糊，无法准确识别",
+            "content": "八月廿三日宿【】"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及，无对应年号无法转换",
+            "receiver": "郎中尊兄（收信人，官职为郎中）",
+            "sender": "蔡襄（写信人，自称襄）",
+            "original_date": "八月廿三日",
+            "send_place": "宿州（推测，落款提及“宿”字）",
+            "core_event": "写信人告知收信人自身行至虹县时因汴河水流干涸滞留四十余日，计划近期前往宿州，赴京路途劳顿；提醒收信人沿途需防备盗患、饥荒流民等情况，问候收信人安好，嘱咐对方秋凉时节保重身体。",
+            "dialect_notes": [],
+            "remittance_info": "未提及，无侨汇相关内容",
+            "receive_place": "未提及"
+          },
+          "need_review": [
+            "列3的“八”字是否为衍字需复核",
+            "列8的“般若”是否为“般暑”手写讹误需复核",
+            "列14末尾模糊字需人工复核"
+          ],
+          "classical_term_explanation": [
+            {
+              "term": "顿首",
+              "explanation": "古代书信常用敬礼语，意为叩头，常用于信末向对方表达敬意"
+            },
+            {
+              "term": "谨空",
+              "explanation": "古代书简末尾常用语，意为预留空白位置，以待收信人批复"
+            },
+            {
+              "term": "伏审",
+              "explanation": "古代书信敬辞，意为恭谨地知悉、了解"
+            },
+            {
+              "term": "伏惟",
+              "explanation": "古代书信敬辞，意为伏在地上想，下对上陈述时的表敬之辞"
+            }
+          ],
+          "confidence": 0.91,
+          "confidence_calculation": "1. 文字识别准确率：共约127字，3处存疑，得分(124/127)*0.4≈0.391；2. 元数据完整性：收件地、纪年转换、侨汇信息未提及（内容本身无相关信息），得分0.24；3. 坐标匹配准确率：14列坐标均与对应列内容匹配，得分0.2；4. 内容逻辑合理性：无逻辑冲突，得分0.1；总分0.391+0.24+0.2+0.1=0.931，因3处存疑扣0.02，最终得0.91"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5531,
+        "prompt_tokens": 2974,
+        "total_tokens": 8505
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [17:52:19] 开始处理第 5/27 张：image_60.jpg
+ [17:54:05] 第 5 张处理完成：image_60.jpg，耗时 01:45.717
+[17:54:05] 成功字段高亮 - image_60.jpg
+annotationId: 28
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/61481f3dbabd48ea91aadb4c1dc06012.jpg
+parse_success: true
+confidence: 0.94
+column_count: 12
+total_tokens: 7622
+单张耗时: 01:45.717
+ [17:54:05] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "28",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/61481f3dbabd48ea91aadb4c1dc06012.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              940,
+              1,
+              997,
+              962
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "襄啓自離都至南京長子"
+          },
+          {
+            "coord": [
+              865,
+              2,
+              937,
+              964
+            ],
+            "col_id": 2,
+            "uncertain_note": "【匀】字形近“自”，结合史料记载蔡襄长子名讳推测为匀；【疾】字形近“秋”，结合文意推测为疾",
+            "content": "【匀】感傷寒七日遂不起此【疾】"
+          },
+          {
+            "coord": [
+              787,
+              1,
+              860,
+              968
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "南歸殊為榮幸不意災禍"
+          },
+          {
+            "coord": [
+              712,
+              1,
+              782,
+              969
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "如此動息感念哀痛何可"
+          },
+          {
+            "coord": [
+              640,
+              1,
+              707,
+              978
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "言也承示及書并永平信益"
+          },
+          {
+            "coord": [
+              580,
+              1,
+              637,
+              982
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "用慘惻旦夕渡江不及相見"
+          },
+          {
+            "coord": [
+              500,
+              1,
+              573,
+              983
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "依詠之極謹奉手啟為"
+          },
+          {
+            "coord": [
+              421,
+              1,
+              493,
+              708
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "謝不宣 襄頓首"
+          },
+          {
+            "coord": [
+              337,
+              1,
+              413,
+              483
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "杜君長官足下"
+          },
+          {
+            "coord": [
+              320,
+              670,
+              365,
+              902
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "七月十三日"
+          },
+          {
+            "coord": [
+              242,
+              210,
+              290,
+              995
+            ],
+            "col_id": 11,
+            "uncertain_note": "无",
+            "content": "貴眷各佳安 老兒已下無恙"
+          },
+          {
+            "coord": [
+              150,
+              228,
+              197,
+              995
+            ],
+            "col_id": 12,
+            "uncertain_note": "无",
+            "content": "永平已曾於遞中馳信報之"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及（无明确纪年信息无法转换为公元纪年）",
+            "receiver": "杜君长官（收信人，身份为长官）",
+            "sender": "蔡襄（北宋士大夫，自称襄）",
+            "original_date": "七月十三日，未提及具体年号纪年",
+            "send_place": "南京（寄信人当前所处地）",
+            "core_event": "蔡襄告知收信人，自己离开都城抵达南京后，长子蔡匀感染伤寒七日后病逝，突遭灾祸十分哀痛；收到对方来信和永平的信件后更感凄恻，自己很快就要渡江，来不及当面相见，特致信答谢，问候对方家中家属安好，已经通过驿站递信告知永平相关事宜。",
+            "dialect_notes": [],
+            "remittance_info": "未提及（无侨汇相关内容）",
+            "receive_place": "未提及"
+          },
+          "need_review": [
+            "列2的【匀】字需人工复核是否为自",
+            "列2的【疾】字需人工复核是否为秋"
+          ],
+          "classical_term_explanation": [
+            {
+              "term": "啓",
+              "explanation": "古代书信开头常用语，意为陈述、禀告"
+            },
+            {
+              "term": "顿首",
+              "explanation": "古代书信常用敬辞，为九拜之一，常用于书信首尾向对方表达敬意"
+            },
+            {
+              "term": "不宣",
+              "explanation": "古代书信结尾常用套语，意为不一一详尽述说"
+            },
+            {
+              "term": "足下",
+              "explanation": "古代对同辈友人的敬称"
+            },
+            {
+              "term": "遞",
+              "explanation": "古代传递官方/私人信件文书的驿站传递系统"
+            }
+          ],
+          "confidence": 0.94,
+          "confidence_calculation": "1. 文字识别准确率：共89字，2字存疑，得分(87/89)*0.4≈0.391；2. 元数据完整性：纪年、收件地、汇款信息未提及为内容本身无相关信息，扣0.05分，得分0.25；3. 坐标匹配准确率：12列坐标均匹配对应内容，得分0.2；4. 内容逻辑合理性：无逻辑矛盾，得分0.1；总分0.391+0.25+0.2+0.1=0.941，四舍五入保留2位小数为0.94"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4662,
+        "prompt_tokens": 2960,
+        "total_tokens": 7622
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [17:54:05] 开始处理第 6/27 张：image_61.jpg
+ [17:55:40] 第 6 张处理完成：image_61.jpg，耗时 01:35.389
+[17:55:40] 成功字段高亮 - image_61.jpg
+annotationId: 29
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/cfc1964c5a2e4043965c3a04015d6147.jpg
+parse_success: true
+confidence: 0.75
+column_count: 8
+total_tokens: 7467
+单张耗时: 01:35.389
+ [17:55:40] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "29",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/cfc1964c5a2e4043965c3a04015d6147.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              900,
+              0,
+              980,
+              997
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "急足回收書忻審歲晏冱寒"
+          },
+          {
+            "coord": [
+              770,
+              0,
+              870,
+              375
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "所履康勝"
+          },
+          {
+            "coord": [
+              650,
+              0,
+              740,
+              705
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "示及告命已頒良慰"
+          },
+          {
+            "coord": [
+              550,
+              0,
+              640,
+              725
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "介注多感之專人為"
+          },
+          {
+            "coord": [
+              460,
+              0,
+              550,
+              997
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "壽有懷併載前幅矣茲得以略"
+          },
+          {
+            "coord": [
+              360,
+              770,
+              440,
+              965
+            ],
+            "col_id": 6,
+            "uncertain_note": "该字笔画连贯辨识度低，形近“頓”，无法100%确认",
+            "content": "【頓】上復"
+          },
+          {
+            "coord": [
+              220,
+              0,
+              320,
+              780
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "壽甫觀使太尉賢弟"
+          },
+          {
+            "coord": [
+              80,
+              420,
+              160,
+              725
+            ],
+            "col_id": 8,
+            "uncertain_note": "该字字形生僻，无明确上下文佐证，无法100%确认",
+            "content": "【𥡴】已附納"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及",
+            "receiver": "寿甫（观使太尉，为写信人贤弟）",
+            "sender": "未提及",
+            "original_date": "未提及",
+            "send_place": "未提及",
+            "core_event": "告知对方已收到来信，知悉收信人近况康健、朝廷任命文书已颁，倍感欣慰，祝寿相关内容已在前封信中写明，本次去信不再赘述",
+            "dialect_notes": [],
+            "remittance_info": "未提及",
+            "receive_place": "未提及"
+          },
+          "need_review": [
+            "列6的【頓】字需人工复核",
+            "列8的【𥡴】字需人工复核"
+          ],
+          "classical_term_explanation": [
+            {
+              "term": "冱寒",
+              "explanation": "文言词汇，指天气极为严寒，冰冻凝结"
+            },
+            {
+              "term": "告命",
+              "explanation": "指古代朝廷颁布的诏令、任命类文书"
+            },
+            {
+              "term": "观使",
+              "explanation": "官职名，为观察使的省称，宋代为军政长官类官职"
+            },
+            {
+              "term": "太尉",
+              "explanation": "古代高级武官官职名，宋元时期多为荣誉虚衔"
+            }
+          ],
+          "confidence": 0.75,
+          "confidence_calculation": "1. 文字识别准确率：共识别55字，2字存疑，得分(53/55)*0.4≈0.385；2. 元数据完整性：仅收件人、核心事件2个字段有明确内容，其余7个字段无相关信息，得分(2/9)*0.3≈0.065；3. 坐标匹配准确率：8列坐标均匹配对应内容，得分0.2；4. 内容逻辑合理性：内容符合古代尺牍行文逻辑，无矛盾，得分0.1；总分0.385+0.065+0.2+0.1=0.75"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4503,
+        "prompt_tokens": 2964,
+        "total_tokens": 7467
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [17:55:40] 开始处理第 7/27 张：image_62.jpg
+ [17:57:22] 第 7 张处理完成：image_62.jpg，耗时 01:42.042
+[17:57:22] 成功字段高亮 - image_62.jpg
+annotationId: 30
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/b91db4bc160e4a0dac92ad0e2a834f1d.jpg
+parse_success: true
+confidence: -
+column_count: 8
+total_tokens: 8528
+单张耗时: 01:42.042
+ [17:57:22] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "30",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/b91db4bc160e4a0dac92ad0e2a834f1d.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              880,
+              0,
+              986,
+              976
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "高齊以夷虜遺種盜"
+          },
+          {
+            "coord": [
+              762,
+              0,
+              877,
+              977
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "據中原其所為皆虜"
+          },
+          {
+            "coord": [
+              635,
+              0,
+              753,
+              978
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "政也雖強飾以稽古禮"
+          },
+          {
+            "coord": [
+              512,
+              0,
+              628,
+              983
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "文之事如犬着方山冠尚"
+          },
+          {
+            "coord": [
+              393,
+              0,
+              507,
+              986
+            ],
+            "col_id": 5,
+            "uncertain_note": "该字手写连笔程度高，字形模糊，无法100%确定，疑似“延/迺/控”",
+            "content": "諸君子【延/迺/控】予從之"
+          },
+          {
+            "coord": [
+              270,
+              0,
+              389,
+              988
+            ],
+            "col_id": 6,
+            "uncertain_note": "该字手写连笔，字形辨识度低，无法100%确定，疑似“壇/壤/壞”",
+            "content": "塵【壇/壤/壞】膻腥污我筆硯"
+          },
+          {
+            "coord": [
+              131,
+              0,
+              265,
+              988
+            ],
+            "col_id": 7,
+            "uncertain_note": "“可”后一字连笔模糊，疑似“鄙/恥”；“熙”前一字字形残缺，疑似“紹”",
+            "content": "余但見其可【鄙/恥】耳【紹】熙"
+          },
+          {
+            "coord": [
+              8,
+              0,
+              120,
+              989
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "八年九月廿日陸游試"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5576,
+        "prompt_tokens": 2952,
+        "total_tokens": 8528
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [17:57:22] 开始处理第 8/27 张：image_63.jpg
+ [17:59:16] 第 8 张处理完成：image_63.jpg，耗时 01:54.063
+[17:59:16] 成功字段高亮 - image_63.jpg
+annotationId: 31
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/f74ea452da014add89cdb1948aa73de6.jpg
+parse_success: true
+confidence: 0.72
+column_count: 11
+total_tokens: 7990
+单张耗时: 01:54.063
+ [17:59:16] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "31",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/f74ea452da014add89cdb1948aa73de6.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              902,
+              20,
+              965,
+              446
+            ],
+            "col_id": 1,
+            "uncertain_note": "列首字为三点水旁，右部笔画模糊，形近“濬”“浦”，无法完全确定",
+            "content": "【濬/浦】白王丞拜問"
+          },
+          {
+            "coord": [
+              832,
+              25,
+              893,
+              242
+            ],
+            "col_id": 2,
+            "uncertain_note": "列首字笔画模糊，形近“契”“弈”，无法完全确定",
+            "content": "【契/弈】家"
+          },
+          {
+            "coord": [
+              758,
+              28,
+              821,
+              430
+            ],
+            "col_id": 3,
+            "uncertain_note": "列首字笔画模糊，形近“尊”“苫”，无法完全确定",
+            "content": "【尊/苫】眷兮惟"
+          },
+          {
+            "coord": [
+              691,
+              26,
+              752,
+              772
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "並擁書祺鏡中有"
+          },
+          {
+            "coord": [
+              612,
+              25,
+              675,
+              930
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "委敢請子聿亦粗能"
+          },
+          {
+            "coord": [
+              540,
+              28,
+              598,
+              635
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "苦但怕不得卒業"
+          },
+          {
+            "coord": [
+              462,
+              30,
+              523,
+              342
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "函丈若不"
+          },
+          {
+            "coord": [
+              388,
+              32,
+              446,
+              965
+            ],
+            "col_id": 8,
+            "uncertain_note": "列末字笔画残损，结合语境推测为“矣”，无法完全确定",
+            "content": "棄遺尚未晚也張七三云【矣】"
+          },
+          {
+            "coord": [
+              300,
+              35,
+              362,
+              958
+            ],
+            "col_id": 9,
+            "uncertain_note": "列首字笔画模糊，形近“責”“貢”，无法完全确定",
+            "content": "【責/貢】可念官期尚遠李何事每"
+          },
+          {
+            "coord": [
+              212,
+              32,
+              273,
+              975
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "為之心折顧無所置力耳"
+          },
+          {
+            "coord": [
+              118,
+              30,
+              195,
+              985
+            ],
+            "col_id": 11,
+            "uncertain_note": "“濬”字笔画模糊，结合首列署名推测为此字，无法完全确定",
+            "content": "三丈亦念之否【濬】頓首再拜"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及",
+            "receiver": "王丞，身份未提及",
+            "sender": "【濬/浦】，身份未提及",
+            "original_date": "未提及",
+            "send_place": "未提及",
+            "core_event": "致信向王丞问安，提及子聿学业情况，称担心其无法顺利完成学业，提及官期尚远，自认无力斡旋，恳请王丞予以照拂",
+            "dialect_notes": [],
+            "remittance_info": "未提及",
+            "receive_place": "未提及"
+          },
+          "need_review": [
+            "列1首字【濬/浦】",
+            "列2首字【契/弈】",
+            "列3首字【尊/苫】",
+            "列8末字【矣】",
+            "列9首字【責/貢】",
+            "列11【濬】字"
+          ],
+          "classical_term_explanation": [
+            {
+              "term": "函丈",
+              "explanation": "古代对前辈学者、尊者或师长的敬称，常用于书札称谓"
+            },
+            {
+              "term": "卒業",
+              "explanation": "即完成学业，“業”为“业”的异体字"
+            },
+            {
+              "term": "顿首",
+              "explanation": "古代跪拜礼之一，为古代书信常用的谦敬用语，常用于信末署名后表恭敬"
+            }
+          ],
+          "confidence": 0.72,
+          "confidence_calculation": "1. 文字识别准确率：共识别69字，6字存疑，得分(63/69)*0.4≈0.365；2. 元数据完整性：仅寄件人、收件人有部分信息，其余核心元数据均未提及，得分0.12；3. 坐标匹配准确率：11列坐标均符合对应文字区域，得分0.2；4. 内容逻辑合理性：语义通顺符合古代手札行文逻辑，得分0.035；总分0.365+0.12+0.2+0.035=0.72"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5016,
+        "prompt_tokens": 2974,
+        "total_tokens": 7990
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [17:59:16] 开始处理第 9/27 张：image_67.jpg
+ [18:00:41] 第 9 张处理完成：image_67.jpg，耗时 01:25.024
+[18:00:41] 成功字段高亮 - image_67.jpg
+annotationId: 32
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d382a350355d46e38d7e2da34810c221.jpg
+parse_success: true
+confidence: 0.97
+column_count: 10
+total_tokens: 7336
+单张耗时: 01:25.024
+ [18:00:41] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "32",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d382a350355d46e38d7e2da34810c221.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              908,
+              12,
+              976,
+              985
+            ],
+            "col_id": 1,
+            "uncertain_note": "第4字字形介于“土”“丈”二者之间，无上下文佐证，无法100%确定",
+            "content": "所示要【土/丈】母令得一小籠子封全"
+          },
+          {
+            "coord": [
+              832,
+              12,
+              902,
+              985
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "諮送不知可用否是新安麵"
+          },
+          {
+            "coord": [
+              757,
+              12,
+              826,
+              985
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "門所出者復未知何所用望"
+          },
+          {
+            "coord": [
+              682,
+              12,
+              752,
+              985
+            ],
+            "col_id": 4,
+            "uncertain_note": "第7字字形介于“齊”“春”二者之间，无上下文佐证，无法100%确定",
+            "content": "批示【齊/春】冬衣曆頭賢郎未拾到"
+          },
+          {
+            "coord": [
+              606,
+              12,
+              677,
+              985
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "其宅地基尹家者根本未分"
+          },
+          {
+            "coord": [
+              528,
+              12,
+              597,
+              985
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "明難商量耳見別訪尋"
+          },
+          {
+            "coord": [
+              428,
+              12,
+              517,
+              985
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "穩便者若有成見宅子又當"
+          },
+          {
+            "coord": [
+              348,
+              12,
+              422,
+              985
+            ],
+            "col_id": 8,
+            "uncertain_note": "第1字字形介于“細”“泗”二者之间，无上下文佐证，无法100%确定",
+            "content": "【細/泗】希示及 丞諮"
+          },
+          {
+            "coord": [
+              198,
+              12,
+              267,
+              985
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "孫號西行少車今有舊車如到"
+          },
+          {
+            "coord": [
+              128,
+              12,
+              197,
+              985
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "彼不用可貨却也"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及",
+            "receiver": "未提及",
+            "sender": "未提及",
+            "original_date": "未提及",
+            "send_place": "未提及",
+            "core_event": "提及寄送小笼子询问是否可用、贤郎未拾到春/齐冬衣历头、尹家所有的宅地基尚未拆分暂难协商正在另行访寻合适宅子、若到彼地旧车不用可变卖相关事宜",
+            "dialect_notes": [],
+            "remittance_info": "未提及",
+            "receive_place": "未提及"
+          },
+          "need_review": [
+            "列1的【土/丈】字需人工复核",
+            "列4的【齊/春】字需人工复核",
+            "列8的【細/泗】字需人工复核"
+          ],
+          "classical_term_explanation": [],
+          "confidence": 0.97,
+          "confidence_calculation": "1. 文字识别准确率：共识别114字，3字存疑，得分(111/114)*0.4≈0.389；2. 元数据完整性：原内容无寄收件人、地址、纪年、汇款相关信息，已准确标注为未提及，核心事件识别完整，得分0.3；3. 坐标匹配准确率：10列坐标均匹配准确，得分0.2；4. 内容逻辑合理性：识别内容无逻辑矛盾，得分0.1；总分0.389+0.3+0.2+0.1=0.989，因3处存疑字扣0.019，最终得0.97"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4374,
+        "prompt_tokens": 2962,
+        "total_tokens": 7336
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:00:41] 开始处理第 10/27 张：image_68.jpg
+ [18:02:03] 第 10 张处理完成：image_68.jpg，耗时 01:22.117
+[18:02:03] 成功字段高亮 - image_68.jpg
+annotationId: 33
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/ec939fa27c634421a847c2b12badbef9.jpg
+parse_success: true
+confidence: 0.99
+column_count: 17
+total_tokens: 6989
+单张耗时: 01:22.117
+ [18:02:03] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "33",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/ec939fa27c634421a847c2b12badbef9.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              933,
+              8,
+              991,
+              818
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "脩啟脩以衰病餘生蒙"
+          },
+          {
+            "coord": [
+              878,
+              8,
+              931,
+              978
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "上恩寬假哀其懇至俾遂"
+          },
+          {
+            "coord": [
+              808,
+              8,
+              877,
+              978
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "歸老白杜門里巷與世日踈"
+          },
+          {
+            "coord": [
+              748,
+              8,
+              807,
+              788
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "惟竊自念幸得早從"
+          },
+          {
+            "coord": [
+              683,
+              8,
+              747,
+              868
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "當世賢者之遊其於欽嚮"
+          },
+          {
+            "coord": [
+              618,
+              8,
+              682,
+              948
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "德義未始少忘於心耳近張"
+          },
+          {
+            "coord": [
+              558,
+              8,
+              617,
+              548
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "寺丞自洛來出"
+          },
+          {
+            "coord": [
+              498,
+              8,
+              557,
+              978
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "所惠書其為感慰何可勝言"
+          },
+          {
+            "coord": [
+              443,
+              8,
+              497,
+              418
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "因得仰詢"
+          },
+          {
+            "coord": [
+              390,
+              8,
+              442,
+              418
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "起居喜承"
+          },
+          {
+            "coord": [
+              338,
+              8,
+              389,
+              408
+            ],
+            "col_id": 11,
+            "uncertain_note": "无",
+            "content": "宴處優閑"
+          },
+          {
+            "coord": [
+              273,
+              8,
+              337,
+              908
+            ],
+            "col_id": 12,
+            "uncertain_note": "无",
+            "content": "履況清福春候暄和更莫"
+          },
+          {
+            "coord": [
+              203,
+              8,
+              272,
+              918
+            ],
+            "col_id": 13,
+            "uncertain_note": "无",
+            "content": "為時愛重以副搢紳所以有"
+          },
+          {
+            "coord": [
+              143,
+              8,
+              202,
+              958
+            ],
+            "col_id": 14,
+            "uncertain_note": "无",
+            "content": "望者非獨田畝虛盡之人區區"
+          },
+          {
+            "coord": [
+              80,
+              8,
+              142,
+              568
+            ],
+            "col_id": 15,
+            "uncertain_note": "无",
+            "content": "也不宣 脩再拜"
+          },
+          {
+            "coord": [
+              68,
+              698,
+              139,
+              958
+            ],
+            "col_id": 16,
+            "uncertain_note": "无",
+            "content": "三月初二日"
+          },
+          {
+            "coord": [
+              23,
+              8,
+              79,
+              748
+            ],
+            "col_id": 17,
+            "uncertain_note": "无",
+            "content": "端明侍讀留臺執事"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及，无对应年份信息无法转换",
+            "receiver": "端明侍读留台执事（宋代任职留台的官员，为收信人敬称，具体姓名未提及）",
+            "sender": "脩（即欧阳修，北宋文人，退隐官员）",
+            "original_date": "三月初二日",
+            "send_place": "未提及",
+            "core_event": "写信人自述衰病之年蒙恩退隐，杜门家居少与外界往来，始终感念早年交游贤者的德义，近日收到对方托张寺丞捎来的书信十分欣慰，问询得知对方起居安适、生活优闲，嘱咐对方春日气候暄和需保重身体，不负士绅群体的期望。",
+            "dialect_notes": [],
+            "remittance_info": "未提及",
+            "receive_place": "未提及，可知张寺丞从洛阳出发捎带书信"
+          },
+          "need_review": [],
+          "classical_term_explanation": [
+            {
+              "term": "端明侍讀",
+              "explanation": "宋代官职名，端明殿侍读的简称，职责为为帝王讲读经史"
+            },
+            {
+              "term": "留臺",
+              "explanation": "古代指迁都后留在旧都的御史台等官署机构"
+            },
+            {
+              "term": "執事",
+              "explanation": "古代书信对收信人的敬称，不敢直呼对方姓名，以其身边执事人员代指"
+            },
+            {
+              "term": "寺丞",
+              "explanation": "古代中央寺级官署的佐官，地位次于寺卿、少卿"
+            },
+            {
+              "term": "搢紳",
+              "explanation": "也作缙绅，古代官员将笏板插于绅带间，是士大夫官员的代称"
+            },
+            {
+              "term": "不宣",
+              "explanation": "古代书信常用结尾用语，意为不一一详尽述说"
+            }
+          ],
+          "confidence": 0.99,
+          "confidence_calculation": "1. 文字识别准确率：共138字，无存疑字，得分(138/138)*0.4=0.4；2. 元数据完整性：寄件地、具体纪年年份、汇款信息属于内容本身无相关信息，无扣分，得分0.3；3. 坐标匹配准确率：17列坐标均为准确范围，得分0.2；4. 内容逻辑合理性：符合宋代士大夫书信行文逻辑，无错误，得分0.1；总分0.4+0.3+0.2+0.1=1.0，因缺少纪年年份、明确寄收件地信息扣0.01，最终得0.99"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4042,
+        "prompt_tokens": 2947,
+        "total_tokens": 6989
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:02:03] 开始处理第 11/27 张：image_71.jpg
+ [18:04:06] 第 11 张处理完成：image_71.jpg，耗时 02:02.257
+[18:04:06] 成功字段高亮 - image_71.jpg
+annotationId: 34
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/603056cc7ff048aa9f49a53fba8ba885.jpg
+parse_success: true
+confidence: 0.97
+column_count: 10
+total_tokens: 8915
+单张耗时: 02:02.257
+ [18:04:06] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "34",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/603056cc7ff048aa9f49a53fba8ba885.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              854,
+              1,
+              946,
+              842
+            ],
+            "col_id": 1,
+            "uncertain_note": "“碌”后字为手写连笔，形近“冒”，存疑",
+            "content": "京再拜于昨日碌【冒】遠勞"
+          },
+          {
+            "coord": [
+              772,
+              3,
+              858,
+              981
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "同謁下情悚感不可勝言"
+          },
+          {
+            "coord": [
+              713,
+              5,
+              770,
+              418
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "大暑不審"
+          },
+          {
+            "coord": [
+              656,
+              3,
+              712,
+              231
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "還館"
+          },
+          {
+            "coord": [
+              571,
+              1,
+              652,
+              528
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "動靜何如想"
+          },
+          {
+            "coord": [
+              477,
+              1,
+              569,
+              989
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "不失調護也京緣熱極不"
+          },
+          {
+            "coord": [
+              402,
+              1,
+              476,
+              989
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "能自持疲頓殊甚未果前"
+          },
+          {
+            "coord": [
+              316,
+              1,
+              401,
+              760
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "造坐次悚怍謹奉代"
+          },
+          {
+            "coord": [
+              219,
+              1,
+              315,
+              989
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "面敘不宣京再拜"
+          },
+          {
+            "coord": [
+              127,
+              1,
+              217,
+              602
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "節夫親契坐前"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及",
+            "receiver": "节夫（收信人，为写信人亲契挚友）",
+            "sender": "蔡京（写信人，为收信人友人）",
+            "original_date": "未提及",
+            "send_place": "未提及",
+            "core_event": "写信人告知此前拜访收信人劳烦对方，内心十分感激，大暑时节问讯收信人起居安否，自身因暑热缠身疲惫不堪，未能再次登门拜访，修书代替面叙致意",
+            "dialect_notes": [],
+            "remittance_info": "未提及",
+            "receive_place": "未提及"
+          },
+          "need_review": [
+            "列1的【冒】字需人工复核"
+          ],
+          "classical_term_explanation": [
+            {
+              "term": "亲契",
+              "explanation": "古代对交情深厚的亲友挚友的尊称"
+            },
+            {
+              "term": "不宣",
+              "explanation": "古代书信结尾常用套语，意为内容繁多不一一详尽叙述"
+            }
+          ],
+          "confidence": 0.97,
+          "confidence_calculation": "1. 文字识别准确率：共识别62字，1字存疑，得分(61/62)*0.4≈0.394；2. 元数据完整性：寄收件地、日期未提及为内容本身无相关信息，无扣分，得分0.3；3. 坐标匹配准确率：10列坐标均对应准确，得分0.2；4. 内容逻辑合理性：内容逻辑通顺符合古代手札体例，得分0.1；总分0.394+0.3+0.2+0.1=0.994，因存在1个存疑字扣减0.024，最终得0.97"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5972,
+        "prompt_tokens": 2943,
+        "total_tokens": 8915
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:04:06] 开始处理第 12/27 张：image_74.jpg
+ [18:07:06] 第 12 张处理完成：image_74.jpg，耗时 03:00.684
+[18:07:06] 成功字段高亮 - image_74.jpg
+annotationId: 35
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d389cd195e124af29cc04320d20170c7.jpg
+parse_success: true
+confidence: -
+column_count: 10
+total_tokens: 11082
+单张耗时: 03:00.684
+ [18:07:06] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "35",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d389cd195e124af29cc04320d20170c7.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              900,
+              0,
+              999,
+              299
+            ],
+            "col_id": 1,
+            "uncertain_note": "中间字为草书，结构模糊，形近可选字为苍、江、零，无法100%确定",
+            "content": "寒【苍/江/零】渚"
+          },
+          {
+            "coord": [
+              800,
+              0,
+              899,
+              299
+            ],
+            "col_id": 2,
+            "uncertain_note": "最下字为草书，结构模糊，形近可选字为苍、苔，无法100%确定",
+            "content": "夜苍【苍/苔】"
+          },
+          {
+            "coord": [
+              700,
+              0,
+              799,
+              299
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "引領見"
+          },
+          {
+            "coord": [
+              600,
+              0,
+              699,
+              299
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "京室皇"
+          },
+          {
+            "coord": [
+              500,
+              0,
+              599,
+              299
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "難正相"
+          },
+          {
+            "coord": [
+              400,
+              0,
+              499,
+              299
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "望金波"
+          },
+          {
+            "coord": [
+              300,
+              0,
+              399,
+              299
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "鸞鵲驚"
+          },
+          {
+            "coord": [
+              200,
+              0,
+              299,
+              299
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "玉繩低"
+          },
+          {
+            "coord": [
+              100,
+              0,
+              199,
+              299
+            ],
+            "col_id": 9,
+            "uncertain_note": "最下字为草书，结构模糊，形近可选字为駝、馳、臺，无法100%确定",
+            "content": "建章【駝/馳/臺】"
+          },
+          {
+            "coord": [
+              0,
+              0,
+              99,
+              299
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "丰林門"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 8130,
+        "prompt_tokens": 2952,
+        "total_tokens": 11082
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:07:06] 开始处理第 13/27 张：image_79.jpg
+ [18:08:52] 第 13 张处理完成：image_79.jpg，耗时 01:46.134
+[18:08:52] 成功字段高亮 - image_79.jpg
+annotationId: 36
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/15b394f4ba22499ba3aadf0bed740f94.jpg
+parse_success: true
+confidence: 0.91
+column_count: 9
+total_tokens: 7447
+单张耗时: 01:46.134
+ [18:08:52] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "36",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/15b394f4ba22499ba3aadf0bed740f94.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              902,
+              8,
+              983,
+              372
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "道昇跪覆"
+          },
+          {
+            "coord": [
+              784,
+              7,
+              881,
+              958
+            ],
+            "col_id": 2,
+            "uncertain_note": "【嬸】字手写形近“孃”，暂识别为嬸，需复核",
+            "content": "【嬸】之夫人粧前道昇久不奉"
+          },
+          {
+            "coord": [
+              668,
+              6,
+              767,
+              373
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "字不勝馳"
+          },
+          {
+            "coord": [
+              558,
+              7,
+              663,
+              718
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "想秋深漸寒計惟"
+          },
+          {
+            "coord": [
+              438,
+              6,
+              553,
+              478
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "淑履清安近"
+          },
+          {
+            "coord": [
+              338,
+              7,
+              433,
+              528
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "尊堂太夫人與"
+          },
+          {
+            "coord": [
+              223,
+              6,
+              332,
+              957
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "令姪吉師父皆在此一再相"
+          },
+          {
+            "coord": [
+              112,
+              7,
+              217,
+              218
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "會想"
+          },
+          {
+            "coord": [
+              2,
+              7,
+              107,
+              959
+            ],
+            "col_id": 9,
+            "uncertain_note": "【爐】字义不通，疑为“嬸”的手写讹误，存疑",
+            "content": "【爐】上亦知之兹有參果四"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及",
+            "receiver": "【嬸】之夫人，为女性长辈亲属，其余身份未提及",
+            "sender": "道昇，其余身份未提及",
+            "original_date": "未提及",
+            "send_place": "未提及",
+            "core_event": "致信问候收信人秋安，告知尊堂太夫人与令姪吉师父目前在写信人所在地，已多次相会，随信附参果四（计量单位未提及）",
+            "dialect_notes": [],
+            "remittance_info": "未提及",
+            "receive_place": "未提及"
+          },
+          "need_review": [
+            "列2的【嬸】字、列9的【爐】字需人工复核"
+          ],
+          "classical_term_explanation": [
+            {
+              "term": "粧前",
+              "explanation": "古代书信对女性收信人的敬语格式，附于收信人称谓后表尊敬"
+            },
+            {
+              "term": "尊堂",
+              "explanation": "古代对他人母亲的敬称"
+            },
+            {
+              "term": "淑履清安",
+              "explanation": "古代书信常用问候语，意为祝愿对方日常起居安好"
+            }
+          ],
+          "confidence": 0.91,
+          "confidence_calculation": "1. 文字识别准确率：共识别47字，2字存疑，得分(45/47)*0.4≈0.383；2. 元数据完整性：寄件地、收件地、纪年、汇款信息均未在原迹提及，无识别错误，得分0.23；3. 坐标匹配准确率：9列坐标均与原迹列范围匹配，得分0.2；4. 内容逻辑合理性：语义通顺符合古代书信范式，得分0.1；总分0.383+0.23+0.2+0.1=0.913，四舍五入保留两位小数为0.91"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4479,
+        "prompt_tokens": 2968,
+        "total_tokens": 7447
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:08:52] 开始处理第 14/27 张：image_81.jpg
+ [18:10:42] 第 14 张处理完成：image_81.jpg，耗时 01:49.389
+[18:10:42] 成功字段高亮 - image_81.jpg
+annotationId: 37
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/99a45b387acf44e190e6b9adf73261be.jpg
+parse_success: true
+confidence: -
+column_count: 7
+total_tokens: 8377
+单张耗时: 01:49.389
+ [18:10:42] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "37",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/99a45b387acf44e190e6b9adf73261be.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              800,
+              0,
+              950,
+              990
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "散策下亭阿水清鱼可"
+          },
+          {
+            "coord": [
+              690,
+              0,
+              790,
+              990
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "数却上采菱舟乘风过"
+          },
+          {
+            "coord": [
+              570,
+              0,
+              680,
+              990
+            ],
+            "col_id": 3,
+            "uncertain_note": "【菱】为草书写法，形近“芰”，结合张栻传世原诗推断为菱",
+            "content": "南浦采【菱】舟"
+          },
+          {
+            "coord": [
+              430,
+              0,
+              560,
+              990
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "湖水接洞庭秋山见遥"
+          },
+          {
+            "coord": [
+              290,
+              0,
+              420,
+              990
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "碧南阜时一登搔首"
+          },
+          {
+            "coord": [
+              140,
+              0,
+              280,
+              990
+            ],
+            "col_id": 6,
+            "uncertain_note": "【斁】为草书写法，属生僻字，结合张栻传世原诗推断为斁",
+            "content": "意无【斁】南阜"
+          },
+          {
+            "coord": [
+              0,
+              0,
+              130,
+              990
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "右张宣公城南杂咏"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5415,
+        "prompt_tokens": 2962,
+        "total_tokens": 8377
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:10:42] 开始处理第 15/27 张：image_85.jpg
+ [18:11:31] 第 15 张处理失败：image_85.jpg，耗时 00:49.304，原因：AI标注失败
+ [18:11:31] 开始处理第 16/27 张：image_87.jpg
+ [18:13:08] 第 16 张处理完成：image_87.jpg，耗时 01:37.017
+[18:13:08] 成功字段高亮 - image_87.jpg
+annotationId: 38
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/32cd432948414ee9997f133fd9f72ef5.jpg
+parse_success: true
+confidence: 0.98
+column_count: 7
+total_tokens: 6991
+单张耗时: 01:37.017
+ [18:13:08] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "38",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/32cd432948414ee9997f133fd9f72ef5.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              820,
+              20,
+              930,
+              950
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "王晉卿畫煙江疊嶂圗"
+          },
+          {
+            "coord": [
+              695,
+              20,
+              815,
+              950
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "余見數本其布置廣狹"
+          },
+          {
+            "coord": [
+              575,
+              20,
+              690,
+              950
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "皆不同內一本有東坡親筆"
+          },
+          {
+            "coord": [
+              455,
+              20,
+              570,
+              950
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "江賦詩者尤為精絕此卷"
+          },
+          {
+            "coord": [
+              335,
+              20,
+              450,
+              950
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "籤題乃徽廟所書蓋嘗"
+          },
+          {
+            "coord": [
+              185,
+              20,
+              330,
+              965
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "入宋內府矣可寶也翰林學"
+          },
+          {
+            "coord": [
+              50,
+              20,
+              175,
+              965
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "士宋濂識"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及",
+            "receiver": "未提及",
+            "sender": "未提及",
+            "original_date": "未提及",
+            "send_place": "未提及",
+            "core_event": "此为宋濂为北宋画家王诜（晋卿）所绘《烟江叠嶂图》所作的书画题跋，提及该画作存多个版本，其中带有苏轼亲笔为该画所作题诗的版本最为精妙，本卷有宋徽宗亲笔签题，曾被宋代内府收藏，是十分珍贵的藏品。",
+            "dialect_notes": [],
+            "remittance_info": "未提及",
+            "receive_place": "未提及"
+          },
+          "need_review": [],
+          "classical_term_explanation": [
+            {
+              "term": "王晉卿",
+              "explanation": "即北宋画家王诜，字晋卿，出身贵族，擅长山水画，《烟江叠嶂图》是其传世代表作品"
+            },
+            {
+              "term": "東坡",
+              "explanation": "即北宋文学家、书画家苏轼，号东坡居士，曾为《烟江叠嶂图》创作题画诗"
+            },
+            {
+              "term": "徽廟",
+              "explanation": "指宋徽宗赵佶，古时常用庙号指代已故帝王，宋徽宗庙号徽宗，故称其为徽庙"
+            },
+            {
+              "term": "宋濂",
+              "explanation": "元末明初著名文学家，官至翰林学士，是明初文坛核心人物，此为其题跋落款"
+            }
+          ],
+          "confidence": 0.98,
+          "confidence_calculation": "1. 文字识别准确率：共识别57字，无存疑字，得分(57/57)*0.4=0.4；2. 元数据完整性：侨批专属元数据（寄收件人、寄收件地、纪年、汇款信息等）内容本身无相关表述，不属于识别错误，得分0.3；3. 坐标匹配准确率：7列坐标标注均准确对应每列文字范围，得分0.2；4. 内容逻辑合理性：识别内容符合宋濂书画题跋的史实逻辑，无错误，得分0.1；总分0.4+0.3+0.2+0.1=1.0，因该文本不属于侨批范畴，扣0.02，最终得0.98"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4027,
+        "prompt_tokens": 2964,
+        "total_tokens": 6991
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:13:08] 开始处理第 17/27 张：image_88.jpg
+ [18:14:17] 第 17 张处理完成：image_88.jpg，耗时 01:09.226
+[18:14:17] 成功字段高亮 - image_88.jpg
+annotationId: 39
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/55a7915315a043b9b8bff59ec9647477.jpg
+parse_success: true
+confidence: -
+column_count: 10
+total_tokens: 5857
+单张耗时: 01:09.226
+ [18:14:17] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "39",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/55a7915315a043b9b8bff59ec9647477.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              910,
+              30,
+              980,
+              780
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "鴛鴦一對共當中"
+          },
+          {
+            "coord": [
+              800,
+              30,
+              870,
+              960
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "春夢三更鴈影邊香"
+          },
+          {
+            "coord": [
+              700,
+              30,
+              760,
+              940
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "泥一尺馬蹄前難將厌"
+          },
+          {
+            "coord": [
+              600,
+              30,
+              665,
+              960
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "酒灌新愛只有香囊"
+          },
+          {
+            "coord": [
+              510,
+              30,
+              580,
+              960
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "報可憐深院料應花"
+          },
+          {
+            "coord": [
+              410,
+              30,
+              480,
+              960
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "似霰長門愁鎖日如年"
+          },
+          {
+            "coord": [
+              300,
+              30,
+              370,
+              970
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "憑誰對郤閒桃李説"
+          },
+          {
+            "coord": [
+              200,
+              30,
+              270,
+              730
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "與悲歡石上緣"
+          },
+          {
+            "coord": [
+              110,
+              30,
+              180,
+              970
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "花朶憑風著意吹春光"
+          },
+          {
+            "coord": [
+              10,
+              30,
+              85,
+              970
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "棄我竟如遺五更飛夢"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 2916,
+        "prompt_tokens": 2941,
+        "total_tokens": 5857
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:14:17] 开始处理第 18/27 张：image_93.jpg
+ [18:15:46] 第 18 张处理完成：image_93.jpg，耗时 01:29.119
+[18:15:46] 成功字段高亮 - image_93.jpg
+annotationId: 40
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/351f5bdf0ca74f83bd9a3423a4df411a.jpg
+parse_success: true
+confidence: -
+column_count: 8
+total_tokens: 7065
+单张耗时: 01:29.119
+ [18:15:46] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "40",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/351f5bdf0ca74f83bd9a3423a4df411a.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              910,
+              135,
+              980,
+              350
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "孝經定本"
+          },
+          {
+            "coord": [
+              775,
+              575,
+              835,
+              835
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "黄道周謹書"
+          },
+          {
+            "coord": [
+              635,
+              125,
+              705,
+              935
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "仲尼居曾子侍子曰先王有至德要道"
+          },
+          {
+            "coord": [
+              505,
+              130,
+              575,
+              930
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "以順天下民用和睦上下無怨汝知之虖"
+          },
+          {
+            "coord": [
+              380,
+              125,
+              455,
+              930
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "曾子辟席曰參不敢何足以知之子曰夫"
+          },
+          {
+            "coord": [
+              290,
+              130,
+              360,
+              925
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "孝德之本也敎之所繇生也復坐吾語汝"
+          },
+          {
+            "coord": [
+              160,
+              125,
+              235,
+              925
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "身體髮膚受之父母不敢毀傷孝之始"
+          },
+          {
+            "coord": [
+              20,
+              125,
+              105,
+              935
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "也立身行道揚名於後世以顯父母孝之"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4106,
+        "prompt_tokens": 2959,
+        "total_tokens": 7065
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:15:46] 开始处理第 19/27 张：image_100.jpg
+ [18:17:42] 第 19 张处理完成：image_100.jpg，耗时 01:55.680
+[18:17:42] 成功字段高亮 - image_100.jpg
+annotationId: 41
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/21639be4285b42dd8c0e5aee6890f2ff.jpg
+parse_success: true
+confidence: 0.81
+column_count: 10
+total_tokens: 8108
+单张耗时: 01:55.680
+ [18:17:42] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "41",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/21639be4285b42dd8c0e5aee6890f2ff.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              905,
+              12,
+              986,
+              977
+            ],
+            "col_id": 1,
+            "uncertain_note": "第二字行草写法与“甚”“其”均形近，无法完全确认；“承”后一字过于潦草，无法识别具体字形",
+            "content": "君【甚/其】苦奔馳 承【】並人奔赴"
+          },
+          {
+            "coord": [
+              803,
+              12,
+              896,
+              977
+            ],
+            "col_id": 2,
+            "uncertain_note": "首字为行草写法，与“雖”形近，存疑",
+            "content": "【雖】草草弄墨 不靈即飲 今亦無"
+          },
+          {
+            "coord": [
+              702,
+              12,
+              801,
+              977
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "味 故安敢赴人家之邀 在都者"
+          },
+          {
+            "coord": [
+              611,
+              12,
+              701,
+              977
+            ],
+            "col_id": 4,
+            "uncertain_note": "“與”后一字行草写法与“渭”形近，存疑",
+            "content": "非象老與【渭】即勝 石可當之 蒙"
+          },
+          {
+            "coord": [
+              517,
+              12,
+              610,
+              977
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "老經年之苦 幫題滿墨 淺不暢"
+          },
+          {
+            "coord": [
+              435,
+              12,
+              516,
+              977
+            ],
+            "col_id": 6,
+            "uncertain_note": "“與”后一字行草写法与“白”“可”均形近，无法完全确认",
+            "content": "懷 與【白/可】勉從"
+          },
+          {
+            "coord": [
+              355,
+              12,
+              434,
+              977
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "老弟之約 亦少盡主人意也 況彦"
+          },
+          {
+            "coord": [
+              271,
+              12,
+              354,
+              977
+            ],
+            "col_id": 8,
+            "uncertain_note": "“一冊”后第一字与“沙”“何”均形近，存疑；“栗可”后一字与“守”“孚”均形近，存疑",
+            "content": "武兄數屬 一冊 【沙/何】何發 栗可【守/孚】"
+          },
+          {
+            "coord": [
+              183,
+              12,
+              270,
+              977
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "雨中無可具 得勉從 命也 西去頭涼 後之嵗當安之"
+          },
+          {
+            "coord": [
+              8,
+              12,
+              182,
+              977
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "稽首 道周"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及",
+            "receiver": "未提及",
+            "sender": "道周（落款署名，未提及身份）",
+            "original_date": "未提及",
+            "send_place": "未提及",
+            "core_event": "为道周所写文士手札，提及收信人奔波劳碌，自言状态不佳不敢赴他人邀约，应允为友人题册以尽主客之谊，雨中仓促完成嘱托，祈愿对方西去后安顺",
+            "dialect_notes": [],
+            "remittance_info": "未提及",
+            "receive_place": "未提及"
+          },
+          "need_review": [
+            "列1的【甚/其】及承后未识别字需复核",
+            "列2的【雖】字需复核",
+            "列4的【渭】字需复核",
+            "列6的【白/可】字需复核",
+            "列8的【沙/何】【守/孚】字需复核"
+          ],
+          "classical_term_explanation": [
+            {
+              "term": "稽首",
+              "explanation": "古代九拜中最隆重的跪拜礼，传统书信中常用作谦敬辞，表达对收信人的敬重"
+            },
+            {
+              "term": "幫題",
+              "explanation": "即替他人在书画、册页上题字、题跋"
+            }
+          ],
+          "confidence": 0.81,
+          "confidence_calculation": "1. 文字识别准确率：共约75字，6字存疑，得分(69/75)*0.4=0.368；2. 元数据完整性：仅寄件人落款可识别为道周，其余元数据项原文无提及，无识别错误，得分0.3；3. 坐标匹配准确率：10列坐标均准确对应列内容，得分0.2；4. 内容逻辑合理性：识别内容逻辑通顺，符合古代文士手札行文习惯，得分0.1；总分0.368+0.3+0.2+0.1=0.968，因有6个存疑字扣0.158，最终得0.81"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5178,
+        "prompt_tokens": 2930,
+        "total_tokens": 8108
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:17:42] 开始处理第 20/27 张：image_103.jpg
+ [18:20:10] 第 20 张处理完成：image_103.jpg，耗时 02:27.765
+[18:20:10] 成功字段高亮 - image_103.jpg
+annotationId: 42
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/94a91af4d7664d939aa782e1a6a96598.jpg
+parse_success: true
+confidence: -
+column_count: 14
+total_tokens: 9609
+单张耗时: 02:27.765
+ [18:20:10] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "42",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/94a91af4d7664d939aa782e1a6a96598.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              930,
+              0,
+              992,
+              997
+            ],
+            "col_id": 1,
+            "uncertain_note": "列底部文字被截断，【筵】为结合古诗语义推断，原迹无法完全确认",
+            "content": "去歲端陽奉 下【筵】"
+          },
+          {
+            "coord": [
+              860,
+              0,
+              929,
+              997
+            ],
+            "col_id": 2,
+            "uncertain_note": "“筵”字草书形态疑似“道”，结合古诗文内容推断为筵",
+            "content": "御筵金盤角黍"
+          },
+          {
+            "coord": [
+              790,
+              0,
+              858,
+              997
+            ],
+            "col_id": 3,
+            "uncertain_note": "“黃”字形态疑似“遙”，结合古诗文内容推断为黃",
+            "content": "天黃封特"
+          },
+          {
+            "coord": [
+              740,
+              0,
+              788,
+              997
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "賜開家宴回首薰"
+          },
+          {
+            "coord": [
+              678,
+              0,
+              739,
+              997
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "風又一年"
+          },
+          {
+            "coord": [
+              619,
+              0,
+              675,
+              997
+            ],
+            "col_id": 6,
+            "uncertain_note": "“舊”字草书形态存疑，结合语义推断",
+            "content": "右廣西感舊"
+          },
+          {
+            "coord": [
+              546,
+              0,
+              616,
+              997
+            ],
+            "col_id": 7,
+            "uncertain_note": "“窠”字草书形态存疑",
+            "content": "荔枝子結蟲窠"
+          },
+          {
+            "coord": [
+              481,
+              0,
+              543,
+              997
+            ],
+            "col_id": 8,
+            "uncertain_note": "“黏”字形态疑似“拈”，存疑",
+            "content": "綠倒黏花開半"
+          },
+          {
+            "coord": [
+              404,
+              0,
+              478,
+              997
+            ],
+            "col_id": 9,
+            "uncertain_note": "“堅”字形态存疑",
+            "content": "女臉紅堅見石城三"
+          },
+          {
+            "coord": [
+              334,
+              0,
+              401,
+              997
+            ],
+            "col_id": 10,
+            "uncertain_note": "“合”字形态存疑，结合“三合驿”典故推断",
+            "content": "合驛便分岐路"
+          },
+          {
+            "coord": [
+              241,
+              0,
+              331,
+              997
+            ],
+            "col_id": 11,
+            "uncertain_note": "【有】字原迹模糊，为语义推断内容",
+            "content": "廣西東【有】過三居驛"
+          },
+          {
+            "coord": [
+              159,
+              0,
+              238,
+              997
+            ],
+            "col_id": 12,
+            "uncertain_note": "“庸”字形态存疑",
+            "content": "上將勳庸動百蠻"
+          },
+          {
+            "coord": [
+              79,
+              0,
+              156,
+              997
+            ],
+            "col_id": 13,
+            "uncertain_note": "列底部被截断，【如】为语义推断内容",
+            "content": "偏裨威略重【如】"
+          },
+          {
+            "coord": [
+              0,
+              0,
+              76,
+              997
+            ],
+            "col_id": 14,
+            "uncertain_note": "列底部被截断，内容不完整",
+            "content": "如山布楊"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 6662,
+        "prompt_tokens": 2947,
+        "total_tokens": 9609
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:20:10] 开始处理第 21/27 张：image_110.jpg
+ [18:21:14] 第 21 张处理完成：image_110.jpg，耗时 01:04.446
+[18:21:14] 成功字段高亮 - image_110.jpg
+annotationId: 43
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/aeb162ff0e624577acd8f2465df675be.jpg
+parse_success: true
+confidence: -
+column_count: 5
+total_tokens: 5892
+单张耗时: 01:04.446
+ [18:21:14] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "43",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/aeb162ff0e624577acd8f2465df675be.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              762,
+              267,
+              951,
+              781
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "富"
+          },
+          {
+            "coord": [
+              516,
+              252,
+              710,
+              787
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "貴"
+          },
+          {
+            "coord": [
+              276,
+              262,
+              475,
+              776
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "長"
+          },
+          {
+            "coord": [
+              32,
+              251,
+              260,
+              775
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "春"
+          },
+          {
+            "coord": [
+              436,
+              22,
+              556,
+              262
+            ],
+            "col_id": 5,
+            "uncertain_note": "印章为篆书字体，部分字形辨识度不足，内容为推断结果",
+            "content": "【慈禧皇太后御笔之宝】"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 2920,
+        "prompt_tokens": 2972,
+        "total_tokens": 5892
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:21:14] 开始处理第 22/27 张：image_113.jpg
+ [18:22:34] 第 22 张处理完成：image_113.jpg，耗时 01:19.927
+[18:22:34] 成功字段高亮 - image_113.jpg
+annotationId: 44
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/4c23e96f443a444cb25484f8a71dc734.jpg
+parse_success: true
+confidence: -
+column_count: 3
+total_tokens: 6659
+单张耗时: 01:19.927
+ [18:22:34] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "44",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/4c23e96f443a444cb25484f8a71dc734.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              520,
+              1,
+              990,
+              994
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "汲古無悶"
+          },
+          {
+            "coord": [
+              8,
+              1,
+              466,
+              994
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "處和乃清"
+          },
+          {
+            "coord": [
+              5,
+              270,
+              85,
+              987
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "甲子新秋稽留山民金農作書"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 3712,
+        "prompt_tokens": 2947,
+        "total_tokens": 6659
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:22:34] 开始处理第 23/27 张：image_114.jpg
+ [18:23:01] 第 23 张处理失败：image_114.jpg，耗时 00:26.581，原因：AI标注失败
+ [18:23:01] 开始处理第 24/27 张：image_117.jpg
+ [18:24:10] 第 24 张处理完成：image_117.jpg，耗时 01:09.071
+[18:24:10] 成功字段高亮 - image_117.jpg
+annotationId: 45
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d48b0e5689b243acbae70893e8c26456.jpg
+parse_success: true
+confidence: -
+column_count: 6
+total_tokens: 6102
+单张耗时: 01:09.071
+ [18:24:10] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "45",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d48b0e5689b243acbae70893e8c26456.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              902,
+              126,
+              982,
+              943
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "漢謌風臺刻石相傳是曹喜書揚州文選樓則隋曹憲"
+          },
+          {
+            "coord": [
+              542,
+              125,
+              628,
+              368
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "簒文選音義地"
+          },
+          {
+            "coord": [
+              648,
+              33,
+              888,
+              958
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "漢謌風臺存大篆"
+          },
+          {
+            "coord": [
+              378,
+              126,
+              458,
+              953
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "葛民先生善篆書通聲音訓詁之學能守家法漢後隋前"
+          },
+          {
+            "coord": [
+              108,
+              33,
+              368,
+              968
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "隋文選樓傳古音"
+          },
+          {
+            "coord": [
+              22,
+              133,
+              102,
+              903
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "有此人庶足當也書十四字呈教并以小印媵之趙之謙記同治己巳七月"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 3130,
+        "prompt_tokens": 2972,
+        "total_tokens": 6102
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:24:10] 开始处理第 25/27 张：image_118.jpg
+ [18:25:10] 第 25 张处理完成：image_118.jpg，耗时 00:59.891
+[18:25:10] 成功字段高亮 - image_118.jpg
+annotationId: 46
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/8926985bad4f44f8b1ec57b0ef552522.jpg
+parse_success: true
+confidence: -
+column_count: 3
+total_tokens: 5832
+单张耗时: 00:59.891
+ [18:25:10] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "46",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/8926985bad4f44f8b1ec57b0ef552522.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              556,
+              70,
+              880,
+              915
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "千里暮山重疊翠"
+          },
+          {
+            "coord": [
+              100,
+              98,
+              360,
+              895
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "一溪寒水淺深高"
+          },
+          {
+            "coord": [
+              5,
+              375,
+              85,
+              665
+            ],
+            "col_id": 3,
+            "uncertain_note": "落款首字笔画模糊，结合书写者张裕钊的字号“廉卿”推断为“廉”",
+            "content": "【廉】卿張裕釗"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 2864,
+        "prompt_tokens": 2968,
+        "total_tokens": 5832
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:25:10] 开始处理第 26/27 张：image_119.jpg
+ [18:26:10] 第 26 张处理完成：image_119.jpg，耗时 00:59.696
+[18:26:10] 成功字段高亮 - image_119.jpg
+annotationId: 47
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/e2d35d4374a94defbc0f8122ecf2669a.jpg
+parse_success: true
+confidence: 1
+column_count: 3
+total_tokens: 6090
+单张耗时: 00:59.696
+ [18:26:10] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "47",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/e2d35d4374a94defbc0f8122ecf2669a.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              605,
+              3,
+              896,
+              996
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "山家自有紅蓮稻"
+          },
+          {
+            "coord": [
+              96,
+              3,
+              382,
+              996
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "舟子還多白小魚"
+          },
+          {
+            "coord": [
+              6,
+              396,
+              76,
+              780
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "宣統紀元正月楊守敬"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "1909年农历正月（宣统纪年，宣统元年为1909年）",
+            "receiver": "未提及",
+            "sender": "未提及",
+            "original_date": "宣统纪元正月",
+            "send_place": "未提及",
+            "core_event": "未提及",
+            "dialect_notes": [],
+            "remittance_info": "未提及",
+            "receive_place": "未提及"
+          },
+          "need_review": [],
+          "classical_term_explanation": [
+            {
+              "term": "宣统纪元",
+              "explanation": "宣统是清朝末代皇帝溥仪的年号，宣统纪元即宣统元年，对应公元1909年"
+            },
+            {
+              "term": "山家",
+              "explanation": "文言指山野人家、隐士居处"
+            },
+            {
+              "term": "舟子",
+              "explanation": "文言对船夫、驾船人的称呼"
+            }
+          ],
+          "confidence": 1,
+          "confidence_calculation": "1. 文字识别准确率：共22字（对联14字+落款8字），全部识别准确，得分(22/22)*0.4=0.4；2. 元数据完整性：仅纪年信息存在，其余信息原迹未提及，无扣分，得分0.3；3. 坐标匹配准确率：3列坐标均准确匹配对应内容区域，得分0.2；4. 内容逻辑合理性：对联内容与落款均符合对应时期书法创作特征，无逻辑错误，得分0.1；总分0.4+0.3+0.2+0.1=1.00"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 3143,
+        "prompt_tokens": 2947,
+        "total_tokens": 6090
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:26:10] 开始处理第 27/27 张：image_120.jpg
+ [18:27:07] 第 27 张处理完成：image_120.jpg，耗时 00:57.964
+[18:27:07] 成功字段高亮 - image_120.jpg
+annotationId: 48
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d3d81282ecfd4e618ee57230045238d5.jpg
+parse_success: true
+confidence: -
+column_count: 3
+total_tokens: 5297
+单张耗时: 00:57.964
+ [18:27:07] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "48",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d3d81282ecfd4e618ee57230045238d5.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              520,
+              5,
+              982,
+              990
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "霜蹄千里駿"
+          },
+          {
+            "coord": [
+              82,
+              5,
+              475,
+              990
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "風翮九霄鵬"
+          },
+          {
+            "coord": [
+              12,
+              492,
+              85,
+              682
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "康有為"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 2351,
+        "prompt_tokens": 2946,
+        "total_tokens": 5297
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [18:27:07] 全部处理结束：成功 25 张，失败 2 张，总耗时 41:11.596
+Copyright © 2024
+系统配置
+整体风格
+
+主题色
+
+导航模式
+
+页宽
+
+
+页签风格
+
+界面显示
+
+灰色模式
+
+色弱模式
+
+隐藏标签页
+
+隐藏页脚
+
+Logo
+
+页签持久化
+
+❗️731⚠️14
+项目标注列表
+共 49 张图片，已标注 0 张
+
+未标注
+ID: 71
+2026-04-02 19:53:06
+
+未标注
+ID: 70
+2026-04-02 19:51:14
+
+未标注
+ID: 69
+2026-04-02 19:48:48
+
+未标注
+ID: 68
+2026-04-02 19:46:52
+
+未标注
+ID: 67
+2026-04-02 19:45:12
+
+未标注
+ID: 66
+2026-04-02 19:43:09
+
+未标注
+ID: 65
+2026-04-02 19:42:05
+
+未标注
+ID: 64
+2026-04-02 19:40:19
+
+未标注
+ID: 63
+2026-04-02 19:38:38
+
+未标注
+ID: 62
+2026-04-02 19:36:21
+
+未标注
+ID: 61
+2026-04-02 19:34:42
+
+未标注
+ID: 60
+2026-04-02 19:32:34
+
+未标注
+ID: 59
+2026-04-02 19:31:04
+
+未标注
+ID: 58
+2026-04-02 19:29:40
+
+未标注
+ID: 57
+2026-04-02 19:27:43
+
+未标注
+ID: 56
+2026-04-02 19:26:24
+
+未标注
+ID: 55
+2026-04-02 19:25:02
+
+未标注
+ID: 54
+2026-04-02 19:23:34
+
+未标注
+ID: 53
+2026-04-02 19:22:29
+
+未标注
+ID: 52
+2026-04-02 19:20:38
+
+未标注
+ID: 51
+2026-04-02 19:19:17
+
+未标注
+ID: 50
+2026-04-02 19:17:46
+
+未标注
+ID: 49
+2026-04-02 19:15:17
+
+未标注
+ID: 48
+2026-04-02 18:27:07
+
+未标注
+ID: 47
+2026-04-02 18:26:09
+
+未标注
+ID: 46
+2026-04-02 18:25:09
+
+未标注
+ID: 45
+2026-04-02 18:24:10
+
+未标注
+ID: 44
+2026-04-02 18:22:34
+
+未标注
+ID: 43
+2026-04-02 18:21:14
+
+未标注
+ID: 42
+2026-04-02 18:20:10
+
+未标注
+ID: 41
+2026-04-02 18:17:42
+
+未标注
+ID: 40
+2026-04-02 18:15:46
+
+未标注
+ID: 39
+2026-04-02 18:14:17
+
+未标注
+ID: 38
+2026-04-02 18:13:08
+
+未标注
+ID: 37
+2026-04-02 18:10:41
+
+未标注
+ID: 36
+2026-04-02 18:08:52
+
+未标注
+ID: 35
+2026-04-02 18:07:06
+
+未标注
+ID: 34
+2026-04-02 18:04:05
+
+未标注
+ID: 33
+2026-04-02 18:02:03
+
+未标注
+ID: 32
+2026-04-02 18:00:41
+
+未标注
+ID: 31
+2026-04-02 17:59:16
+
+未标注
+ID: 30
+2026-04-02 17:57:22
+
+未标注
+ID: 29
+2026-04-02 17:55:40
+
+未标注
+ID: 28
+2026-04-02 17:54:04
+
+未标注
+ID: 27
+2026-04-02 17:52:19
+
+未标注
+ID: 26
+2026-04-02 17:50:29
+
+未标注
+ID: 25
+2026-04-02 17:49:30
+
+未标注
+ID: 24
+2026-04-02 17:47:09
+
+未标注
+ID: 22
+2026-04-02 17:36:50
+进度: 24/24
+完成率: 100%
+成功: 23
+失败: 1
+累计耗时: 00:00.000
+ [19:13:33] 开始上传，项目ID=8，共 24 张图片（后端串行，前端将逐张等待响应）
+ [19:13:33] 开始处理第 1/24 张：image_15.jpg
+ [19:15:18] 第 1 张处理完成：image_15.jpg，耗时 01:44.761
+[19:15:18] 成功字段高亮 - image_15.jpg
+annotationId: 49
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/4e210ebe91004a45b489ec084027937d.jpg
+parse_success: true
+confidence: -
+column_count: 12
+total_tokens: 7624
+单张耗时: 01:44.761
+ [19:15:18] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "49",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/4e210ebe91004a45b489ec084027937d.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              910,
+              0,
+              985,
+              955
+            ],
+            "col_id": 1,
+            "uncertain_note": "【郪】【昃】为章草写法，无对应侨批语境支撑，无法100%确认",
+            "content": "七月具書承白歲【郪】布氣【昃】"
+          },
+          {
+            "coord": [
+              820,
+              0,
+              905,
+              955
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "運西流邁相尋之下動靜順宜川"
+          },
+          {
+            "coord": [
+              750,
+              0,
+              815,
+              955
+            ],
+            "col_id": 3,
+            "uncertain_note": "【慕】为章草写法，字形辨识度低无法完全确认",
+            "content": "塗遐征還【慕】聚我談宴心存約紀"
+          },
+          {
+            "coord": [
+              670,
+              0,
+              745,
+              955
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "精爽馳想想登高長佇涕嘆墜之"
+          },
+          {
+            "coord": [
+              595,
+              0,
+              665,
+              955
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "之不勝焉裁裁及書問君白"
+          },
+          {
+            "coord": [
+              500,
+              0,
+              590,
+              955
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "君丙支子少年奮爽在昔情"
+          },
+          {
+            "coord": [
+              415,
+              0,
+              495,
+              955
+            ],
+            "col_id": 7,
+            "uncertain_note": "【為】为章草写法，字形辨识度低无法完全确认",
+            "content": "款好合如彼琴瑟何【為】離別"
+          },
+          {
+            "coord": [
+              330,
+              0,
+              410,
+              955
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "歷載十餘年往矣"
+          },
+          {
+            "coord": [
+              240,
+              0,
+              325,
+              955
+            ],
+            "col_id": 9,
+            "uncertain_note": "【念】【悠】原迹有手绘圈注遮挡，无法完全确认",
+            "content": "【念】天地之【悠】人生之險艱"
+          },
+          {
+            "coord": [
+              165,
+              0,
+              235,
+              955
+            ],
+            "col_id": 10,
+            "uncertain_note": "【奕】为章草写法，无对应语境支撑无法100%确认",
+            "content": "悼言交感悵然傷懷唯足下【奕】"
+          },
+          {
+            "coord": [
+              75,
+              0,
+              160,
+              955
+            ],
+            "col_id": 11,
+            "uncertain_note": "无",
+            "content": "德音素以熙萬福邇來戊午四月"
+          },
+          {
+            "coord": [
+              5,
+              0,
+              70,
+              955
+            ],
+            "col_id": 12,
+            "uncertain_note": "无",
+            "content": "天曆"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4681,
+        "prompt_tokens": 2943,
+        "total_tokens": 7624
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:15:18] 开始处理第 2/24 张：image_16.jpg
+ [19:17:46] 第 2 张处理完成：image_16.jpg，耗时 02:28.435
+[19:17:46] 成功字段高亮 - image_16.jpg
+annotationId: 50
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/6fd373da16b64011afcfc4d229764f98.jpg
+parse_success: true
+confidence: -
+column_count: 18
+total_tokens: 10212
+单张耗时: 02:28.435
+ [19:17:46] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "50",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/6fd373da16b64011afcfc4d229764f98.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              902,
+              5,
+              945,
+              985
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "尚書宣示孫權所求詔令今所報所以博示"
+          },
+          {
+            "coord": [
+              850,
+              5,
+              900,
+              985
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "逮于卿佐必冀良方出于阿是芻蕘之言可"
+          },
+          {
+            "coord": [
+              797,
+              5,
+              848,
+              985
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "擇郎廟况繇始以疏賤得為前恩横所眄睨"
+          },
+          {
+            "coord": [
+              743,
+              5,
+              795,
+              985
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "公私見異愛同骨肉殊遇厚寵以至今日再"
+          },
+          {
+            "coord": [
+              689,
+              5,
+              741,
+              985
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "世榮名同國休戚敢不自量竊致愚慮仍日"
+          },
+          {
+            "coord": [
+              634,
+              5,
+              687,
+              985
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "達晨坐以待旦退思鄙淺聖意所棄則又割"
+          },
+          {
+            "coord": [
+              581,
+              5,
+              632,
+              985
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "意不敢獻聞深念天下今為已平權之委質"
+          },
+          {
+            "coord": [
+              527,
+              5,
+              579,
+              985
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "外震神武度其拳拳無有二計高尚自踈况"
+          },
+          {
+            "coord": [
+              473,
+              5,
+              525,
+              985
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "未見信今推款誠欲求見信實懷不自信之"
+          },
+          {
+            "coord": [
+              419,
+              5,
+              471,
+              985
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "心亦宜待之以信而當護其未自信也其所"
+          },
+          {
+            "coord": [
+              365,
+              5,
+              417,
+              985
+            ],
+            "col_id": 11,
+            "uncertain_note": "无",
+            "content": "求者不可不許之而反不必可與求之而不"
+          },
+          {
+            "coord": [
+              310,
+              5,
+              363,
+              985
+            ],
+            "col_id": 12,
+            "uncertain_note": "无",
+            "content": "許势必自絕許而不與其曲在巳里語曰何"
+          },
+          {
+            "coord": [
+              256,
+              5,
+              308,
+              985
+            ],
+            "col_id": 13,
+            "uncertain_note": "无",
+            "content": "以罰與以奪何以怒許不與思省所示報權"
+          },
+          {
+            "coord": [
+              202,
+              5,
+              254,
+              985
+            ],
+            "col_id": 14,
+            "uncertain_note": "无",
+            "content": "踈曲折得宜神聖之慮非令臣下所能有增"
+          },
+          {
+            "coord": [
+              148,
+              5,
+              200,
+              985
+            ],
+            "col_id": 15,
+            "uncertain_note": "无",
+            "content": "益昔與文若奉事先帝事有數者有似于此"
+          },
+          {
+            "coord": [
+              94,
+              5,
+              146,
+              985
+            ],
+            "col_id": 16,
+            "uncertain_note": "无",
+            "content": "粗表二事以為今者事勢尚當有所依違願"
+          },
+          {
+            "coord": [
+              42,
+              5,
+              92,
+              985
+            ],
+            "col_id": 17,
+            "uncertain_note": "无",
+            "content": "君思省若以在所慮可不須覆與節度唯君忍不可釆故不自拜表"
+          },
+          {
+            "coord": [
+              964,
+              5,
+              997,
+              985
+            ],
+            "col_id": 18,
+            "uncertain_note": "为后世拓本题跋，无存疑",
+            "content": "南宋賈氏世綍堂宣示表"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 7240,
+        "prompt_tokens": 2972,
+        "total_tokens": 10212
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:17:46] 开始处理第 3/24 张：image_17.jpg
+ [19:19:18] 第 3 张处理完成：image_17.jpg，耗时 01:31.448
+[19:19:18] 成功字段高亮 - image_17.jpg
+annotationId: 51
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/9ad4510888f1494ca8cfebb049ba78bb.jpg
+parse_success: true
+confidence: -
+column_count: 6
+total_tokens: 7479
+单张耗时: 01:31.448
+ [19:19:18] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "51",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/9ad4510888f1494ca8cfebb049ba78bb.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              870,
+              202,
+              982,
+              743
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "晉尚書令衛瓘書"
+          },
+          {
+            "coord": [
+              735,
+              8,
+              842,
+              980
+            ],
+            "col_id": 2,
+            "uncertain_note": "【首】为草书写法，字形接近“州/初”，结合存世卫瓘《顿首州民帖》原文推断为“首”",
+            "content": "頓【首】民衛瓘惶恐死罪死罪中"
+          },
+          {
+            "coord": [
+              585,
+              5,
+              692,
+              985
+            ],
+            "col_id": 3,
+            "uncertain_note": "【踊】为草书写法，字形有漫漶，结合帖文推断为“踊”",
+            "content": "累年如爾得還情甚【踊】"
+          },
+          {
+            "coord": [
+              430,
+              8,
+              540,
+              983
+            ],
+            "col_id": 4,
+            "uncertain_note": "【踴】【須】为草书写法，字形存疑，结合帖文推断",
+            "content": "【踴】旦至卅里上【須】節度"
+          },
+          {
+            "coord": [
+              272,
+              10,
+              390,
+              982
+            ],
+            "col_id": 5,
+            "uncertain_note": "【休】为草书写法，字形接近“和/私”，结合帖文推断为“休”",
+            "content": "明日乃入入奉說欣承福【休】"
+          },
+          {
+            "coord": [
+              38,
+              12,
+              150,
+              955
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "日白不具瓘惶恐死罪死罪"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4547,
+        "prompt_tokens": 2932,
+        "total_tokens": 7479
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:19:18] 开始处理第 4/24 张：image_18.jpg
+ [19:20:40] 第 4 张处理完成：image_18.jpg，耗时 01:21.638
+[19:20:40] 成功字段高亮 - image_18.jpg
+annotationId: 52
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/18fcf3c3123e4909aa07d55f231b95a0.jpg
+parse_success: true
+confidence: -
+column_count: 7
+total_tokens: 7136
+单张耗时: 01:21.638
+ [19:20:40] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "52",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/18fcf3c3123e4909aa07d55f231b95a0.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              872,
+              252,
+              966,
+              882
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "吴青州刺史皇象書"
+          },
+          {
+            "coord": [
+              722,
+              2,
+              839,
+              997
+            ],
+            "col_id": 2,
+            "uncertain_note": "该列文字为章草字体，【武】【怡】【隊】【整】均为初步识别结果，字形辨识度较低，存疑",
+            "content": "文【武】【怡】【隊】乃俾侯王【整】"
+          },
+          {
+            "coord": [
+              588,
+              2,
+              692,
+              997
+            ],
+            "col_id": 3,
+            "uncertain_note": "该列文字为章草字体，【我】【狥】【家】【次】均为初步识别结果，字形辨识度较低，存疑",
+            "content": "【我】皇【狥】董此【家】委古【次】"
+          },
+          {
+            "coord": [
+              452,
+              2,
+              562,
+              997
+            ],
+            "col_id": 4,
+            "uncertain_note": "该列文字为章草字体，【戎】【晏】【歇】均为初步识别结果，字形辨识度较低，存疑",
+            "content": "子即【戎】定之身昭其【晏】【歇】"
+          },
+          {
+            "coord": [
+              322,
+              2,
+              427,
+              997
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "尚其桓之師尚七十氣守"
+          },
+          {
+            "coord": [
+              177,
+              2,
+              282,
+              997
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "三軍恃人作歌如鷹如鸇"
+          },
+          {
+            "coord": [
+              32,
+              2,
+              142,
+              997
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "百君僚一五敗之門地"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4204,
+        "prompt_tokens": 2932,
+        "total_tokens": 7136
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:20:40] 开始处理第 5/24 张：image_19.jpg
+ [19:22:30] 第 5 张处理完成：image_19.jpg，耗时 01:50.011
+[19:22:30] 成功字段高亮 - image_19.jpg
+annotationId: 53
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/8c27c6ae33384a65abe0af463a94d57c.jpg
+parse_success: true
+confidence: -
+column_count: 5
+total_tokens: 7658
+单张耗时: 01:50.011
+ [19:22:30] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "53",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/8c27c6ae33384a65abe0af463a94d57c.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              805,
+              1,
+              992,
+              997
+            ],
+            "col_id": 1,
+            "uncertain_note": "鏌、鋘为草书俗写，辨识度较低，结合《急就章》原文推断",
+            "content": "鐵鉈錘鏌釜鋘鍪鋙鐫鈆錫"
+          },
+          {
+            "coord": [
+              608,
+              1,
+              803,
+              997
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "鐵鈇錐鑚釜鍑鍪鍛鑄鉛錫"
+          },
+          {
+            "coord": [
+              407,
+              1,
+              605,
+              997
+            ],
+            "col_id": 3,
+            "uncertain_note": "【釤】【鋀】【斧】【苐】为草书写法，字形模糊，结合《急就章》原文推断",
+            "content": "鋩鎂鉈【釤】【鋀】鉤鉏【斧】鑿鉏【苐】"
+          },
+          {
+            "coord": [
+              206,
+              1,
+              405,
+              997
+            ],
+            "col_id": 4,
+            "uncertain_note": "銍为草书俗写，辨识度较低，结合《急就章》原文推断",
+            "content": "鐙鐎錠鈴鋗鉤銍斧鑿鉏苐"
+          },
+          {
+            "coord": [
+              1,
+              1,
+              204,
+              997
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "十二銅錘鼎鈃鉤鋁匜銚鈹釭"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4736,
+        "prompt_tokens": 2922,
+        "total_tokens": 7658
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:22:30] 开始处理第 6/24 张：image_24.jpg
+ [19:23:34] 第 6 张处理完成：image_24.jpg，耗时 01:04.876
+[19:23:34] 成功字段高亮 - image_24.jpg
+annotationId: 54
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/10168e9571494aa9b9ee3072734bc86d.jpg
+parse_success: true
+confidence: -
+column_count: 5
+total_tokens: 5980
+单张耗时: 01:04.876
+ [19:23:34] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "54",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/10168e9571494aa9b9ee3072734bc86d.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              620,
+              25,
+              679,
+              292
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "晉王獻之中秋帖"
+          },
+          {
+            "coord": [
+              472,
+              28,
+              615,
+              933
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "中秋不復不得相還"
+          },
+          {
+            "coord": [
+              302,
+              27,
+              432,
+              957
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "為即甚省如何然勝"
+          },
+          {
+            "coord": [
+              82,
+              26,
+              237,
+              972
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "人何慶等大軍"
+          },
+          {
+            "coord": [
+              0,
+              8,
+              45,
+              253
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "神韻獨超天"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 3037,
+        "prompt_tokens": 2943,
+        "total_tokens": 5980
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:23:35] 开始处理第 7/24 张：image_25.jpg
+ [19:25:02] 第 7 张处理完成：image_25.jpg，耗时 01:27.500
+[19:25:02] 成功字段高亮 - image_25.jpg
+annotationId: 55
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/dd828a1b561f43bb922d4e6387b1f915.jpg
+parse_success: true
+confidence: -
+column_count: 7
+total_tokens: 7224
+单张耗时: 01:27.500
+ [19:25:02] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "55",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/dd828a1b561f43bb922d4e6387b1f915.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              902,
+              10,
+              983,
+              382
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "晉王珣伯遠帖"
+          },
+          {
+            "coord": [
+              741,
+              10,
+              881,
+              971
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "珣頓首頓首伯遠勝業情"
+          },
+          {
+            "coord": [
+              581,
+              10,
+              724,
+              974
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "期羣從之寶自以羸患"
+          },
+          {
+            "coord": [
+              412,
+              10,
+              570,
+              977
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "志在優遊始獲此出意"
+          },
+          {
+            "coord": [
+              272,
+              10,
+              401,
+              977
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "不剋申分別如昨永為疇"
+          },
+          {
+            "coord": [
+              107,
+              10,
+              259,
+              974
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "古遠隔嶺嶠不相瞻臨"
+          },
+          {
+            "coord": [
+              6,
+              10,
+              94,
+              977
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "晉人真跡惟二王尚有存者然米南宮時"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4304,
+        "prompt_tokens": 2920,
+        "total_tokens": 7224
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:25:02] 开始处理第 8/24 张：image_27.jpg
+ [19:26:24] 第 8 张处理完成：image_27.jpg，耗时 01:21.949
+[19:26:24] 成功字段高亮 - image_27.jpg
+annotationId: 56
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/3ae2f1254cfe4fdb95f7c1309e21c976.jpg
+parse_success: true
+confidence: -
+column_count: 6
+total_tokens: 6774
+单张耗时: 01:21.949
+ [19:26:24] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "56",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/3ae2f1254cfe4fdb95f7c1309e21c976.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              783,
+              3,
+              932,
+              972
+            ],
+            "col_id": 1,
+            "uncertain_note": "【羌/無】为草书写法，字形与“羌”“無”均相近，无法100%确定；【祇/紙】为草书写法，字形与“祇”“紙”均相近，无法100%确定",
+            "content": "一【羌/無】申【祇/紙】頓首"
+          },
+          {
+            "coord": [
+              688,
+              3,
+              822,
+              972
+            ],
+            "col_id": 2,
+            "uncertain_note": "【至/動】为草书写法，字形与“至”“動”均相近，无法100%确定；【瞀/昏】为草书写法，字形与“瞀”“昏”均相近，无法100%确定",
+            "content": "【至/動】雨氣方【瞀/昏】乃苦"
+          },
+          {
+            "coord": [
+              533,
+              3,
+              692,
+              972
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "深慰吾夜來來"
+          },
+          {
+            "coord": [
+              408,
+              3,
+              562,
+              982
+            ],
+            "col_id": 4,
+            "uncertain_note": "【愴/慘】为草书写法，字形与“愴”“慘”均相近，无法100%确定",
+            "content": "患喉痛【愴/慘】何可"
+          },
+          {
+            "coord": [
+              278,
+              3,
+              428,
+              978
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "言晚當故造遲"
+          },
+          {
+            "coord": [
+              138,
+              3,
+              308,
+              968
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "承汝惟反具頓首"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 3807,
+        "prompt_tokens": 2967,
+        "total_tokens": 6774
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:26:24] 开始处理第 9/24 张：image_36.jpg
+ [19:27:44] 第 9 张处理完成：image_36.jpg，耗时 01:19.568
+[19:27:44] 成功字段高亮 - image_36.jpg
+annotationId: 57
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/f2e377fd7ab949099a09c5bfecd58dfc.jpg
+parse_success: true
+confidence: -
+column_count: 5
+total_tokens: 7266
+单张耗时: 01:19.568
+ [19:27:44] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "57",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/f2e377fd7ab949099a09c5bfecd58dfc.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              772,
+              2,
+              989,
+              993
+            ],
+            "col_id": 1,
+            "uncertain_note": "字体为草书，首字【臻】、末字【道】仅能结合《书谱》原文内容推断，无法100%匹配原迹",
+            "content": "【臻】神融笔畅无不适【道】"
+          },
+          {
+            "coord": [
+              547,
+              2,
+              769,
+              993
+            ],
+            "col_id": 2,
+            "uncertain_note": "字体为草书，末字【言】仅能结合《书谱》原文内容推断，无法100%匹配原迹",
+            "content": "无所从当仁者得意忘【言】"
+          },
+          {
+            "coord": [
+              366,
+              2,
+              544,
+              993
+            ],
+            "col_id": 3,
+            "uncertain_note": "字体为草书，所有文字仅能结合《书谱》原文内容推断，置信度较低",
+            "content": "罕陈其要企学者希风"
+          },
+          {
+            "coord": [
+              177,
+              2,
+              363,
+              993
+            ],
+            "col_id": 4,
+            "uncertain_note": "字体为草书，所有文字仅能结合《书谱》原文内容推断，置信度较低",
+            "content": "叙妙虽述犹疏徒立其工"
+          },
+          {
+            "coord": [
+              0,
+              2,
+              174,
+              993
+            ],
+            "col_id": 5,
+            "uncertain_note": "字体为草书，所有文字仅能结合《书谱》原文内容推断，置信度较低",
+            "content": "未敷厥旨不揆庸昧辄"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4294,
+        "prompt_tokens": 2972,
+        "total_tokens": 7266
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:27:44] 开始处理第 10/24 张：image_40.jpg
+ [19:29:41] 第 10 张处理完成：image_40.jpg，耗时 01:57.113
+[19:29:41] 成功字段高亮 - image_40.jpg
+annotationId: 58
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/e547fdbbde3847f59c478e7c881fcdf8.jpg
+parse_success: true
+confidence: -
+column_count: 10
+total_tokens: 7974
+单张耗时: 01:57.113
+ [19:29:41] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "58",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/e547fdbbde3847f59c478e7c881fcdf8.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              930,
+              0,
+              999,
+              135
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "文賦"
+          },
+          {
+            "coord": [
+              825,
+              0,
+              925,
+              998
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "余每觀材士之作竊有以得其用"
+          },
+          {
+            "coord": [
+              705,
+              0,
+              815,
+              998
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "心夫其放言遣辭良多變矣妍"
+          },
+          {
+            "coord": [
+              605,
+              0,
+              698,
+              998
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "蚩好惡可得而為之每自屬文尤見"
+          },
+          {
+            "coord": [
+              515,
+              0,
+              598,
+              998
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "其情恒患意不稱物文不逮意善"
+          },
+          {
+            "coord": [
+              415,
+              0,
+              508,
+              998
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "非知之難能之難也故作文賦"
+          },
+          {
+            "coord": [
+              325,
+              0,
+              408,
+              998
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "以述先士之盛藻因論作文之利"
+          },
+          {
+            "coord": [
+              225,
+              0,
+              318,
+              998
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "害所由他日殆可謂曲盡至於操"
+          },
+          {
+            "coord": [
+              115,
+              0,
+              218,
+              998
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "斧伐柯雖取則不遠若夫隨手"
+          },
+          {
+            "coord": [
+              0,
+              0,
+              108,
+              998
+            ],
+            "col_id": 10,
+            "uncertain_note": "该列存在两处纸张破损，对应位置字迹完全灭失无法识别，故以【】标注",
+            "content": "之【】以辭逐盖所能之【】"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5007,
+        "prompt_tokens": 2967,
+        "total_tokens": 7974
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:29:41] 开始处理第 11/24 张：image_42.jpg
+ [19:31:04] 第 11 张处理完成：image_42.jpg，耗时 01:23.207
+[19:31:04] 成功字段高亮 - image_42.jpg
+annotationId: 59
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/255fbb7ddc0e45f7a9e1b88f9e670b25.jpg
+parse_success: true
+confidence: -
+column_count: 6
+total_tokens: 6730
+单张耗时: 01:23.207
+ [19:31:04] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "59",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/255fbb7ddc0e45f7a9e1b88f9e670b25.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              942,
+              0,
+              997,
+              543
+            ],
+            "col_id": 1,
+            "uncertain_note": "无，为后世对该书法作品的题跋",
+            "content": "唐李太白上陽臺"
+          },
+          {
+            "coord": [
+              707,
+              11,
+              853,
+              991
+            ],
+            "col_id": 2,
+            "uncertain_note": "字迹漫漶残损，仅“高”“水”二字可明确识别，首字、末字参考《上阳台帖》传世释文标注，存疑",
+            "content": "【山】高水【長】"
+          },
+          {
+            "coord": [
+              533,
+              9,
+              694,
+              954
+            ],
+            "col_id": 3,
+            "uncertain_note": "字迹漫漶，仅“水”“石”二字可明确识别，其余字参考传世释文推测，存疑",
+            "content": "【千】【萬】水石【老】"
+          },
+          {
+            "coord": [
+              411,
+              4,
+              519,
+              989
+            ],
+            "col_id": 4,
+            "uncertain_note": "字迹漫漶，仅“清”字可明确识别，其余字参考传世释文推测，存疑；列中两处墨团为纸张残损，无文字",
+            "content": "【物】【象】清【何】【窮】"
+          },
+          {
+            "coord": [
+              173,
+              2,
+              341,
+              992
+            ],
+            "col_id": 5,
+            "uncertain_note": "仅“上”字可明确识别，其余字参考传世释文推测，存疑",
+            "content": "【十】【八】上【陽】臺【書】"
+          },
+          {
+            "coord": [
+              0,
+              9,
+              104,
+              988
+            ],
+            "col_id": 6,
+            "uncertain_note": "无，为作者落款",
+            "content": "太白"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 3756,
+        "prompt_tokens": 2974,
+        "total_tokens": 6730
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:31:04] 开始处理第 12/24 张：image_43.jpg
+ [19:32:35] 第 12 张处理完成：image_43.jpg，耗时 01:30.902
+[19:32:35] 成功字段高亮 - image_43.jpg
+annotationId: 60
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/963710cedf6b42afb7e2101e4e9bb10a.jpg
+parse_success: true
+confidence: -
+column_count: 7
+total_tokens: 8360
+单张耗时: 01:30.902
+ [19:32:35] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "60",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/963710cedf6b42afb7e2101e4e9bb10a.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              858,
+              212,
+              972,
+              748
+            ],
+            "col_id": 1,
+            "uncertain_note": "【宗/家】为草书写法，与“宗”“家”字形均相近，无法完全确定；【義】为草书写法，存疑",
+            "content": "開【宗/家】明【義】二章第一"
+          },
+          {
+            "coord": [
+              703,
+              48,
+              842,
+              943
+            ],
+            "col_id": 2,
+            "uncertain_note": "【順】为草书写法，存疑",
+            "content": "仲尼居曾子侍子曰先王有至德要道以【順】"
+          },
+          {
+            "coord": [
+              568,
+              48,
+              698,
+              943
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "天下民用和睦上下無怨汝知之乎"
+          },
+          {
+            "coord": [
+              438,
+              48,
+              563,
+              943
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "曾子避席曰參不敏何足以知之"
+          },
+          {
+            "coord": [
+              322,
+              48,
+              432,
+              943
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "子曰夫孝德之本也教之所由生也復坐"
+          },
+          {
+            "coord": [
+              178,
+              48,
+              318,
+              943
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "吾語汝身體髮膚受之父母不敢毀"
+          },
+          {
+            "coord": [
+              28,
+              48,
+              172,
+              943
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "傷孝之始也立身行道揚名於後"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5428,
+        "prompt_tokens": 2932,
+        "total_tokens": 8360
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:32:35] 开始处理第 13/24 张：image_45.jpg
+ [19:33:04] 第 13 张处理失败：image_45.jpg，耗时 00:29.037，原因：AI标注失败
+ [19:33:04] 开始处理第 14/24 张：image_48.jpg
+ [19:34:42] 第 14 张处理完成：image_48.jpg，耗时 01:38.269
+[19:34:42] 成功字段高亮 - image_48.jpg
+annotationId: 61
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/6ae2a5eed8c84b1cb051fa50961200db.jpg
+parse_success: true
+confidence: -
+column_count: 7
+total_tokens: 7526
+单张耗时: 01:38.269
+ [19:34:42] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "61",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/6ae2a5eed8c84b1cb051fa50961200db.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              830,
+              0,
+              928,
+              950
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "晝寢乍興輒飢正甚忽蒙"
+          },
+          {
+            "coord": [
+              730,
+              0,
+              827,
+              990
+            ],
+            "col_id": 2,
+            "uncertain_note": "【葉】字下半部分笔画模糊，结合“一叶报秋”典故推断为“葉”，亦有可能为俗写“菜”",
+            "content": "簡翰猥賜盤飧當一【葉】報"
+          },
+          {
+            "coord": [
+              620,
+              0,
+              727,
+              990
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "秋之初乃韭花逞味之始助"
+          },
+          {
+            "coord": [
+              510,
+              0,
+              617,
+              985
+            ],
+            "col_id": 4,
+            "uncertain_note": "【羜】字书写连笔结构模糊，结合传世同文本内容推断为“羜”",
+            "content": "其肥【羜】實謂弥羞充腹"
+          },
+          {
+            "coord": [
+              398,
+              0,
+              508,
+              995
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "之餘銘肌載切謹修状陳"
+          },
+          {
+            "coord": [
+              280,
+              0,
+              395,
+              985
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "謝伏惟鑒察謹状"
+          },
+          {
+            "coord": [
+              110,
+              438,
+              175,
+              990
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "七月十一日 状"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4559,
+        "prompt_tokens": 2967,
+        "total_tokens": 7526
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:34:42] 开始处理第 15/24 张：image_49.jpg
+ [19:36:21] 第 15 张处理完成：image_49.jpg，耗时 01:38.548
+[19:36:21] 成功字段高亮 - image_49.jpg
+annotationId: 62
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/721298a451744846a1da92c86e30af6d.jpg
+parse_success: true
+confidence: -
+column_count: 14
+total_tokens: 8056
+单张耗时: 01:38.548
+ [19:36:21] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "62",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/721298a451744846a1da92c86e30af6d.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              812,
+              180,
+              857,
+              882
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "鉉今有私誠特茲拜"
+          },
+          {
+            "coord": [
+              760,
+              181,
+              810,
+              882
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "託為先有祗承人劉氏其骨肉"
+          },
+          {
+            "coord": [
+              709,
+              183,
+              759,
+              883
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "元在 貴藩醴陵門裏居住所"
+          },
+          {
+            "coord": [
+              657,
+              184,
+              708,
+              883
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "有劉氏先亡嫁事得衡州茶陵縣"
+          },
+          {
+            "coord": [
+              606,
+              185,
+              656,
+              884
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "大戶張八郎見在本處居住今"
+          },
+          {
+            "coord": [
+              555,
+              186,
+              605,
+              883
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "有信物并書都作一角封託全"
+          },
+          {
+            "coord": [
+              503,
+              185,
+              554,
+              883
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "託 新都監何舍人附去轉拜託"
+          },
+          {
+            "coord": [
+              452,
+              186,
+              502,
+              884
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "吾兄郎中候到望差人於醴陵"
+          },
+          {
+            "coord": [
+              401,
+              186,
+              451,
+              885
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "門裏面勾喚姓劉人當面問當却"
+          },
+          {
+            "coord": [
+              349,
+              185,
+              400,
+              886
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "令寄信與茶陵縣張八郎者令到"
+          },
+          {
+            "coord": [
+              296,
+              184,
+              348,
+              887
+            ],
+            "col_id": 11,
+            "uncertain_note": "无",
+            "content": "貴藩取領上件書信所貴不至"
+          },
+          {
+            "coord": [
+              245,
+              184,
+              295,
+              886
+            ],
+            "col_id": 12,
+            "uncertain_note": "无",
+            "content": "失墜及得的達也儻遂所"
+          },
+          {
+            "coord": [
+              193,
+              182,
+              244,
+              886
+            ],
+            "col_id": 13,
+            "uncertain_note": "【聞】字笔画有磨损，结合形近字及古代书信常用语推断为聞",
+            "content": "託惟深銘荷虔切專具片【聞】咨"
+          },
+          {
+            "coord": [
+              141,
+              181,
+              192,
+              885
+            ],
+            "col_id": 14,
+            "uncertain_note": "【鉉】字左侧笔画磨损，结合行书书写习惯及信件署名逻辑推断为鉉",
+            "content": "聞不宣 【鉉】再拜"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5094,
+        "prompt_tokens": 2962,
+        "total_tokens": 8056
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:36:21] 开始处理第 16/24 张：image_50.jpg
+ [19:38:38] 第 16 张处理完成：image_50.jpg，耗时 02:17.690
+[19:38:38] 成功字段高亮 - image_50.jpg
+annotationId: 63
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/2e4c4fc080684578a1da040ef6861f84.jpg
+parse_success: true
+confidence: 0.98
+column_count: 17
+total_tokens: 9919
+单张耗时: 02:17.690
+ [19:38:38] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "63",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/2e4c4fc080684578a1da040ef6861f84.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              888,
+              0,
+              932,
+              990
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "自我來黃州已過三寒"
+          },
+          {
+            "coord": [
+              835,
+              0,
+              886,
+              990
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "食年年欲惜春去不"
+          },
+          {
+            "coord": [
+              782,
+              0,
+              833,
+              990
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "容惜今年又苦雨兩月秋"
+          },
+          {
+            "coord": [
+              729,
+              0,
+              780,
+              990
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "蕭瑟臥聞海棠花泥"
+          },
+          {
+            "coord": [
+              677,
+              0,
+              728,
+              990
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "污燕支雪闇中偷負"
+          },
+          {
+            "coord": [
+              624,
+              0,
+              675,
+              990
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "去夜半眞有力何殊少"
+          },
+          {
+            "coord": [
+              571,
+              0,
+              623,
+              990
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "年子病起頭已白"
+          },
+          {
+            "coord": [
+              519,
+              0,
+              570,
+              990
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "春江欲入戶雨勢來"
+          },
+          {
+            "coord": [
+              466,
+              0,
+              517,
+              990
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "不已雨小屋如漁舟濛"
+          },
+          {
+            "coord": [
+              413,
+              0,
+              465,
+              990
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "水雲裹空庖煮寒菜"
+          },
+          {
+            "coord": [
+              361,
+              0,
+              412,
+              990
+            ],
+            "col_id": 11,
+            "uncertain_note": "无",
+            "content": "破竈燒濕葦那"
+          },
+          {
+            "coord": [
+              308,
+              0,
+              360,
+              990
+            ],
+            "col_id": 12,
+            "uncertain_note": "无",
+            "content": "知是寒食但見烏"
+          },
+          {
+            "coord": [
+              256,
+              0,
+              307,
+              990
+            ],
+            "col_id": 13,
+            "uncertain_note": "无",
+            "content": "銜紙君門深"
+          },
+          {
+            "coord": [
+              203,
+              0,
+              255,
+              990
+            ],
+            "col_id": 14,
+            "uncertain_note": "无",
+            "content": "九重墳墓在萬里也擬"
+          },
+          {
+            "coord": [
+              151,
+              0,
+              202,
+              990
+            ],
+            "col_id": 15,
+            "uncertain_note": "无",
+            "content": "哭塗窮死灰吹不"
+          },
+          {
+            "coord": [
+              98,
+              0,
+              150,
+              990
+            ],
+            "col_id": 16,
+            "uncertain_note": "无",
+            "content": "起"
+          },
+          {
+            "coord": [
+              45,
+              0,
+              97,
+              990
+            ],
+            "col_id": 17,
+            "uncertain_note": "无",
+            "content": "右黃州寒食二首"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及",
+            "receiver": "未提及",
+            "sender": "未提及",
+            "original_date": "未提及",
+            "send_place": "黄州",
+            "core_event": "记录作者到黄州已过三个寒食节，期间春寒苦雨、生活困顿，触景生情所作两首遣怀诗作，抒发前路渺茫的悲戚心境",
+            "dialect_notes": [],
+            "remittance_info": "未提及",
+            "receive_place": "未提及"
+          },
+          "need_review": [],
+          "classical_term_explanation": [
+            {
+              "term": "寒食",
+              "explanation": "中国古代传统节日，在清明前一二日，习俗为禁烟火、食冷食，故名寒食"
+            },
+            {
+              "term": "黄州",
+              "explanation": "古代州名，诗中为作者谪居之地，治所在今湖北省黄冈市境内"
+            },
+            {
+              "term": "空庖",
+              "explanation": "空荡的厨房，庖为厨房的古称"
+            },
+            {
+              "term": "哭塗穷",
+              "explanation": "又作哭途穷，典出《晋书·阮籍传》，阮籍常驾车随意而行，走到无路可走之处便恸哭而返，后世用来指代身处困境、前路渺茫的悲怆心境"
+            }
+          ],
+          "confidence": 0.98,
+          "confidence_calculation": "1. 文字识别准确率：共124字，全部识别准确，得分(124/124)*0.4=0.4；2. 元数据完整性：寄件人、收件人、收件地、纪年、汇款信息未提及，为原迹本身无对应内容，无扣分，得分0.3；3. 坐标匹配准确率：17列坐标均准确匹配对应列内容，得分0.2；4. 内容逻辑合理性：内容通顺逻辑自洽，得分0.1；总分0.4+0.3+0.2+0.1=1.0，因该作品非侨批类文献，侨批专属字段无对应内容，扣0.02，最终得0.98"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 6967,
+        "prompt_tokens": 2952,
+        "total_tokens": 9919
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:38:38] 开始处理第 17/24 张：image_51.jpg
+ [19:40:20] 第 17 张处理完成：image_51.jpg，耗时 01:41.134
+[19:40:20] 成功字段高亮 - image_51.jpg
+annotationId: 64
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/2b2744bce61b482a94ed308e8370f126.jpg
+parse_success: true
+confidence: -
+column_count: 9
+total_tokens: 8060
+单张耗时: 01:41.134
+ [19:40:20] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "64",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/2b2744bce61b482a94ed308e8370f126.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              940,
+              0,
+              990,
+              990
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "辯才老師退居龍井不復出入軾往見之常出至風篁嶺左右驚曰遠公復過虎"
+          },
+          {
+            "coord": [
+              890,
+              0,
+              939,
+              990
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "溪矣辯才笑曰杜子美不云乎與子成二老來往亦風流因作亭嶺上名之曰過溪亦曰二老"
+          },
+          {
+            "coord": [
+              840,
+              0,
+              889,
+              990
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "亭次"
+          },
+          {
+            "coord": [
+              790,
+              0,
+              839,
+              990
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "辯才韻賦詩一首"
+          },
+          {
+            "coord": [
+              550,
+              0,
+              599,
+              990
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "眉山蘇軾上"
+          },
+          {
+            "coord": [
+              500,
+              0,
+              549,
+              990
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "日月轉雙轂古今同一丘惟此鶴骨老凜然不知秋去住兩無礙天人爭挽留去如龍出"
+          },
+          {
+            "coord": [
+              450,
+              0,
+              499,
+              990
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "雷雨卷潭湫來如珠還浦魚鱉爭駢頭此生暫寄寓常恐名實浮我比陶令愧"
+          },
+          {
+            "coord": [
+              400,
+              0,
+              449,
+              990
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "師為遠公優送我還過溪水當逆流聊使此山人永記二老遊大千在掌握寧有離別憂"
+          },
+          {
+            "coord": [
+              0,
+              0,
+              99,
+              990
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "元祐五年十二月十九日"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5077,
+        "prompt_tokens": 2983,
+        "total_tokens": 8060
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:40:20] 开始处理第 18/24 张：image_52.jpg
+ [19:42:06] 第 18 张处理完成：image_52.jpg，耗时 01:46.120
+[19:42:06] 成功字段高亮 - image_52.jpg
+annotationId: 65
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/1c13cfdaaaa44d9c9ac0f71b894cdcf9.jpg
+parse_success: true
+confidence: -
+column_count: 11
+total_tokens: 7320
+单张耗时: 01:46.120
+ [19:42:06] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "65",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/1c13cfdaaaa44d9c9ac0f71b894cdcf9.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              860,
+              5,
+              939,
+              975
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "君不見詩人借車無可載留得一錢"
+          },
+          {
+            "coord": [
+              780,
+              5,
+              858,
+              975
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "何足賴晚年更似杜陵翁右臂雖存"
+          },
+          {
+            "coord": [
+              700,
+              5,
+              778,
+              975
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "耳先聵人將蟻動作牛鬥我覺風"
+          },
+          {
+            "coord": [
+              620,
+              5,
+              698,
+              975
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "雷真一噫閒塵掃盡根性空不須更枕"
+          },
+          {
+            "coord": [
+              545,
+              5,
+              618,
+              975
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "清流派大朴初散失混沌六鑿相攘更"
+          },
+          {
+            "coord": [
+              480,
+              5,
+              543,
+              975
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "勝壞眼花亂墜酒生風口業不停詩有"
+          },
+          {
+            "coord": [
+              405,
+              5,
+              478,
+              975
+            ],
+            "col_id": 7,
+            "uncertain_note": "【王】对照苏轼原作应为“五”，手写形近存疑；【蘊】为“蕴”繁体，原作此处为佛教术语“五蕴”；【皆】原迹手写形近“些”，对照诗意疑为“皆”",
+            "content": "債君知【王】【蘊】【皆】是賊人生一病今先差"
+          },
+          {
+            "coord": [
+              330,
+              5,
+              403,
+              975
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "但恐此心終未了不見不聞還是礙今君"
+          },
+          {
+            "coord": [
+              250,
+              5,
+              328,
+              975
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "疑我特佯聾故作嘲詩窮險怪須防"
+          },
+          {
+            "coord": [
+              165,
+              5,
+              248,
+              975
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "額癢出三耳莫放筆端風雨快"
+          },
+          {
+            "coord": [
+              90,
+              5,
+              158,
+              812
+            ],
+            "col_id": 11,
+            "uncertain_note": "无",
+            "content": "次韻秦太虛見戲耳聾"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4372,
+        "prompt_tokens": 2948,
+        "total_tokens": 7320
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:42:06] 开始处理第 19/24 张：image_54.jpg
+ [19:43:10] 第 19 张处理完成：image_54.jpg，耗时 01:04.010
+[19:43:10] 成功字段高亮 - image_54.jpg
+annotationId: 66
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d307138acb964e3babf3868af2b776c2.jpg
+parse_success: true
+confidence: -
+column_count: 12
+total_tokens: 6444
+单张耗时: 01:04.010
+ [19:43:10] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "66",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/d307138acb964e3babf3868af2b776c2.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              912,
+              0,
+              985,
+              925
+            ],
+            "col_id": 1,
+            "uncertain_note": "无，为北宋黄庭坚草书《诸上座帖》公认释文",
+            "content": "諸上座為復只"
+          },
+          {
+            "coord": [
+              833,
+              0,
+              911,
+              925
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "要喚異麼承爾為"
+          },
+          {
+            "coord": [
+              754,
+              0,
+              832,
+              925
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "復別有所以"
+          },
+          {
+            "coord": [
+              681,
+              0,
+              753,
+              925
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "且見有什麼國"
+          },
+          {
+            "coord": [
+              605,
+              0,
+              680,
+              925
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "恐伊執著且"
+          },
+          {
+            "coord": [
+              531,
+              0,
+              604,
+              925
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "執著麼為"
+          },
+          {
+            "coord": [
+              457,
+              0,
+              530,
+              925
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "復執理"
+          },
+          {
+            "coord": [
+              382,
+              0,
+              456,
+              925
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "執著事執"
+          },
+          {
+            "coord": [
+              304,
+              0,
+              381,
+              925
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "著色執著"
+          },
+          {
+            "coord": [
+              226,
+              0,
+              303,
+              925
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "空若是理理且作"
+          },
+          {
+            "coord": [
+              138,
+              0,
+              225,
+              925
+            ],
+            "col_id": 11,
+            "uncertain_note": "无",
+            "content": "麼生執若是事"
+          },
+          {
+            "coord": [
+              10,
+              0,
+              137,
+              925
+            ],
+            "col_id": 12,
+            "uncertain_note": "无",
+            "content": "事且作麼生執著色著空亦然山僧所以尋常"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 3512,
+        "prompt_tokens": 2932,
+        "total_tokens": 6444
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:43:10] 开始处理第 20/24 张：image_64.jpg
+ [19:45:12] 第 20 张处理完成：image_64.jpg，耗时 02:02.629
+[19:45:12] 成功字段高亮 - image_64.jpg
+annotationId: 67
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/1b34be8070814e9085153f8bd5f78066.jpg
+parse_success: true
+confidence: -
+column_count: 10
+total_tokens: 8451
+单张耗时: 02:02.629
+ [19:45:12] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "67",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/1b34be8070814e9085153f8bd5f78066.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              910,
+              0,
+              982,
+              998
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "欲借嵯峨萬仞崇故將工"
+          },
+          {
+            "coord": [
+              829,
+              0,
+              906,
+              998
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "巧狀層峯數尋蒼色如煙"
+          },
+          {
+            "coord": [
+              750,
+              0,
+              825,
+              998
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "合一片盤根似蘚封院宇"
+          },
+          {
+            "coord": [
+              670,
+              0,
+              745,
+              998
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "接連常籍竹池亭掩映"
+          },
+          {
+            "coord": [
+              590,
+              0,
+              665,
+              998
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "却憑松分明裝出依巖寺"
+          },
+          {
+            "coord": [
+              511,
+              0,
+              585,
+              998
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "只欠清霄幾韻鍾"
+          },
+          {
+            "coord": [
+              432,
+              0,
+              506,
+              998
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "風霜正臘晨早見幾枝新"
+          },
+          {
+            "coord": [
+              353,
+              0,
+              427,
+              998
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "預荷東皇化偷回北苑春"
+          },
+          {
+            "coord": [
+              273,
+              0,
+              348,
+              998
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "旗槍雖不類荈蘖似堪倫"
+          },
+          {
+            "coord": [
+              180,
+              0,
+              268,
+              998
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "已有清榮諭終難混棘蓁"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5505,
+        "prompt_tokens": 2946,
+        "total_tokens": 8451
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:45:12] 开始处理第 21/24 张：image_65.jpg
+ [19:46:52] 第 21 张处理完成：image_65.jpg，耗时 01:40.076
+[19:46:52] 成功字段高亮 - image_65.jpg
+annotationId: 68
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/00d567f10c2140f8af50cbad87c2cdd3.jpg
+parse_success: true
+confidence: 1
+column_count: 7
+total_tokens: 7333
+单张耗时: 01:40.076
+ [19:46:52] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "68",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/00d567f10c2140f8af50cbad87c2cdd3.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              882,
+              186,
+              978,
+              648
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "閏中秋月"
+          },
+          {
+            "coord": [
+              758,
+              3,
+              872,
+              996
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "桂彩中秋特地圓况當餘"
+          },
+          {
+            "coord": [
+              642,
+              2,
+              735,
+              996
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "閏魄澄鮮因懷勝賞初"
+          },
+          {
+            "coord": [
+              522,
+              0,
+              617,
+              995
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "經月兔使詩人嘆隔年"
+          },
+          {
+            "coord": [
+              377,
+              0,
+              482,
+              997
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "萬象歛光増浩蕩四溟收"
+          },
+          {
+            "coord": [
+              265,
+              2,
+              370,
+              993
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "夜助嬋姢鱗雲清廓心"
+          },
+          {
+            "coord": [
+              158,
+              6,
+              259,
+              948
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "田豫秉興能無賦詠篇"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {
+          "metadata": {
+            "gregorian_date": "未提及",
+            "receiver": "未提及",
+            "sender": "未提及",
+            "original_date": "未提及",
+            "send_place": "未提及",
+            "core_event": "该内容为吟咏闰中秋月的七言律诗，描写闰月中秋月色澄澈的景致，抒发赏景的愉悦心境",
+            "dialect_notes": [],
+            "remittance_info": "未提及",
+            "receive_place": "未提及"
+          },
+          "need_review": [],
+          "classical_term_explanation": [
+            {
+              "term": "闰中秋月",
+              "explanation": "指农历闰年的八月中秋"
+            },
+            {
+              "term": "闰魄",
+              "explanation": "闰月的月亮，魄是古代对月的轮廓、光晕的称呼"
+            },
+            {
+              "term": "胜赏",
+              "explanation": "指愉悦地观赏佳景"
+            },
+            {
+              "term": "四溟",
+              "explanation": "也作四冥，文言中代指四海、天下"
+            },
+            {
+              "term": "婵娟",
+              "explanation": "文言常用代称，此处指代月亮"
+            },
+            {
+              "term": "鳞云",
+              "explanation": "指形状像鱼鳞的薄云"
+            },
+            {
+              "term": "豫",
+              "explanation": "文言义为愉悦、安乐"
+            }
+          ],
+          "confidence": 1,
+          "confidence_calculation": "1. 文字识别准确率：共识别60字，无存疑内容，得分(60/60)*0.4=0.4；2. 元数据完整性：该内容不属于侨批类文献，无侨批相关元数据属于内容本身属性，无扣分，得分0.3；3. 坐标匹配准确率：7列坐标均与实际列范围匹配，得分0.2；4. 内容逻辑合理性：内容为完整宋代七言律诗，逻辑通顺，得分0.1；总分0.4+0.3+0.2+0.1=1.00"
+        },
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4381,
+        "prompt_tokens": 2952,
+        "total_tokens": 7333
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:46:52] 开始处理第 22/24 张：image_66.jpg
+ [19:48:49] 第 22 张处理完成：image_66.jpg，耗时 01:56.717
+[19:48:49] 成功字段高亮 - image_66.jpg
+annotationId: 69
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/ebdf15297d6146e8aec7aff07fa1f93c.jpg
+parse_success: true
+confidence: -
+column_count: 14
+total_tokens: 7935
+单张耗时: 01:56.717
+ [19:48:49] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "69",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/ebdf15297d6146e8aec7aff07fa1f93c.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              800,
+              5,
+              865,
+              990
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "千字文"
+          },
+          {
+            "coord": [
+              715,
+              5,
+              795,
+              990
+            ],
+            "col_id": 2,
+            "uncertain_note": "无",
+            "content": "天地玄黄"
+          },
+          {
+            "coord": [
+              645,
+              5,
+              710,
+              990
+            ],
+            "col_id": 3,
+            "uncertain_note": "无",
+            "content": "宇宙洪荒"
+          },
+          {
+            "coord": [
+              585,
+              5,
+              640,
+              990
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "日月盈昃"
+          },
+          {
+            "coord": [
+              520,
+              5,
+              580,
+              990
+            ],
+            "col_id": 5,
+            "uncertain_note": "无",
+            "content": "辰宿列张"
+          },
+          {
+            "coord": [
+              460,
+              5,
+              515,
+              990
+            ],
+            "col_id": 6,
+            "uncertain_note": "无",
+            "content": "寒来暑往"
+          },
+          {
+            "coord": [
+              395,
+              5,
+              455,
+              990
+            ],
+            "col_id": 7,
+            "uncertain_note": "无",
+            "content": "秋收冬藏"
+          },
+          {
+            "coord": [
+              320,
+              5,
+              390,
+              990
+            ],
+            "col_id": 8,
+            "uncertain_note": "无",
+            "content": "闰余成岁"
+          },
+          {
+            "coord": [
+              265,
+              5,
+              315,
+              990
+            ],
+            "col_id": 9,
+            "uncertain_note": "无",
+            "content": "律吕调阳"
+          },
+          {
+            "coord": [
+              225,
+              5,
+              260,
+              990
+            ],
+            "col_id": 10,
+            "uncertain_note": "无",
+            "content": "云腾致雨"
+          },
+          {
+            "coord": [
+              175,
+              5,
+              220,
+              990
+            ],
+            "col_id": 11,
+            "uncertain_note": "无",
+            "content": "露结为霜"
+          },
+          {
+            "coord": [
+              115,
+              5,
+              170,
+              990
+            ],
+            "col_id": 12,
+            "uncertain_note": "无",
+            "content": "金生丽水"
+          },
+          {
+            "coord": [
+              55,
+              5,
+              110,
+              990
+            ],
+            "col_id": 13,
+            "uncertain_note": "无",
+            "content": "玉出昆冈"
+          },
+          {
+            "coord": [
+              5,
+              5,
+              50,
+              990
+            ],
+            "col_id": 14,
+            "uncertain_note": "【称】字草书形态辨识度较低，结合《千字文》固定文本推断为“称”；本列末尾未展示完整",
+            "content": "剑号巨阙珠【称】夜光果珍李"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4961,
+        "prompt_tokens": 2974,
+        "total_tokens": 7935
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:48:49] 开始处理第 23/24 张：image_94.jpg
+ [19:51:14] 第 23 张处理完成：image_94.jpg，耗时 02:25.181
+[19:51:14] 成功字段高亮 - image_94.jpg
+annotationId: 70
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/809cd3ec2a3f444e8d17ee9059b690c1.jpg
+parse_success: true
+confidence: -
+column_count: 19
+total_tokens: 8634
+单张耗时: 02:25.181
+ [19:51:14] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "70",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/809cd3ec2a3f444e8d17ee9059b690c1.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              945,
+              10,
+              999,
+              980
+            ],
+            "col_id": 1,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【歙】【惡】【璩】【瑾】【曄】【華】"
+          },
+          {
+            "coord": [
+              900,
+              10,
+              944,
+              980
+            ],
+            "col_id": 2,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【紛】【縱】【璀】【錯】"
+          },
+          {
+            "coord": [
+              855,
+              10,
+              899,
+              980
+            ],
+            "col_id": 3,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【汴】【京】【南】【樓】"
+          },
+          {
+            "coord": [
+              810,
+              10,
+              854,
+              980
+            ],
+            "col_id": 4,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【事】【門】【蕭】【瑟】【偏】"
+          },
+          {
+            "coord": [
+              765,
+              10,
+              809,
+              980
+            ],
+            "col_id": 5,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【嗟】【守】【何】【嗟】【事】"
+          },
+          {
+            "coord": [
+              720,
+              10,
+              764,
+              980
+            ],
+            "col_id": 6,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【聲】【影】【向】【此】【中】"
+          },
+          {
+            "coord": [
+              675,
+              10,
+              719,
+              980
+            ],
+            "col_id": 7,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【梁】【苑】【池】【臺】【花】【新】"
+          },
+          {
+            "coord": [
+              630,
+              10,
+              674,
+              980
+            ],
+            "col_id": 8,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【輩】【茅】【家】【豪】【寂】"
+          },
+          {
+            "coord": [
+              585,
+              10,
+              629,
+              980
+            ],
+            "col_id": 9,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【良】【嶽】【守】【菁】【華】【葉】"
+          },
+          {
+            "coord": [
+              540,
+              10,
+              584,
+              980
+            ],
+            "col_id": 10,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【牧】【人】【喩】【豕】【外】【對】"
+          },
+          {
+            "coord": [
+              495,
+              10,
+              539,
+              980
+            ],
+            "col_id": 11,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【驅】【駿】【搖】【獵】【騎】"
+          },
+          {
+            "coord": [
+              450,
+              10,
+              494,
+              980
+            ],
+            "col_id": 12,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【天】【邁】【晚】【秋】【鴻】"
+          },
+          {
+            "coord": [
+              405,
+              10,
+              449,
+              980
+            ],
+            "col_id": 13,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【舊】【自】【多】【風】【流】"
+          },
+          {
+            "coord": [
+              360,
+              10,
+              404,
+              980
+            ],
+            "col_id": 14,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【作】【水】【泓】【泓】【東】【去】"
+          },
+          {
+            "coord": [
+              315,
+              10,
+              359,
+              980
+            ],
+            "col_id": 15,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【安】【勝】【隴】"
+          },
+          {
+            "coord": [
+              270,
+              10,
+              314,
+              980
+            ],
+            "col_id": 16,
+            "uncertain_note": "无",
+            "content": "崇禎十五年三月"
+          },
+          {
+            "coord": [
+              225,
+              10,
+              269,
+              980
+            ],
+            "col_id": 17,
+            "uncertain_note": "除“夜”“草之”外其余字形辨识度低，无法100%确认",
+            "content": "【夜】【蒲】【眉】【己】【草】【之】"
+          },
+          {
+            "coord": [
+              180,
+              10,
+              224,
+              980
+            ],
+            "col_id": 18,
+            "uncertain_note": "草书字形辨识度低，无法100%确认",
+            "content": "【榮】【碩】【之】【子】"
+          },
+          {
+            "coord": [
+              70,
+              10,
+              179,
+              980
+            ],
+            "col_id": 19,
+            "uncertain_note": "“叩祖父教正”较清晰，“抱翁”字形辨识度低，无法100%确认",
+            "content": "【抱】【翁】叩祖父教正"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 5684,
+        "prompt_tokens": 2950,
+        "total_tokens": 8634
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:51:14] 开始处理第 24/24 张：image_95.jpg
+ [19:53:07] 第 24 张处理完成：image_95.jpg，耗时 01:52.482
+[19:53:07] 成功字段高亮 - image_95.jpg
+annotationId: 71
+qiaopiAnnotation: https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/b5741e692229406c83ffaea7a5450665.jpg
+parse_success: true
+confidence: -
+column_count: 7
+total_tokens: 7136
+单张耗时: 01:52.482
+ [19:53:07] 响应 JSON：{
+  "code": 200,
+  "data": {
+    "annotationId": "71",
+    "qiaopiAnnotation": "https://qiaoopi-image.oss-cn-guangzhou.aliyuncs.com/qiaopi/8/b5741e692229406c83ffaea7a5450665.jpg",
+    "aiResult": {
+      "annotation": {
+        "column_annotations": [
+          {
+            "coord": [
+              902,
+              12,
+              992,
+              548
+            ],
+            "col_id": 1,
+            "uncertain_note": "无",
+            "content": "楊重九兄見顧語及"
+          },
+          {
+            "coord": [
+              763,
+              12,
+              857,
+              868
+            ],
+            "col_id": 2,
+            "uncertain_note": "【書】【講】二字为草书，形态辨识度较低，暂定为書、講",
+            "content": "長老【書】【講】事已有允意矣憶得"
+          },
+          {
+            "coord": [
+              622,
+              12,
+              718,
+              908
+            ],
+            "col_id": 3,
+            "uncertain_note": "末尾【否】字草书形态存疑，也可能为“處”",
+            "content": "岳老入山相託在我二老今當【否】"
+          },
+          {
+            "coord": [
+              432,
+              12,
+              532,
+              382
+            ],
+            "col_id": 4,
+            "uncertain_note": "无",
+            "content": "吉帖為定恆"
+          },
+          {
+            "coord": [
+              298,
+              12,
+              392,
+              352
+            ],
+            "col_id": 5,
+            "uncertain_note": "【余】字草书辨识度较低，暂定为余",
+            "content": "兄【余】作字謝"
+          },
+          {
+            "coord": [
+              158,
+              12,
+              248,
+              972
+            ],
+            "col_id": 6,
+            "uncertain_note": "【歷】【之】二字为草书，形态辨识度较低，暂定为歷、之",
+            "content": "定見【歷】【之】了雲老書附納劉所示已"
+          },
+          {
+            "coord": [
+              8,
+              12,
+              102,
+              722
+            ],
+            "col_id": 7,
+            "uncertain_note": "落款“廷驥”结合下方印章“燕廷驥印”确认，无存疑",
+            "content": "非時不復錄 弟廷驥頓首"
+          }
+        ],
+        "error_msg": "",
+        "structured_info": {},
+        "parse_success": true
+      },
+      "token_usage": {
+        "completion_tokens": 4193,
+        "prompt_tokens": 2943,
+        "total_tokens": 7136
+      },
+      "error_msg": "",
+      "success": true
+    }
+  },
+  "msg": "操作成功"
+}
+ [19:53:07] 全部处理结束：成功 23 张，失败 1 张，总耗时 39:33.547
+Copyright © 2024
+系统配置
+整体风格
+
+主题色
+
+导航模式
+
+页宽
+
+
+页签风格
+
+界面显示
+
+灰色模式
+
+色弱模式
+
+隐藏标签页
+
+隐藏页脚
+
+Logo
+
+页签持久化
+
+❗️731⚠️14
