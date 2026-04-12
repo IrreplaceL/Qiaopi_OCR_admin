@@ -37,7 +37,7 @@
 
 ## 4. 接口约定
 后端基地址（当前写死）：
-- `API_BASE_URL = http://127.0.0.1:1031`
+- `API_BASE_URL = http://172.174.90.114:1031`
 
 ### 4.1 上传并识别
 - `POST /ocr/upload?projectId={projectId}&userId={userId}`

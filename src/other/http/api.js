@@ -5,7 +5,7 @@
 
 import { annotationData } from '../mockData1.js'
 
-const API_BASE_URL = 'http://127.0.0.1:1031'
+const API_BASE_URL = 'http://172.174.90.114:1031'
 
 // 开发模式：设置为 true 使用 mock 数据，false 使用真实后端
 const USE_MOCK_DATA = false
