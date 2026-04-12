@@ -101,6 +101,16 @@
   background: #059669;
 }
 
+.btn-warning {
+  background: #f59e0b;
+  color: #111827;
+}
+
+.btn-warning:hover {
+  background: #d97706;
+  color: #fff;
+}
+
 .btn:disabled {
   opacity: 0.75;
   cursor: not-allowed;
@@ -334,6 +344,22 @@
 
 .upload-placeholder:hover .placeholder-text {
   color: #3b82f6;
+}
+
+.upload-placeholder.disabled {
+  cursor: not-allowed;
+  border-color: #e5e7eb;
+  background: #f3f4f6;
+}
+
+.upload-placeholder.disabled .placeholder-icon,
+.upload-placeholder.disabled .placeholder-text {
+  color: #9ca3af;
+}
+
+.upload-placeholder.disabled:hover {
+  border-color: #e5e7eb;
+  background: #f3f4f6;
 }
 
 .placeholder-content {
@@ -956,4 +982,44 @@
   padding: 4px 8px;
   cursor: pointer;
   font-size: 12px;
+}
+
+.save-confirm-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 140;
+  background: rgba(15, 23, 42, 0.38);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+
+.save-confirm-dialog {
+  width: min(92vw, 420px);
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #dbe3f2;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.25);
+  padding: 20px;
+}
+
+.save-confirm-dialog h4 {
+  margin: 0 0 8px;
+  color: #111827;
+  font-size: 18px;
+}
+
+.save-confirm-dialog p {
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.save-confirm-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }

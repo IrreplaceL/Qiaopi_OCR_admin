@@ -17,23 +17,29 @@ import { vitePluginFakeServer } from "vite-plugin-fake-server";
 
 export function getPluginsList(
   VITE_CDN: boolean,
-  VITE_COMPRESSION: ViteCompression
+  VITE_COMPRESSION: ViteCompression,
+  isDev = false
 ): PluginOption[] {
   const lifecycle = process.env.npm_lifecycle_event;
+  const enableChecker =
+    !isDev || process.env.VITE_ENABLE_CHECKER === "true";
   return [
     vue(),
     // jsx、tsx语法支持
     vueJsx(),
-    checker({
-      typescript: true,
-      vueTsc: true,
-      eslint: {
-        lintCommand: `eslint ${pathResolve("../{src,mock,build}/**/*.{vue,js,ts,tsx}")}`,
-        useFlatConfig: true
-      },
-      terminal: false,
-      enableBuild: false
-    }),
+    enableChecker
+      ? checker({
+          typescript: true,
+          vueTsc: true,
+          overlay: false,
+          eslint: {
+            lintCommand: `eslint ${pathResolve("../{src,mock,build}/**/*.{vue,js,ts,tsx}")}`,
+            useFlatConfig: true
+          },
+          terminal: true,
+          enableBuild: false
+        })
+      : null,
     // 按下Command(⌘)+Shift(⇧)，然后点击页面元素会自动打开本地IDE并跳转到对应的代码位置
     Inspector(),
     viteBuildInfo(),

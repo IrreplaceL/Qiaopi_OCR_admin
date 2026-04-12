@@ -1,7 +1,10 @@
 import axios from "axios";
 import type { App } from "vue";
 
-let config: object = {};
+let config: PlatformConfigs = {
+  Title: "侨批图像标注系统",
+  ResponsiveStorageNameSpace: "responsive-"
+};
 const { VITE_PUBLIC_PATH } = import.meta.env;
 
 const setConfig = (cfg?: unknown) => {

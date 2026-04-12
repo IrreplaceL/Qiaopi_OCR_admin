@@ -1,7 +1,7 @@
 import App from "./App.vue";
 import router from "./router";
 import { setupStore } from "@/store";
-import { getPlatformConfig } from "./config";
+import { getConfig, getPlatformConfig } from "./config";
 import { MotionPlugin } from "@vueuse/motion";
 // import { useEcharts } from "@/plugins/echarts";
 import { createApp, type Directive } from "vue";
@@ -52,13 +52,15 @@ import "tippy.js/themes/light.css";
 import VueTippy from "vue-tippy";
 app.use(VueTippy);
 
-getPlatformConfig(app).then(async config => {
-  setupStore(app);
-  app.use(router);
-  await router.isReady();
-  injectResponsiveStorage(app, config);
-  app.use(MotionPlugin).use(useElementPlus).use(Table);
-  // .use(PureDescriptions)
-  // .use(useEcharts);
-  app.mount("#app");
+setupStore(app);
+app.use(router);
+injectResponsiveStorage(app, getConfig());
+app.use(MotionPlugin).use(useElementPlus).use(Table);
+// .use(PureDescriptions)
+// .use(useEcharts);
+app.mount("#app");
+
+void router.isReady();
+void getPlatformConfig(app).catch(error => {
+  console.warn("platform-config load failed:", error);
 });

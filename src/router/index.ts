@@ -36,7 +36,13 @@ import {
  * 如何排除文件请看：https://cn.vitejs.dev/guide/features.html#negative-patterns
  */
 const modules: Record<string, any> = import.meta.glob(
-  ["./modules/**/*.ts", "!./modules/**/remaining.ts"],
+  [
+    "./modules/**/*.ts",
+    "!./modules/**/remaining.ts",
+    "!./modules/**/userinfo.ts",
+    "!./modules/**/bloginfo.ts",
+    "!./modules/**/personal.ts"
+  ],
   {
     eager: true
   }
@@ -138,6 +144,9 @@ router.beforeEach((to: ToRouteType, _from, next) => {
       next({ path: "/error/404" });
     } */
     if (_from?.name) {
+      if (usePermissionStoreHook().wholeMenus.length === 0 && to.path !== "/login") {
+        void initRouter();
+      }
       // name为超链接
       if (externalLink) {
         openLink(to?.name as string);

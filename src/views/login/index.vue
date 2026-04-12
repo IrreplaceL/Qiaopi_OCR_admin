@@ -8,7 +8,7 @@ import type { FormInstance } from "element-plus";
 import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
 import { register } from "@/api/user";
-import { initRouter, getTopMenu } from "@/router/utils";
+import { initRouter } from "@/router/utils";
 import { bg, avatar, illustration } from "./utils/static";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { ref, reactive, toRaw, onMounted, onBeforeUnmount, nextTick } from "vue";
@@ -127,11 +127,10 @@ const onLogin = async (formEl: FormInstance | undefined) => {
         })
         .then(res => {
           if (res.code === 200) {
-            // 获取后端路由
-            return initRouter().then(() => {
-              router.push(getTopMenu(true).path).then(() => {
-                message("登录成功", { type: "success" });
-              });
+            // 先进入静态可达首页，待跳转完成后再异步初始化动态路由，避免首屏资源解析竞态。
+            return router.push("/welcome").then(() => {
+              void initRouter();
+              message("登录成功", { type: "success" });
             });
           } else {
             message(res.msg || "登录失败", { type: "error" });

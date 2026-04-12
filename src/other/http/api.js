@@ -177,6 +177,27 @@ export async function getAnnotationDetail(annotationId) {
 }
 
 /**
+ * 根据项目获取标注列表（用于详情页上一条/下一条导航）
+ * @param {string|number} projectId
+ * @returns {Promise<{code:number,msg:string,data:Array}>}
+ */
+export async function getAnnotationListByProject(projectId) {
+  const query = new URLSearchParams({ projectId: String(projectId) })
+  const response = await fetch(`${API_BASE_URL}/annotation/list?${query.toString()}`)
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+
+  const result = await response.json()
+  if (result.code !== 200 && result.code !== 0) {
+    throw new Error(result.msg || '获取标注列表失败')
+  }
+
+  return result
+}
+
+/**
  * 保存人工标注结果
  * @param {Array} annotationData - 当前页面标注行数组
  * @param {Object} params
@@ -191,7 +212,7 @@ export async function saveAnnotation(annotationData, { annotationId, annotatorId
   if (rawStructure) {
     const prunedResult = rawStructure?.result?.ocrResults?.[0]?.prunedResult
     if (prunedResult && Array.isArray(prunedResult.rec_texts)) {
-      prunedResult.rec_texts = annotationData.map(item => item.corrected_text || '')
+      prunedResult.rec_texts = annotationData.map(item => item.contentChange || item.corrected_text || item.content || item.ocr_text || '')
     }
   }
   const manualAnnotationJson = JSON.stringify(rawStructure || {})

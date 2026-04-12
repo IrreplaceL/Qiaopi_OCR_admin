@@ -1,17 +1,23 @@
 <template>
-  <div class="annotation-container">
+  <div ref="annotationContainerRef" class="annotation-container">
     <!-- 顶部工具栏 -->
     <header class="toolbar">
       <div class="toolbar-title">侨批文献标注系统</div>
       <div class="toolbar-actions">
         <input
+          v-if="!isDetailMode"
           type="file"
           ref="fileInputRef"
           @change="handleFileChange"
           accept="image/*"
           style="display: none;"
         />
-        <button class="btn btn-secondary" :disabled="isUploading" @click="triggerFileUpload">
+        <button
+          v-if="!isDetailMode"
+          class="btn btn-secondary"
+          :disabled="isUploading"
+          @click="triggerFileUpload"
+        >
           {{ isUploading ? '识别中...' : '上传图片' }}
         </button>
         <div v-if="imageUrl" class="zoom-controls">
@@ -33,12 +39,38 @@
             </svg>
           </button>
         </div>
+        <button
+          v-if="isDetailMode"
+          class="btn btn-icon"
+          :disabled="!hasPrev || isUploading || isSaving"
+          @click="goToPrevAnnotation"
+          :title="hasPrev ? '上一条标注' : '已是第一条'"
+        >
+          {{ hasPrev ? '上一条' : '已是第一条' }}
+        </button>
+        <button
+          v-if="isDetailMode"
+          class="btn btn-icon"
+          :disabled="!hasNext || isUploading || isSaving"
+          @click="goToNextAnnotation"
+          :title="hasNext ? '下一条标注' : '已是最后一条'"
+        >
+          {{ hasNext ? '下一条' : '已是最后一条' }}
+        </button>
+        <button
+          v-if="isDetailMode"
+          class="btn btn-warning"
+          @click="backToProjectList"
+          title="返回项目标注列表"
+        >
+          返回列表
+        </button>
         <button class="btn btn-icon" @click="toggleFullscreen" title="全屏">
           <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
             <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
           </svg>
         </button>
-        <button class="btn btn-primary" @click="save" :disabled="!annotationData.length || isSaving">保存标注</button>
+        <button class="btn btn-primary" @click="openSaveConfirm" :disabled="!annotationData.length || isSaving">保存标注</button>
       </div>
     </header>
 
@@ -80,12 +112,19 @@
               ref="imageRef"
               @load="onImageLoad"
             />
-            <div v-else class="upload-placeholder" @click="triggerFileUpload">
+            <div
+              v-else
+              class="upload-placeholder"
+              :class="{ disabled: isDetailMode }"
+              @click="!isDetailMode && triggerFileUpload()"
+            >
               <div class="placeholder-content">
                 <svg class="placeholder-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
-                <p class="placeholder-text">点击上传侨批图像</p>
+                <p class="placeholder-text">
+                  {{ isDetailMode ? '当前标注缺少图像，无法重新上传' : '点击上传侨批图像' }}
+                </p>
               </div>
             </div>
             <svg
@@ -165,11 +204,11 @@
             >
               <div class="canvas-item-content">
                 <span class="item-number">{{ item.colId }}</span>
-                <div 
+                <div
                   :class="['item-text', textDirection === 'vertical' ? 'vertical-text' : 'horizontal-text']"
                   :style="{ fontSize: getTextFontSize(item) }"
                 >
-                  {{ item.content }}
+                  {{ getPreferredText(item) }}
                 </div>
               </div>
             </div>
@@ -207,7 +246,7 @@
             <div class="form-group">
               <label>坐标信息：</label>
               <div class="text-display">
-                X: {{ selectedLine.bbox[0] }} - {{ selectedLine.bbox[2] }}, 
+                X: {{ selectedLine.bbox[0] }} - {{ selectedLine.bbox[2] }},
                 Y: {{ selectedLine.bbox[1] }} - {{ selectedLine.bbox[3] }}
               </div>
             </div>
@@ -223,7 +262,7 @@
             {{ isInfoCollapsed ? '展开' : '收起' }}
           </button>
         </div>
-        
+
         <div v-show="!isInfoCollapsed" class="info-content">
           <!-- 基础信息 -->
           <div v-if="structuredInfo" class="info-section">
@@ -329,14 +368,31 @@
         </div>
       </section>
     </main>
+
+    <div v-if="showSaveDialog" class="save-confirm-overlay" @click.self="closeSaveConfirm">
+      <div class="save-confirm-dialog" role="dialog" aria-modal="true" aria-label="保存标注确认">
+        <h4>确认保存标注</h4>
+        <p>将保存当前校正结果，是否继续？</p>
+        <div class="save-confirm-actions">
+          <button class="btn btn-icon" :disabled="isSaving" @click="closeSaveConfirm">取消</button>
+          <button class="btn btn-primary" :disabled="isSaving" @click="save">{{ isSaving ? '保存中...' : '确认保存' }}</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
 import { useUserStoreHook } from '@/store/modules/user'
-import { processImage, saveAnnotation, getAnnotationDetail } from '../http/api.js'
+import {
+  processImage,
+  saveAnnotation,
+  getAnnotationDetail,
+  getAnnotationListByProject
+} from '../http/api.js'
 
 // 响应式数据
 const annotationData = ref([])
@@ -360,13 +416,17 @@ const isSaving = ref(false)
 const rawData = ref(null)
 const zoomLevel = ref(1)
 const isFullscreen = ref(false)
+const showSaveDialog = ref(false)
 const isDragging = ref(false)
 const dragStart = ref({ x: 0, y: 0 })
 const scrollStart = ref({ x: 0, y: 0 })
 const isTextDragging = ref(false)
 const textDragStart = ref({ x: 0, y: 0 })
 const textScrollStart = ref({ x: 0, y: 0 })
+const annotationContainerRef = ref(null)
+const annotationOrder = ref([])
 const route = useRoute()
+const router = useRouter()
 const userStore = useUserStoreHook()
 
 // 新增：结构化信息
@@ -381,6 +441,17 @@ const syncingScroll = ref(false)
 const projectId = computed(() => route.params.projectId)
 const userId = computed(() => userStore.userId)
 const annotationId = computed(() => route.params.annotationId)
+const isDetailMode = computed(() => Boolean(annotationId.value))
+const currentAnnotationIndex = computed(() => {
+  const currentId = String(annotationId.value || '')
+  return annotationOrder.value.findIndex(item => String(item.id) === currentId)
+})
+const hasPrev = computed(() => currentAnnotationIndex.value > 0)
+const hasNext = computed(
+  () =>
+    currentAnnotationIndex.value > -1 &&
+    currentAnnotationIndex.value < annotationOrder.value.length - 1
+)
 
 // 计算属性：判断文字方向
 const textDirection = computed(() => {
@@ -409,11 +480,11 @@ const textDirection = computed(() => {
 // 计算文字的字体大小（基于框的大小和字数）
 const getTextFontSize = (item) => {
   if (!item.bbox) return '12px'
-  
+
   const width = (item.bbox[2] - item.bbox[0]) * scaleRatio.value
   const height = (item.bbox[3] - item.bbox[1]) * scaleRatio.value
-  const charCount = item.content.length
-  
+  const charCount = Math.max(1, getPreferredText(item).length)
+
   if (textDirection.value === 'vertical') {
     // 竖排文字：宽度决定字体大小，高度决定能放几个字
     // 字体大小 = 框宽度 * 0.7（留一些边距）
@@ -427,6 +498,10 @@ const getTextFontSize = (item) => {
     const maxByWidth = (width * 0.85) / charCount
     return Math.max(6, Math.min(maxByHeight, maxByWidth, 20)) + 'px'
   }
+}
+
+const getPreferredText = (item) => {
+  return item.contentChange || item.corrected_text || item.content || item.ocr_text || ''
 }
 
 const getBoxColorClass = (colId) => {
@@ -466,7 +541,7 @@ const handleFileChange = async (event) => {
   if (!file) return
 
   if (!file.type.startsWith('image/')) {
-    alert('请选择图片文件')
+    ElMessage.warning('请选择图片文件')
     return
   }
 
@@ -496,18 +571,18 @@ const uploadAndProcess = async (file) => {
     // 适配新的数据结构
     if (result.data) {
       const annotation = result.data.annotation
-      
+
       // 转换 columnAnnotations 为标注数据数组
       // 后端坐标是基于 1000x1000 的标准化坐标系统
       const COORD_SYSTEM_SIZE = 1000
-      
+
       annotationData.value = (annotation?.columnAnnotations || []).map(col => {
         // 先转换为相对坐标（0-1之间）
         const relX1 = col.coordX1 / COORD_SYSTEM_SIZE
         const relY1 = col.coordY1 / COORD_SYSTEM_SIZE
         const relX2 = col.coordX2 / COORD_SYSTEM_SIZE
         const relY2 = col.coordY2 / COORD_SYSTEM_SIZE
-        
+
         return {
           ...col,
           // 保存相对坐标，等图片加载后再转换为绝对坐标
@@ -515,31 +590,71 @@ const uploadAndProcess = async (file) => {
           bbox: [col.coordX1, col.coordY1, col.coordX2, col.coordY2] // 临时使用原始坐标
         }
       })
-      
+
       // 保存结构化信息
       structuredInfo.value = annotation?.structuredInfo || null
       classicalTerms.value = annotation?.classicalTerms || []
       dialectNotes.value = annotation?.dialectNotes || []
       needReviewItems.value = annotation?.needReviewItems || []
       tokenUsage.value = result.data.tokenUsage || null
-      
+
       // 保存图片 URL
       if (result.data.imageInput) {
         imageUrl.value = result.data.imageInput
       }
-      
+
       rawData.value = result.data
     }
 
     console.log('标注数据加载成功：', annotationData.value)
   } catch (error) {
     console.error('上传处理失败：', error)
-    alert(`上传处理失败：${error.message}`)
+    ElMessage.error(`上传处理失败：${error.message}`)
     imageUrl.value = ''
     annotationData.value = []
   } finally {
     isUploading.value = false
   }
+}
+
+const loadAnnotationOrder = async () => {
+  if (!projectId.value || !isDetailMode.value) {
+    annotationOrder.value = []
+    return
+  }
+
+  try {
+    const result = await getAnnotationListByProject(projectId.value)
+    annotationOrder.value = Array.isArray(result?.data) ? result.data : []
+  } catch (error) {
+    console.error('加载标注顺序失败：', error)
+    annotationOrder.value = []
+  }
+}
+
+const goToPrevAnnotation = () => {
+  if (!hasPrev.value) return
+  const target = annotationOrder.value[currentAnnotationIndex.value - 1]
+  if (!target?.id) return
+  router.push(`/classinfo/detail/${projectId.value}/annotation/${target.id}`)
+}
+
+const goToNextAnnotation = () => {
+  if (!hasNext.value) return
+  const target = annotationOrder.value[currentAnnotationIndex.value + 1]
+  if (!target?.id) return
+  router.push(`/classinfo/detail/${projectId.value}/annotation/${target.id}`)
+}
+
+const backToProjectList = async () => {
+  if (document.fullscreenElement) {
+    try {
+      await document.exitFullscreen()
+    } catch (err) {
+      console.error('退出全屏失败：', err)
+    }
+  }
+  router.push(`/classinfo/detail/${projectId.value}`)
 }
 
 // 图片加载相关
@@ -566,13 +681,13 @@ const updateImageDimensions = () => {
     imageDisplayHeight.value = displayHeight
     scaleRatio.value = displayWidth / naturalWidth
     imageLoaded.value = true
-    
+
     console.log('图片尺寸信息:', {
       natural: { width: naturalWidth, height: naturalHeight },
       display: { width: displayWidth, height: displayHeight },
       scaleRatio: scaleRatio.value
     })
-    
+
     // 重要：图片加载后，将相对坐标转换为基于实际图片尺寸的绝对坐标
     if (annotationData.value.length > 0 && annotationData.value[0].relativeCoords) {
       console.log('开始转换相对坐标为实际坐标...')
@@ -589,7 +704,7 @@ const updateImageDimensions = () => {
           bbox: actualBbox
         }
       })
-      
+
       console.log('坐标转换完成！')
       console.log('第一个bbox实际坐标:', annotationData.value[0].bbox)
       console.log('缩放后坐标:', {
@@ -696,15 +811,15 @@ const handleWheel = (event) => {
   const target = event.target
   const isOnImage = target.closest('.qiaopi-image') || target.closest('.bbox-overlay')
   const isOnTextArea = target.closest('.text-canvas-wrapper') || target.closest('.text-canvas-item')
-  
+
   // 只有在图片或 OCR 框区域上才缩放，否则正常滚动
   if (isOnImage || isOnTextArea) {
     event.preventDefault()
-    
+
     // 增加灵敏度
     const delta = -event.deltaY / 500
     const newZoom = zoomLevel.value + delta
-    
+
     // 扩大缩放范围：0.3 ~ 5
     zoomLevel.value = Math.max(0.3, Math.min(5, newZoom))
   }
@@ -788,11 +903,11 @@ const handleTextMouseLeave = () => {
 
 // 全屏控制
 const toggleFullscreen = async () => {
-  const container = document.querySelector('.annotation-container')
+  const fullscreenTarget = document.documentElement
 
   if (!document.fullscreenElement) {
     try {
-      await container.requestFullscreen()
+      await fullscreenTarget.requestFullscreen()
       isFullscreen.value = true
     } catch (err) {
       console.error('无法进入全屏模式:', err)
@@ -807,6 +922,16 @@ const toggleFullscreen = async () => {
   }
 }
 
+const tryAutoEnterFullscreen = async () => {
+  if (document.fullscreenElement) return
+  try {
+    await document.documentElement.requestFullscreen()
+    isFullscreen.value = true
+  } catch {
+    // 浏览器策略限制时静默处理，后续由用户手势触发。
+  }
+}
+
 // 编辑功能
 const updateText = () => {
   // 文本更新会实时反映在标注数据中
@@ -818,41 +943,43 @@ const confidenceColor = (score) => {
   return '#ef4444'
 }
 
-const save = async () => {
+const openSaveConfirm = () => {
   if (!annotationData.value.length) {
-    alert('没有标注数据可以保存')
+    ElMessage.warning('没有标注数据可以保存')
     return
   }
-  
   if (!annotationId.value) {
-    alert('无法获取标注 ID，请重新加载页面')
+    ElMessage.warning('详情模式下才能保存标注')
     return
   }
-  
+  showSaveDialog.value = true
+}
+
+const closeSaveConfirm = () => {
+  if (isSaving.value) return
+  showSaveDialog.value = false
+}
+
+const save = async () => {
+  if (!annotationData.value.length || !annotationId.value) {
+    ElMessage.warning('当前无可保存标注')
+    return
+  }
+
+  showSaveDialog.value = false
   isSaving.value = true
   try {
-    // 转换回后端需要的数据格式
-    const columnAnnotations = annotationData.value.map(item => ({
-      id: item.id,
-      annotationId: item.annotationId,
-      colId: item.colId,
-      content: item.content,
-      contentChange: item.contentChange,
-      coordX1: item.bbox[0],
-      coordY1: item.bbox[1],
-      coordX2: item.bbox[2],
-      coordY2: item.bbox[3],
-      uncertainNote: item.uncertainNote
-    }))
-    
-    await saveAnnotation({
+    await saveAnnotation(annotationData.value, {
       annotationId: annotationId.value,
       annotatorId: userId.value,
-      columnAnnotations: columnAnnotations
+      ocrRawJson:
+        rawData.value?.ocrRawJson ||
+        rawData.value?.annotation?.ocrRawJson ||
+        null
     })
-    alert('标注结果已保存')
+    ElMessage.success('标注结果已保存')
   } catch (error) {
-    alert('保存失败：' + error.message)
+    ElMessage.error('保存失败：' + error.message)
   } finally {
     isSaving.value = false
   }
@@ -865,23 +992,23 @@ const loadExistingAnnotation = async (id) => {
     console.log('开始加载标注详情，ID:', id)
     const result = await getAnnotationDetail(id)
     console.log('API 返回数据：', result)
-    
+
     // 适配新的数据结构
     if (result.data) {
       const annotation = result.data.annotation
       console.log('解析 annotation:', annotation)
-      
+
       // 转换 columnAnnotations 为标注数据数组
       // 后端坐标是基于 1000x1000 的标准化坐标系统
       const COORD_SYSTEM_SIZE = 1000
-      
+
       annotationData.value = (annotation?.columnAnnotations || []).map(col => {
         // 先转换为相对坐标（0-1之间）
         const relX1 = col.coordX1 / COORD_SYSTEM_SIZE
         const relY1 = col.coordY1 / COORD_SYSTEM_SIZE
         const relX2 = col.coordX2 / COORD_SYSTEM_SIZE
         const relY2 = col.coordY2 / COORD_SYSTEM_SIZE
-        
+
         return {
           ...col,
           // 保存相对坐标，等图片加载后再转换为绝对坐标
@@ -889,69 +1016,113 @@ const loadExistingAnnotation = async (id) => {
           bbox: [col.coordX1, col.coordY1, col.coordX2, col.coordY2] // 临时使用原始坐标
         }
       })
-      
+
       console.log('转换后的 annotationData:', annotationData.value)
-      
+
       // 详细调试信息
       console.log('=== 坐标调试信息 ===')
       console.log('列数:', annotationData.value.length)
-      
+
       // 找出X和Y的范围
       const allX = annotationData.value.flatMap(col => [col.bbox[0], col.bbox[2]])
       const allY = annotationData.value.flatMap(col => [col.bbox[1], col.bbox[3]])
       console.log('X坐标范围:', Math.min(...allX), '-', Math.max(...allX))
       console.log('Y坐标范围:', Math.min(...allY), '-', Math.max(...allY))
-      
+
       // 打印每一列的信息
       annotationData.value.forEach(col => {
         console.log(`列${col.colId}: [${col.bbox[0]}, ${col.bbox[1]}, ${col.bbox[2]}, ${col.bbox[3]}] 宽=${col.bbox[2]-col.bbox[0]} 高=${col.bbox[3]-col.bbox[1]}`)
       })
       console.log('===================')
-      
+
       // 保存结构化信息
       structuredInfo.value = annotation?.structuredInfo || null
       classicalTerms.value = annotation?.classicalTerms || []
       dialectNotes.value = annotation?.dialectNotes || []
       needReviewItems.value = annotation?.needReviewItems || []
       tokenUsage.value = result.data.tokenUsage || null
-      
+
       // 保存图片 URL
       if (result.data.imageInput) {
         imageUrl.value = result.data.imageInput
         console.log('设置图片 URL:', imageUrl.value)
       }
-      
+
       rawData.value = result.data
     } else {
       console.warn('result.data 不存在:', result)
     }
-    
+
     console.log('已有标注数据加载成功，annotationData:', annotationData.value)
   } catch (error) {
     console.error('加载标注详情失败：', error)
-    alert(`加载标注失败：${error.message}`)
+    ElMessage.error(`加载标注失败：${error.message}`)
   } finally {
     isUploading.value = false
   }
 }
 
 // 生命周期
-onMounted(async () => {
-  window.addEventListener('resize', () => {
-    if (imageLoaded.value) {
-      updateImageDimensions()
-    }
-  })
-
-  // 监听全屏变化
-  document.addEventListener('fullscreenchange', () => {
-    isFullscreen.value = !!document.fullscreenElement
-  })
-
-  // 若携带 annotationId，加载已有标注数据
-  if (annotationId.value) {
-    await loadExistingAnnotation(annotationId.value)
+const handleResize = () => {
+  if (imageLoaded.value) {
+    updateImageDimensions()
   }
+}
+
+const handleFullscreenChange = () => {
+  isFullscreen.value = !!document.fullscreenElement
+}
+
+const handleFirstInteractionFullscreen = async () => {
+  await tryAutoEnterFullscreen()
+  if (document.fullscreenElement) {
+    window.removeEventListener('click', handleFirstInteractionFullscreen)
+    window.removeEventListener('keydown', handleFirstInteractionFullscreen)
+  }
+}
+
+const reloadDetailByRoute = async (id) => {
+  if (!id) return
+  selectedLine.value = null
+  highlightedLineId.value = null
+  await loadExistingAnnotation(id)
+}
+
+onMounted(async () => {
+  window.addEventListener('resize', handleResize)
+  document.addEventListener('fullscreenchange', handleFullscreenChange)
+
+  await tryAutoEnterFullscreen()
+  if (!document.fullscreenElement) {
+    window.addEventListener('click', handleFirstInteractionFullscreen)
+    window.addEventListener('keydown', handleFirstInteractionFullscreen)
+  }
+
+  if (isDetailMode.value) {
+    await Promise.all([
+      reloadDetailByRoute(annotationId.value),
+      loadAnnotationOrder()
+    ])
+  }
+})
+
+watch(annotationId, async (newId, oldId) => {
+  if (!newId || newId === oldId) return
+  await reloadDetailByRoute(newId)
+})
+
+watch(projectId, async (newProjectId, oldProjectId) => {
+  if (!isDetailMode.value) return
+  if (newProjectId && newProjectId !== oldProjectId) {
+    await loadAnnotationOrder()
+  }
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+  document.removeEventListener('fullscreenchange', handleFullscreenChange)
+  window.removeEventListener('click', handleFirstInteractionFullscreen)
+  window.removeEventListener('keydown', handleFirstInteractionFullscreen)
 })
 </script>
 
