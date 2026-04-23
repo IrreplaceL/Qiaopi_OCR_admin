@@ -172,7 +172,7 @@ export const uploadOcrImage = async (
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await fetch(`http://172.174.90.114:1031/ocr/upload?${query.toString()}`, {
+  const response = await fetch(`http://127.0.0.1:1031/ocr/upload?${query.toString()}`, {
     method: "POST",
     body: formData
   });
