@@ -1,4 +1,5 @@
 import { http } from "@/utils/http";
+import { apiUrl } from "@/api/base";
 
 export type UserResult = {
   code: number;
@@ -172,7 +173,7 @@ export const uploadOcrImage = async (
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await fetch(`http://127.0.0.1:1031/ocr/upload?${query.toString()}`, {
+  const response = await fetch(apiUrl("/ocr/upload", query), {
     method: "POST",
     body: formData
   });

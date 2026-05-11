@@ -2,13 +2,9 @@ import type { Plugin } from "vite";
 import { getPackageSize } from "./utils";
 import dayjs, { type Dayjs } from "dayjs";
 import duration from "dayjs/plugin/duration";
-import gradientString from "gradient-string";
 import boxen, { type Options as BoxenOptions } from "boxen";
-dayjs.extend(duration);
 
-const welcomeMessage = gradientString("cyan", "magenta").multiline(
-  `您好! 欢迎使用 pure-admin 开源项目\n我们为您精心准备了下面两个贴心的保姆级文档\nhttps://pure-admin.github.io/pure-admin-doc\nhttps://pure-admin-utils.netlify.app`
-);
+dayjs.extend(duration);
 
 const boxenOptions: BoxenOptions = {
   padding: 0.5,
@@ -21,6 +17,7 @@ export function viteBuildInfo(): Plugin {
   let startTime: Dayjs;
   let endTime: Dayjs;
   let outDir: string;
+
   return {
     name: "vite:buildInfo",
     configResolved(resolvedConfig) {
@@ -28,7 +25,7 @@ export function viteBuildInfo(): Plugin {
       outDir = resolvedConfig.build?.outDir ?? "dist";
     },
     buildStart() {
-      console.log(boxen(welcomeMessage, boxenOptions));
+      console.log(boxen("侨批图像标注系统正在构建", boxenOptions));
       if (config.command === "build") {
         startTime = dayjs(new Date());
       }
@@ -39,15 +36,11 @@ export function viteBuildInfo(): Plugin {
         getPackageSize({
           folder: outDir,
           callback: (size: string) => {
+            const elapsed = dayjs
+              .duration(endTime.diff(startTime))
+              .format("mm分ss秒");
             console.log(
-              boxen(
-                gradientString("cyan", "magenta").multiline(
-                  `🎉 恭喜打包完成（总用时${dayjs
-                    .duration(endTime.diff(startTime))
-                    .format("mm分ss秒")}，打包后的大小为${size}）`
-                ),
-                boxenOptions
-              )
+              boxen(`构建完成：用时 ${elapsed}，产物大小 ${size}`, boxenOptions)
             );
           }
         });

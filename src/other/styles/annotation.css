@@ -6,8 +6,9 @@
 
 .annotation-container {
   width: 100%;
-  height: 100%;
-  min-height: 640px;
+  height: 100vh;
+  max-height: 100vh;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   background: #f5f5f5;
@@ -18,6 +19,7 @@
 /* 工具栏样式 */
 .toolbar {
   height: 56px;
+  flex: 0 0 56px;
   background: #1f2937;
   color: white;
   display: flex;
@@ -226,6 +228,7 @@
 /* 主内容区域 - 三栏布局 */
 .main-content-three-columns {
   flex: 1;
+  height: calc(100vh - 56px);
   display: flex;
   overflow: hidden;
   width: 100%;
@@ -276,6 +279,8 @@
   background: white;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .image-panel {
@@ -741,10 +746,11 @@
 
 /* 编辑面板样式 */
 .edit-panel {
-  position: absolute;
+  position: fixed;
   right: 24px;
   top: 80px;
   width: 350px;
+  max-width: calc(100vw - 16px);
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
@@ -760,6 +766,13 @@
   align-items: center;
   background: #f9fafb;
   border-radius: 8px 8px 0 0;
+  cursor: move;
+  user-select: none;
+  touch-action: none;
+}
+
+.edit-header:active {
+  cursor: grabbing;
 }
 
 .edit-header h4 {
@@ -790,7 +803,7 @@
 
 .edit-body {
   padding: 20px;
-  max-height: 500px;
+  max-height: min(500px, calc(100vh - 190px));
   overflow-y: auto;
 }
 
@@ -889,13 +902,20 @@
 .info-panel {
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  max-height: calc(100vh - 56px);
   overflow: hidden;
   transition: flex-basis 0.2s ease, min-width 0.2s ease;
 }
 
 .info-content {
   flex: 1;
+  min-height: 0;
+  height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
   padding: 16px;
 }
 

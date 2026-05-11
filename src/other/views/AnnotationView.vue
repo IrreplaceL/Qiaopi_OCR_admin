@@ -236,10 +236,10 @@
         </div>
 
         <!-- 编辑面板 -->
-        <div v-if="selectedLine" class="edit-panel">
-          <div class="edit-header">
+        <div v-if="selectedLine" class="edit-panel" :style="editPanelStyle">
+          <div class="edit-header" @mousedown="startEditPanelDrag">
             <h4>编辑第 {{ selectedLine.colId }} 列</h4>
-            <button class="btn-close" @click="selectedLine = null">×</button>
+            <button class="btn-close" @mousedown.stop @click="closeEditPanel">×</button>
           </div>
           <div class="edit-body">
             <div class="form-group">
@@ -284,7 +284,7 @@
           </button>
         </div>
 
-        <div v-show="!isInfoCollapsed" class="info-content">
+        <div v-show="!isInfoCollapsed" class="info-content" @wheel.stop>
           <div v-if="structuredInfo" class="info-section">
             <div class="section-title">基础元数据</div>
             <div class="info-form-grid">
@@ -537,6 +537,8 @@ const tokenUsage = ref(null)
 const isInfoCollapsed = ref(false)
 const syncingScroll = ref(false)
 const activeBoxEdit = ref(null)
+const editPanelPosition = ref(null)
+const editPanelDrag = ref(null)
 const COORD_SYSTEM_SIZE = 1000
 const MIN_BOX_SIZE = 12
 
@@ -554,6 +556,15 @@ const hasNext = computed(
     currentAnnotationIndex.value > -1 &&
     currentAnnotationIndex.value < annotationOrder.value.length - 1
 )
+const editPanelStyle = computed(() => {
+  if (!editPanelPosition.value) return {}
+
+  return {
+    left: `${editPanelPosition.value.x}px`,
+    top: `${editPanelPosition.value.y}px`,
+    right: 'auto'
+  }
+})
 
 // 计算属性：判断文字方向
 const textDirection = computed(() => {
@@ -642,6 +653,17 @@ const formatCoord = (value) => Math.round(Number(value || 0))
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
 
+const clampEditPanelPosition = (x, y, width = 350, height = 420) => {
+  const margin = 8
+  const maxX = Math.max(margin, window.innerWidth - width - margin)
+  const maxY = Math.max(margin, window.innerHeight - height - margin)
+
+  return {
+    x: clamp(x, margin, maxX),
+    y: clamp(y, margin, maxY)
+  }
+}
+
 const normalizeBbox = (bbox) => {
   let x1 = clamp(Math.min(bbox[0], bbox[2]), 0, imageWidth.value)
   let y1 = clamp(Math.min(bbox[1], bbox[3]), 0, imageHeight.value)
@@ -722,6 +744,50 @@ const stopBoxEdit = () => {
   activeBoxEdit.value = null
   window.removeEventListener('mousemove', handleBoxEditMove)
   window.removeEventListener('mouseup', stopBoxEdit)
+}
+
+const handleEditPanelDrag = (event) => {
+  if (!editPanelDrag.value) return
+
+  const { offsetX, offsetY, width, height } = editPanelDrag.value
+  editPanelPosition.value = clampEditPanelPosition(
+    event.clientX - offsetX,
+    event.clientY - offsetY,
+    width,
+    height
+  )
+}
+
+const stopEditPanelDrag = () => {
+  editPanelDrag.value = null
+  window.removeEventListener('mousemove', handleEditPanelDrag)
+  window.removeEventListener('mouseup', stopEditPanelDrag)
+}
+
+const startEditPanelDrag = (event) => {
+  if (event.button !== 0) return
+  if (event.target?.closest?.('button,input,textarea,select')) return
+
+  const panel = event.target?.closest?.('.edit-panel')
+  if (!panel) return
+
+  const rect = panel.getBoundingClientRect()
+  editPanelPosition.value = { x: rect.left, y: rect.top }
+  editPanelDrag.value = {
+    offsetX: event.clientX - rect.left,
+    offsetY: event.clientY - rect.top,
+    width: rect.width,
+    height: rect.height
+  }
+
+  window.addEventListener('mousemove', handleEditPanelDrag)
+  window.addEventListener('mouseup', stopEditPanelDrag)
+  event.preventDefault()
+}
+
+const closeEditPanel = () => {
+  stopEditPanelDrag()
+  selectedLine.value = null
 }
 
 const startBoxDrag = (event, item) => {
@@ -1488,6 +1554,17 @@ const handleResize = () => {
   if (imageLoaded.value) {
     updateImageDimensions()
   }
+
+  if (editPanelPosition.value) {
+    const panel = document.querySelector('.edit-panel')
+    const rect = panel?.getBoundingClientRect()
+    editPanelPosition.value = clampEditPanelPosition(
+      editPanelPosition.value.x,
+      editPanelPosition.value.y,
+      rect?.width ?? 350,
+      rect?.height ?? 420
+    )
+  }
 }
 
 const handleFullscreenChange = () => {
@@ -1541,6 +1618,7 @@ watch(projectId, async (newProjectId, oldProjectId) => {
 
 onBeforeUnmount(() => {
   stopBoxEdit()
+  stopEditPanelDrag()
   window.removeEventListener('resize', handleResize)
   document.removeEventListener('fullscreenchange', handleFullscreenChange)
   window.removeEventListener('click', handleFirstInteractionFullscreen)

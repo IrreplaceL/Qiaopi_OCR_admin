@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import { readdir, stat } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
-import { sum, formatBytes } from "@pureadmin/utils";
 import {
   name,
   version,
@@ -10,6 +9,20 @@ import {
   dependencies,
   devDependencies
 } from "../package.json";
+
+function sum(values: number[]) {
+  return values.reduce((total, value) => total + value, 0);
+}
+
+function formatBytes(bytes: number) {
+  if (bytes === 0) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  const index = Math.min(
+    Math.floor(Math.log(bytes) / Math.log(1024)),
+    units.length - 1
+  );
+  return `${(bytes / 1024 ** index).toFixed(2)} ${units[index]}`;
+}
 
 /** 启动`node`进程时所在工作目录的绝对路径 */
 const root: string = process.cwd();
@@ -56,7 +69,9 @@ const wrapperEnv = (envConf: Recordable): ViteEnv => {
     VITE_ROUTER_HISTORY: "",
     VITE_CDN: false,
     VITE_HIDE_HOME: "false",
-    VITE_COMPRESSION: "none"
+    VITE_COMPRESSION: "none",
+    VITE_API_URL: "/api",
+    VITE_API_PROXY_TARGET: "http://127.0.0.1:1031"
   };
 
   for (const envName of Object.keys(envConf)) {

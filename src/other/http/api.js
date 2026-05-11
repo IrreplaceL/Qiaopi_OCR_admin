@@ -3,13 +3,9 @@
  * 包含所有HTTP请求相关的函数
  */
 
-import { annotationData } from '../mockData1.js'
-
-const API_BASE_URL = 'http://127.0.0.1:1031'
+import { apiUrl } from '@/api/base'
 
 // 开发模式：设置为 true 使用 mock 数据，false 使用真实后端
-const USE_MOCK_DATA = false
-
 function parseJsonSafely(value) {
   if (!value) return null
   if (typeof value === 'object') return value
@@ -100,16 +96,6 @@ function unwrapUploadPayload(result) {
  * @returns {Promise<{annotationData:Array,imageUrl:string|null,rawData:Object|null}>}
  */
 export async function processImage(file, { projectId, userId }) {
-  // Mock 模式：直接返回模拟数据
-  if (USE_MOCK_DATA) {
-    await new Promise(resolve => setTimeout(resolve, 500))
-    return Promise.resolve({
-      annotationData,
-      imageUrl: null,
-      rawData: null
-    })
-  }
-
   if (!projectId || !userId) {
     throw new Error('缺少 projectId 或 userId')
   }
@@ -122,7 +108,7 @@ export async function processImage(file, { projectId, userId }) {
     userId: String(userId)
   })
 
-  const response = await fetch(`${API_BASE_URL}/ocr/upload?${query.toString()}`, {
+  const response = await fetch(apiUrl('/ocr/upload', query), {
     method: 'POST',
     body: formData
   })
@@ -160,7 +146,7 @@ export async function processImage(file, { projectId, userId }) {
 export async function getAnnotationDetail(annotationId) {
   const query = new URLSearchParams({ annotationId: String(annotationId) })
 
-  const response = await fetch(`${API_BASE_URL}/annotation/detail?${query.toString()}`)
+  const response = await fetch(apiUrl('/annotation/detail', query))
 
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`)
@@ -183,7 +169,7 @@ export async function getAnnotationDetail(annotationId) {
  */
 export async function getAnnotationListByProject(projectId) {
   const query = new URLSearchParams({ projectId: String(projectId) })
-  const response = await fetch(`${API_BASE_URL}/annotation/list?${query.toString()}`)
+  const response = await fetch(apiUrl('/annotation/list', query))
 
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`)
@@ -278,7 +264,7 @@ export async function saveAnnotation(annotationData, params) {
     tokenUsage: tokenUsage ? stripClientFields(tokenUsage) : null
   }
 
-  const response = await fetch(`${API_BASE_URL}/annotation/save`, {
+  const response = await fetch(apiUrl('/annotation/save'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)

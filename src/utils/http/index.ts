@@ -13,13 +13,14 @@ import { stringify } from "qs";
 import NProgress from "../progress";
 import { getToken, formatToken } from "@/utils/auth";
 import { useUserStoreHook } from "@/store/modules/user";
+import { API_BASE_URL } from "@/api/base";
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
   // 请求超时时间
   timeout: 10000,
   // 后端服务地址
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_BASE_URL,
   headers: {
     Accept: "application/json, text/plain, */*",
     "Content-Type": "application/json",
@@ -76,13 +77,13 @@ class PureHttp {
         }
         /** 请求白名单，放置一些不需要`token`的接口（通过设置请求白名单，防止`token`过期后再请求造成的死循环问题） */
         const whiteList = ["/refresh-token", "/login"];
-        return whiteList.some(url => config.url.endsWith(url))
+        return whiteList.some(url => config.url?.endsWith(url))
           ? config
           : new Promise(resolve => {
               const data = getToken();
               if (data) {
                 const now = new Date().getTime();
-                const expired = parseInt(data.expires) - now <= 0;
+                const expired = Number(data.expires) - now <= 0;
                 if (expired) {
                   if (!PureHttp.isRefreshing) {
                     PureHttp.isRefreshing = true;
