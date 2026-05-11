@@ -70,6 +70,14 @@
             <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
           </svg>
         </button>
+        <button
+          v-if="isDetailMode && imageLoaded"
+          class="btn btn-secondary"
+          :disabled="isSaving"
+          @click="addAnnotationBox"
+        >
+          新增框
+        </button>
         <button class="btn btn-primary" @click="openSaveConfirm" :disabled="!annotationData.length || isSaving">保存标注</button>
       </div>
     </header>
@@ -136,7 +144,7 @@
             >
               <g
                 v-for="item in annotationData"
-                :key="item.colId"
+                :key="item.__clientKey || item.id || item.colId"
               >
                 <rect
                   :x="getDisplayRect(item).x"
@@ -145,8 +153,20 @@
                   :height="getDisplayRect(item).height"
                   :class="['bbox-rect', getBoxColorClass(item.colId), { 'bbox-active': highlightedLineId === item.colId }]"
                   @click.stop="handleBboxClick(item)"
+                  @mousedown.stop.prevent="startBoxDrag($event, item)"
                   @mouseenter="handleBboxHover(item.colId)"
                   @mouseleave="handleBboxLeave"
+                />
+                <rect
+                  v-for="handle in getResizeHandles(item)"
+                  v-show="highlightedLineId === item.colId"
+                  :key="`${item.colId}-${handle.name}`"
+                  :x="handle.x"
+                  :y="handle.y"
+                  :width="handle.size"
+                  :height="handle.size"
+                  :class="['bbox-handle', `handle-${handle.name}`]"
+                  @mousedown.stop.prevent="startBoxResize($event, item, handle.name)"
                 />
                 <text
                   :x="getDisplayRect(item).x + 5"
@@ -164,7 +184,7 @@
       <!-- 右侧：标注区域 -->
       <section class="annotation-panel column-middle">
         <div class="panel-header">
-          <h3>OCR识别结果</h3>
+          <h3>标注区</h3>
           <span class="text-direction">{{ textDirection === 'vertical' ? '竖排文字' : '横排文字' }}</span>
         </div>
 
@@ -189,7 +209,7 @@
           >
             <div
               v-for="item in annotationData"
-              :key="item.colId"
+              :key="item.__clientKey || item.id || item.colId"
               :data-line-id="item.colId"
               :class="['text-canvas-item', getBoxColorClass(item.colId), { 'item-active': highlightedLineId === item.colId }]"
               :style="{
@@ -246,10 +266,11 @@
             <div class="form-group">
               <label>坐标信息：</label>
               <div class="text-display">
-                X: {{ selectedLine.bbox[0] }} - {{ selectedLine.bbox[2] }},
-                Y: {{ selectedLine.bbox[1] }} - {{ selectedLine.bbox[3] }}
+                X: {{ formatCoord(selectedLine.bbox[0]) }} - {{ formatCoord(selectedLine.bbox[2]) }},
+                Y: {{ formatCoord(selectedLine.bbox[1]) }} - {{ formatCoord(selectedLine.bbox[3]) }}
               </div>
             </div>
+            <button class="btn btn-danger full-width" @click="deleteSelectedBox">删除此列</button>
           </div>
         </div>
       </section>
@@ -264,6 +285,83 @@
         </div>
 
         <div v-show="!isInfoCollapsed" class="info-content">
+          <div v-if="structuredInfo" class="info-section">
+            <div class="section-title">基础元数据</div>
+            <div class="info-form-grid">
+              <label class="info-field">
+                <span>寄件人</span>
+                <input v-model="structuredInfo.sender" class="form-control compact" placeholder="未提取" />
+              </label>
+              <label class="info-field">
+                <span>收件人</span>
+                <input v-model="structuredInfo.receiver" class="form-control compact" placeholder="未提取" />
+              </label>
+              <label class="info-field">
+                <span>寄件地</span>
+                <input v-model="structuredInfo.sendPlace" class="form-control compact" placeholder="未提取" />
+              </label>
+              <label class="info-field">
+                <span>收件地</span>
+                <input v-model="structuredInfo.receivePlace" class="form-control compact" placeholder="未提取" />
+              </label>
+              <label class="info-field">
+                <span>原文日期</span>
+                <input v-model="structuredInfo.originalDate" class="form-control compact" placeholder="未提取" />
+              </label>
+              <label class="info-field">
+                <span>公历日期</span>
+                <input v-model="structuredInfo.gregorianDate" class="form-control compact" placeholder="未提取" />
+              </label>
+              <label class="info-field full">
+                <span>侨汇信息</span>
+                <textarea v-model="structuredInfo.remittanceInfo" class="form-control compact" rows="2" placeholder="未提取"></textarea>
+              </label>
+            </div>
+          </div>
+
+          <div v-if="structuredInfo" class="info-section">
+            <div class="section-title">核心内容摘要</div>
+            <textarea v-model="structuredInfo.coreEvent" class="form-control compact" rows="4" placeholder="请输入核心内容摘要"></textarea>
+          </div>
+
+          <div class="info-section">
+            <div class="section-title with-action">
+              <span>文言词汇解释</span>
+              <button class="btn btn-mini" @click="addClassicalTerm">新增</button>
+            </div>
+            <div v-if="!classicalTerms.length" class="empty-hint">暂无词汇解释</div>
+            <div v-for="(term, index) in classicalTerms" :key="getEditableKey(term, index, 'term')" class="editable-list-item">
+              <input v-model="term.term" class="form-control compact" placeholder="词汇" />
+              <textarea v-model="term.explanation" class="form-control compact" rows="2" placeholder="解释"></textarea>
+              <button class="btn btn-danger btn-mini" @click="removeClassicalTerm(index)">删除</button>
+            </div>
+          </div>
+
+          <div class="info-section">
+            <div class="section-title with-action">
+              <span>方言俗字注释</span>
+              <button class="btn btn-mini" @click="addDialectNote">新增</button>
+            </div>
+            <div v-if="!dialectNotes.length" class="empty-hint">暂无方言注释</div>
+            <div v-for="(note, index) in dialectNotes" :key="getEditableKey(note, index, 'dialect')" class="editable-list-item">
+              <input v-model="note.original" class="form-control compact" placeholder="原词" />
+              <textarea v-model="note.note" class="form-control compact" rows="2" placeholder="注释"></textarea>
+              <button class="btn btn-danger btn-mini" @click="removeDialectNote(index)">删除</button>
+            </div>
+          </div>
+
+          <div class="info-section warning-section">
+            <div class="section-title with-action">
+              <span>需要人工复核</span>
+              <button class="btn btn-mini" @click="addNeedReviewItem">新增</button>
+            </div>
+            <div v-if="!needReviewItems.length" class="empty-hint">暂无复核项</div>
+            <div v-for="(item, index) in needReviewItems" :key="getEditableKey(item, index, 'review')" class="editable-list-item">
+              <textarea v-model="item.item" class="form-control compact" rows="2" placeholder="复核项"></textarea>
+              <button class="btn btn-danger btn-mini" @click="removeNeedReviewItem(index)">删除</button>
+            </div>
+          </div>
+          <template v-if="false">
           <!-- 基础信息 -->
           <div v-if="structuredInfo" class="info-section">
             <div class="section-title">📋 基础元数据</div>
@@ -330,6 +428,7 @@
           </div>
 
           <!-- 置信度信息 -->
+          </template>
           <div v-if="structuredInfo?.confidence" class="info-section">
             <div class="section-title">📊 识别置信度</div>
             <div class="confidence-wrap">
@@ -385,7 +484,7 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserStoreHook } from '@/store/modules/user'
 import {
   processImage,
@@ -437,6 +536,9 @@ const needReviewItems = ref([])
 const tokenUsage = ref(null)
 const isInfoCollapsed = ref(false)
 const syncingScroll = ref(false)
+const activeBoxEdit = ref(null)
+const COORD_SYSTEM_SIZE = 1000
+const MIN_BOX_SIZE = 12
 
 const projectId = computed(() => route.params.projectId)
 const userId = computed(() => userStore.userId)
@@ -500,8 +602,13 @@ const getTextFontSize = (item) => {
   }
 }
 
+const firstNonBlankText = (...values) => {
+  const value = values.find(item => typeof item === 'string' && item.trim().length > 0)
+  return value ?? ''
+}
+
 const getPreferredText = (item) => {
-  return item.contentChange || item.corrected_text || item.content || item.ocr_text || ''
+  return firstNonBlankText(item.contentChange, item.corrected_text, item.content, item.ocr_text)
 }
 
 const getBoxColorClass = (colId) => {
@@ -529,6 +636,238 @@ const getDisplayRect = (item) => {
     width: Math.max(2, baseW - gap),
     height: Math.max(2, baseH - gap)
   }
+}
+
+const formatCoord = (value) => Math.round(Number(value || 0))
+
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
+
+const normalizeBbox = (bbox) => {
+  let x1 = clamp(Math.min(bbox[0], bbox[2]), 0, imageWidth.value)
+  let y1 = clamp(Math.min(bbox[1], bbox[3]), 0, imageHeight.value)
+  let x2 = clamp(Math.max(bbox[0], bbox[2]), 0, imageWidth.value)
+  let y2 = clamp(Math.max(bbox[1], bbox[3]), 0, imageHeight.value)
+
+  if (x2 - x1 < MIN_BOX_SIZE) {
+    if (x1 + MIN_BOX_SIZE <= imageWidth.value) {
+      x2 = x1 + MIN_BOX_SIZE
+    } else {
+      x1 = Math.max(0, x2 - MIN_BOX_SIZE)
+    }
+  }
+  if (y2 - y1 < MIN_BOX_SIZE) {
+    if (y1 + MIN_BOX_SIZE <= imageHeight.value) {
+      y2 = y1 + MIN_BOX_SIZE
+    } else {
+      y1 = Math.max(0, y2 - MIN_BOX_SIZE)
+    }
+  }
+
+  return [x1, y1, x2, y2]
+}
+
+const setItemBbox = (item, bbox) => {
+  item.bbox = normalizeBbox(bbox)
+  item.relativeCoords = [
+    imageWidth.value ? item.bbox[0] / imageWidth.value : 0,
+    imageHeight.value ? item.bbox[1] / imageHeight.value : 0,
+    imageWidth.value ? item.bbox[2] / imageWidth.value : 0,
+    imageHeight.value ? item.bbox[3] / imageHeight.value : 0
+  ]
+}
+
+const ensureColumnClientKey = (item) => {
+  if (!item.__clientKey) {
+    item.__clientKey = `column-${item.id ?? 'new'}-${Date.now()}-${Math.random().toString(16).slice(2)}`
+  }
+  return item.__clientKey
+}
+
+const getResizeHandles = (item) => {
+  const rect = getDisplayRect(item)
+  const size = Math.max(8, Math.min(12, 10 / zoomLevel.value))
+  const half = size / 2
+  const midX = rect.x + rect.width / 2
+  const midY = rect.y + rect.height / 2
+  const right = rect.x + rect.width
+  const bottom = rect.y + rect.height
+
+  return [
+    { name: 'nw', x: rect.x - half, y: rect.y - half, size },
+    { name: 'n', x: midX - half, y: rect.y - half, size },
+    { name: 'ne', x: right - half, y: rect.y - half, size },
+    { name: 'e', x: right - half, y: midY - half, size },
+    { name: 'se', x: right - half, y: bottom - half, size },
+    { name: 's', x: midX - half, y: bottom - half, size },
+    { name: 'sw', x: rect.x - half, y: bottom - half, size },
+    { name: 'w', x: rect.x - half, y: midY - half, size }
+  ]
+}
+
+const getPointerImagePoint = (event) => {
+  const overlay = imageWrapperRef.value?.querySelector('.bbox-overlay')
+  if (!overlay) return null
+
+  const rect = overlay.getBoundingClientRect()
+  const displayX = (event.clientX - rect.left) / zoomLevel.value
+  const displayY = (event.clientY - rect.top) / zoomLevel.value
+
+  return {
+    x: displayX / scaleRatio.value,
+    y: displayY / scaleRatio.value
+  }
+}
+
+const stopBoxEdit = () => {
+  activeBoxEdit.value = null
+  window.removeEventListener('mousemove', handleBoxEditMove)
+  window.removeEventListener('mouseup', stopBoxEdit)
+}
+
+const startBoxDrag = (event, item) => {
+  if (!imageLoaded.value) return
+  const point = getPointerImagePoint(event)
+  if (!point) return
+
+  selectedLine.value = item
+  highlightedLineId.value = item.colId
+  activeBoxEdit.value = {
+    mode: 'move',
+    item,
+    startPoint: point,
+    startBbox: [...item.bbox]
+  }
+  window.addEventListener('mousemove', handleBoxEditMove)
+  window.addEventListener('mouseup', stopBoxEdit)
+}
+
+const startBoxResize = (event, item, handle) => {
+  if (!imageLoaded.value) return
+  const point = getPointerImagePoint(event)
+  if (!point) return
+
+  selectedLine.value = item
+  highlightedLineId.value = item.colId
+  activeBoxEdit.value = {
+    mode: 'resize',
+    handle,
+    item,
+    startPoint: point,
+    startBbox: [...item.bbox]
+  }
+  window.addEventListener('mousemove', handleBoxEditMove)
+  window.addEventListener('mouseup', stopBoxEdit)
+}
+
+const handleBoxEditMove = (event) => {
+  const edit = activeBoxEdit.value
+  if (!edit) return
+
+  const point = getPointerImagePoint(event)
+  if (!point) return
+
+  const dx = point.x - edit.startPoint.x
+  const dy = point.y - edit.startPoint.y
+  const [x1, y1, x2, y2] = edit.startBbox
+  let next = [x1, y1, x2, y2]
+
+  if (edit.mode === 'move') {
+    next = [x1 + dx, y1 + dy, x2 + dx, y2 + dy]
+    const width = x2 - x1
+    const height = y2 - y1
+    next[0] = clamp(next[0], 0, imageWidth.value - width)
+    next[1] = clamp(next[1], 0, imageHeight.value - height)
+    next[2] = next[0] + width
+    next[3] = next[1] + height
+  } else {
+    if (edit.handle.includes('w')) next[0] = x1 + dx
+    if (edit.handle.includes('e')) next[2] = x2 + dx
+    if (edit.handle.includes('n')) next[1] = y1 + dy
+    if (edit.handle.includes('s')) next[3] = y2 + dy
+  }
+
+  setItemBbox(edit.item, next)
+}
+
+const sortAndRenumberColumns = () => {
+  const selectedKey = selectedLine.value ? ensureColumnClientKey(selectedLine.value) : null
+  annotationData.value = [...annotationData.value]
+    .sort((a, b) => {
+      const ax = a.bbox?.[0] ?? 0
+      const bx = b.bbox?.[0] ?? 0
+      return bx - ax
+    })
+    .map((item, index) => ({
+      ...item,
+      __clientKey: ensureColumnClientKey(item),
+      colId: index + 1
+    }))
+
+  if (selectedKey) {
+    selectedLine.value = annotationData.value.find(item => item.__clientKey === selectedKey) || null
+    highlightedLineId.value = selectedLine.value?.colId ?? null
+  }
+}
+
+const addAnnotationBox = () => {
+  if (!imageLoaded.value || !imageWidth.value || !imageHeight.value) {
+    ElMessage.warning('图片加载完成后才能新增标注框')
+    return
+  }
+
+  const viewport = imageContainerRef.value
+  const centerDisplayX = viewport
+    ? (viewport.scrollLeft + viewport.clientWidth / 2 - 24) / zoomLevel.value
+    : imageDisplayWidth.value / 2
+  const centerDisplayY = viewport
+    ? (viewport.scrollTop + viewport.clientHeight / 2 - 24) / zoomLevel.value
+    : imageDisplayHeight.value / 2
+  const centerX = clamp(centerDisplayX / scaleRatio.value, 0, imageWidth.value)
+  const centerY = clamp(centerDisplayY / scaleRatio.value, 0, imageHeight.value)
+  const boxWidth = Math.max(60, imageWidth.value * 0.08)
+  const boxHeight = Math.max(180, imageHeight.value * 0.45)
+  const newItem = {
+    id: null,
+    annotationId: Number(annotationId.value),
+    colId: annotationData.value.length + 1,
+    content: '',
+    contentChange: '',
+    uncertainNote: '',
+    createdAt: null,
+    updatedAt: null,
+    __clientKey: `column-new-${Date.now()}`,
+    bbox: normalizeBbox([
+      centerX - boxWidth / 2,
+      centerY - boxHeight / 2,
+      centerX + boxWidth / 2,
+      centerY + boxHeight / 2
+    ]),
+    relativeCoords: []
+  }
+  setItemBbox(newItem, newItem.bbox)
+  annotationData.value.push(newItem)
+  selectedLine.value = newItem
+  sortAndRenumberColumns()
+}
+
+const deleteSelectedBox = async () => {
+  if (!selectedLine.value) return
+
+  try {
+    await ElMessageBox.confirm('删除后将重新排列列编号，是否继续？', '删除此列', {
+      confirmButtonText: '删除',
+      cancelButtonText: '取消',
+      type: 'warning'
+    })
+  } catch {
+    return
+  }
+
+  const target = selectedLine.value
+  annotationData.value = annotationData.value.filter(item => item !== target)
+  selectedLine.value = null
+  highlightedLineId.value = null
+  sortAndRenumberColumns()
 }
 
 // 文件上传相关
@@ -590,9 +929,10 @@ const uploadAndProcess = async (file) => {
           bbox: [col.coordX1, col.coordY1, col.coordX2, col.coordY2] // 临时使用原始坐标
         }
       })
+      annotationData.value.forEach(ensureColumnClientKey)
 
       // 保存结构化信息
-      structuredInfo.value = annotation?.structuredInfo || null
+      structuredInfo.value = annotation?.structuredInfo || createDefaultStructuredInfo()
       classicalTerms.value = annotation?.classicalTerms || []
       dialectNotes.value = annotation?.dialectNotes || []
       needReviewItems.value = annotation?.needReviewItems || []
@@ -829,6 +1169,7 @@ const handleWheel = (event) => {
 // 鼠标拖动功能
 const handleMouseDown = (event) => {
   if (!imageUrl.value || event.button !== 0) return
+  if (activeBoxEdit.value || event.target.closest('.bbox-rect') || event.target.closest('.bbox-handle')) return
 
   isDragging.value = true
   dragStart.value = {
@@ -943,6 +1284,79 @@ const confidenceColor = (score) => {
   return '#ef4444'
 }
 
+const createDefaultStructuredInfo = () => ({
+  id: null,
+  annotationId: Number(annotationId.value),
+  confidence: null,
+  confidenceCalculation: '',
+  coreEvent: '',
+  createdAt: null,
+  gregorianDate: '',
+  originalDate: '',
+  receivePlace: '',
+  receiver: '',
+  remittanceInfo: '',
+  sendPlace: '',
+  sender: '',
+  updatedAt: null
+})
+
+const ensureStructuredInfo = () => {
+  if (!structuredInfo.value) {
+    structuredInfo.value = createDefaultStructuredInfo()
+  } else if (!structuredInfo.value.annotationId) {
+    structuredInfo.value.annotationId = Number(annotationId.value)
+  }
+}
+
+const getEditableKey = (item, index, prefix) => {
+  if (!item.__clientKey) {
+    item.__clientKey = `${prefix}-${item.id ?? 'new'}-${Date.now()}-${index}-${Math.random().toString(16).slice(2)}`
+  }
+  return item.__clientKey
+}
+
+const addClassicalTerm = () => {
+  ensureStructuredInfo()
+  classicalTerms.value.push({
+    id: null,
+    structuredInfoId: structuredInfo.value?.id ?? null,
+    term: '',
+    explanation: ''
+  })
+}
+
+const removeClassicalTerm = (index) => {
+  classicalTerms.value.splice(index, 1)
+}
+
+const addDialectNote = () => {
+  ensureStructuredInfo()
+  dialectNotes.value.push({
+    id: null,
+    structuredInfoId: structuredInfo.value?.id ?? null,
+    original: '',
+    note: ''
+  })
+}
+
+const removeDialectNote = (index) => {
+  dialectNotes.value.splice(index, 1)
+}
+
+const addNeedReviewItem = () => {
+  ensureStructuredInfo()
+  needReviewItems.value.push({
+    id: null,
+    structuredInfoId: structuredInfo.value?.id ?? null,
+    item: ''
+  })
+}
+
+const removeNeedReviewItem = (index) => {
+  needReviewItems.value.splice(index, 1)
+}
+
 const openSaveConfirm = () => {
   if (!annotationData.value.length) {
     ElMessage.warning('没有标注数据可以保存')
@@ -971,11 +1385,17 @@ const save = async () => {
   try {
     await saveAnnotation(annotationData.value, {
       annotationId: annotationId.value,
-      annotatorId: userId.value,
-      ocrRawJson:
-        rawData.value?.ocrRawJson ||
-        rawData.value?.annotation?.ocrRawJson ||
-        null
+      imageWidth: imageWidth.value,
+      imageHeight: imageHeight.value,
+      imageInput: imageUrl.value || rawData.value?.imageInput || '',
+      success: rawData.value?.success ?? true,
+      parseSuccess: rawData.value?.annotation?.parseSuccess ?? true,
+      errorMsg: rawData.value?.annotation?.errorMsg || rawData.value?.errorMsg || '',
+      structuredInfo: structuredInfo.value,
+      classicalTerms: classicalTerms.value,
+      dialectNotes: dialectNotes.value,
+      needReviewItems: needReviewItems.value,
+      tokenUsage: tokenUsage.value
     })
     ElMessage.success('标注结果已保存')
   } catch (error) {
@@ -1016,6 +1436,7 @@ const loadExistingAnnotation = async (id) => {
           bbox: [col.coordX1, col.coordY1, col.coordX2, col.coordY2] // 临时使用原始坐标
         }
       })
+      annotationData.value.forEach(ensureColumnClientKey)
 
       console.log('转换后的 annotationData:', annotationData.value)
 
@@ -1036,7 +1457,7 @@ const loadExistingAnnotation = async (id) => {
       console.log('===================')
 
       // 保存结构化信息
-      structuredInfo.value = annotation?.structuredInfo || null
+      structuredInfo.value = annotation?.structuredInfo || createDefaultStructuredInfo()
       classicalTerms.value = annotation?.classicalTerms || []
       dialectNotes.value = annotation?.dialectNotes || []
       needReviewItems.value = annotation?.needReviewItems || []
@@ -1119,6 +1540,7 @@ watch(projectId, async (newProjectId, oldProjectId) => {
 })
 
 onBeforeUnmount(() => {
+  stopBoxEdit()
   window.removeEventListener('resize', handleResize)
   document.removeEventListener('fullscreenchange', handleFullscreenChange)
   window.removeEventListener('click', handleFirstInteractionFullscreen)

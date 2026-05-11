@@ -111,6 +111,37 @@
   color: #fff;
 }
 
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.btn-mini {
+  padding: 5px 10px;
+  font-size: 12px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+}
+
+.btn-mini:hover {
+  background: #f3f4f6;
+}
+
+.btn-mini.btn-danger {
+  border-color: #ef4444;
+  background: #ef4444;
+  color: #fff;
+}
+
+.full-width {
+  width: 100%;
+}
+
 .btn:disabled {
   opacity: 0.75;
   cursor: not-allowed;
@@ -205,26 +236,38 @@
 
 /* 三栏：左侧图像、中间标注、右侧信息 */
 .column-left {
-  width: 40%;
+  flex: 1 1 40%;
   min-width: 350px;
 }
 
 .column-middle {
-  width: 40%;
+  flex: 1 1 40%;
   min-width: 350px;
   border-left: 1px solid #e5e7eb;
   border-right: 1px solid #e5e7eb;
 }
 
 .column-right {
-  width: 20%;
+  flex: 0 0 20%;
   min-width: 220px;
   background: #f9fafb;
 }
 
 .info-panel.collapsed {
-  width: 72px;
+  flex-basis: 72px;
   min-width: 72px;
+}
+
+.info-panel.collapsed .panel-header {
+  padding: 12px 8px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-panel.collapsed .panel-header h3 {
+  writing-mode: vertical-rl;
+  font-size: 14px;
+  line-height: 1.2;
 }
 
 /* 图像面板和标注面板 */
@@ -419,6 +462,29 @@
   font-weight: 600;
   pointer-events: none;
   user-select: none;
+}
+
+.bbox-handle {
+  fill: #ffffff;
+  stroke: #ef4444;
+  stroke-width: 2;
+  cursor: nwse-resize;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+}
+
+.handle-n,
+.handle-s {
+  cursor: ns-resize;
+}
+
+.handle-e,
+.handle-w {
+  cursor: ew-resize;
+}
+
+.handle-ne,
+.handle-sw {
+  cursor: nesw-resize;
 }
 
 /* 文本画布容器样式 - 使用坐标布局 */
@@ -824,7 +890,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: width 0.2s ease;
+  transition: flex-basis 0.2s ease, min-width 0.2s ease;
 }
 
 .info-content {
@@ -853,6 +919,59 @@
 .info-section.warning-section {
   background: #fef3c7;
   border-color: #fbbf24;
+}
+
+.info-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.info-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  color: #374151;
+  font-weight: 600;
+}
+
+.info-field.full {
+  grid-column: 1 / -1;
+}
+
+.form-control.compact {
+  padding: 7px 9px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.section-title.with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.editable-list-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f9fafb;
+}
+
+.empty-hint {
+  padding: 10px;
+  color: #6b7280;
+  font-size: 13px;
+  text-align: center;
+  background: #f9fafb;
+  border: 1px dashed #d1d5db;
+  border-radius: 6px;
 }
 
 .section-title {
@@ -985,7 +1104,7 @@
 }
 
 .save-confirm-overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 140;
   background: rgba(15, 23, 42, 0.38);

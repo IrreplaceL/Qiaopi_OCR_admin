@@ -197,34 +197,91 @@ export async function getAnnotationListByProject(projectId) {
   return result
 }
 
+function stripClientFields(item = {}) {
+  const { __clientKey, relativeCoords, bbox, line_id, ocr_text, corrected_text, score, entities, ...rest } = item
+  return rest
+}
+
+function toBackendCoord(value, size) {
+  if (!size) return 0
+  return Math.round(Math.max(0, Math.min(1000, (Number(value || 0) / size) * 1000)))
+}
+
+function firstNonBlankText(...values) {
+  const value = values.find(item => typeof item === 'string' && item.trim().length > 0)
+  return value ?? ''
+}
+
 /**
  * 保存人工标注结果
- * @param {Array} annotationData - 当前页面标注行数组
+ * @param {Array} annotationData - 当前页面列级标注数组
  * @param {Object} params
  * @param {string|number} params.annotationId
- * @param {string|number} params.annotatorId
- * @param {string} params.ocrRawJson - 原始 OCR JSON 字符串，用于保持结构一致
+ * @param {number} params.imageWidth
+ * @param {number} params.imageHeight
  * @returns {Promise<Object>}
  */
-export async function saveAnnotation(annotationData, { annotationId, annotatorId, ocrRawJson }) {
-  // 以 ocrRawJson 结构为基础，将 rec_texts 替换为校正文本
-  const rawStructure = parseJsonSafely(ocrRawJson)
-  if (rawStructure) {
-    const prunedResult = rawStructure?.result?.ocrResults?.[0]?.prunedResult
-    if (prunedResult && Array.isArray(prunedResult.rec_texts)) {
-      prunedResult.rec_texts = annotationData.map(item => item.contentChange || item.corrected_text || item.content || item.ocr_text || '')
+export async function saveAnnotation(annotationData, params) {
+  const {
+    annotationId,
+    imageWidth,
+    imageHeight,
+    imageInput,
+    success = true,
+    parseSuccess = true,
+    errorMsg = '',
+    structuredInfo,
+    classicalTerms = [],
+    dialectNotes = [],
+    needReviewItems = [],
+    tokenUsage
+  } = params
+
+  const numericAnnotationId = Number(annotationId)
+  const columnAnnotations = annotationData.map(item => {
+    const [x1, y1, x2, y2] = item.bbox || [item.coordX1, item.coordY1, item.coordX2, item.coordY2]
+    return {
+      ...stripClientFields(item),
+      id: item.id ?? null,
+      annotationId: numericAnnotationId,
+      colId: Number(item.colId),
+      coordX1: toBackendCoord(x1, imageWidth),
+      coordY1: toBackendCoord(y1, imageHeight),
+      coordX2: toBackendCoord(x2, imageWidth),
+      coordY2: toBackendCoord(y2, imageHeight),
+      content: firstNonBlankText(item.content, item.ocr_text),
+      contentChange: firstNonBlankText(item.contentChange, item.corrected_text, item.content, item.ocr_text),
+      uncertainNote: item.uncertainNote || ''
     }
+  })
+
+  const payload = {
+    success,
+    imageInput,
+    errorMsg,
+    annotation: {
+      columnAnnotations,
+      structuredInfo: structuredInfo
+        ? {
+            ...stripClientFields(structuredInfo),
+            annotationId: numericAnnotationId
+          }
+        : {
+            annotationId: numericAnnotationId
+          },
+      classicalTerms: classicalTerms.map(item => stripClientFields(item)),
+      dialectNotes: dialectNotes.map(item => stripClientFields(item)),
+      needReviewItems: needReviewItems.map(item => stripClientFields(item)),
+      parseSuccess,
+      errorMsg
+    },
+    tokenUsage: tokenUsage ? stripClientFields(tokenUsage) : null
   }
-  const manualAnnotationJson = JSON.stringify(rawStructure || {})
 
   const response = await fetch(`${API_BASE_URL}/annotation/save`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      annotationId: Number(annotationId),
-      annotatorId: Number(annotatorId),
-      manualAnnotationJson
-    })
+    body: JSON.stringify(payload)
   })
 
   if (!response.ok) {
