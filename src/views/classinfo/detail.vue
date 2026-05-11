@@ -1,12 +1,21 @@
 <template>
-  <div class="detail-page">
-    <!-- 顶部面包屑 + 返回 -->
-    <div class="page-header">
-      <el-button :icon="ArrowLeft" @click="router.back()">返回</el-button>
-      <span class="page-title">项目标注列表</span>
-      <span class="page-sub">共 {{ list.length }} 张图片，已标注 {{ annotatedCount }} 张</span>
+  <section class="detail-page">
+    <div class="page-hero">
+      <div>
+        <button class="archive-button ghost" type="button" @click="router.back()">
+          <el-icon><ArrowLeft /></el-icon>
+          返回
+        </button>
+        <div class="hero-copy">
+          <span class="archive-kicker">Document Set</span>
+          <h1 class="archive-title">侨批图像档案</h1>
+          <p class="archive-subtitle">
+            共 {{ list.length }} 张图像，已完成 {{ annotatedCount }} 张。点击卡片进入双栏对照标注。
+          </p>
+        </div>
+      </div>
       <el-button type="primary" class="add-btn" @click="goToAnnotationNew">
-        新增标注图片
+        新增标注图像
       </el-button>
       <input
         ref="uploadInputRef"
@@ -18,17 +27,15 @@
       />
     </div>
 
-    <!-- 加载中 -->
     <div v-loading="loading" class="image-grid">
       <el-empty v-if="!loading && list.length === 0" description="该项目暂无标注数据" />
 
-      <div
+      <article
         v-for="item in list"
         :key="item.id"
         class="image-card"
         @click="goToAnnotationDetail(item.id)"
       >
-        <!-- 图片区域 -->
         <div class="image-wrap">
           <el-image
             :src="item.imageUrl"
@@ -49,24 +56,19 @@
               </div>
             </template>
           </el-image>
-
-          <!-- 标注状态角标 -->
-          <el-tag
-            :type="item.annotated ? 'success' : 'info'"
-            class="status-tag"
-            size="small"
-            effect="dark"
-          >
-            {{ item.annotated ? '已标注' : '未标注' }}
-          </el-tag>
+          <span :class="['status-dot', getStatusInfo(item).className]">
+            {{ getStatusInfo(item).label }}
+          </span>
         </div>
 
-        <!-- 底部信息 -->
         <div class="image-footer">
-          <span class="image-id">ID: {{ item.id }}</span>
-          <span class="image-time">{{ item.updateTime }}</span>
+          <div>
+            <h2>{{ getImageTitle(item) }}</h2>
+            <span>ID {{ item.id }}</span>
+          </div>
+          <time>{{ item.updateTime }}</time>
         </div>
-      </div>
+      </article>
     </div>
 
     <div
@@ -88,11 +90,11 @@
 
       <div v-show="!progressPanelCollapsed" class="upload-progress-body">
         <div class="progress-meta">
-          <span>进度: {{ progressState.done }}/{{ progressState.total }}</span>
-          <span>完成率: {{ progressPercent }}%</span>
-          <span>成功: {{ progressState.success }}</span>
-          <span>失败: {{ progressState.fail }}</span>
-          <span>累计耗时: {{ totalElapsedLabel }}</span>
+          <span>进度 {{ progressState.done }}/{{ progressState.total }}</span>
+          <span>完成率 {{ progressPercent }}%</span>
+          <span>成功 {{ progressState.success }}</span>
+          <span>失败 {{ progressState.fail }}</span>
+          <span>耗时 {{ totalElapsedLabel }}</span>
         </div>
 
         <div class="progress-bar-wrap">
@@ -105,7 +107,7 @@
               [{{ log.time }}] {{ log.message }}
             </div>
             <div v-else class="highlight-card">
-              <div class="highlight-title">[{{ log.time }}] 成功字段高亮 - {{ log.fileName }}</div>
+              <div class="highlight-title">[{{ log.time }}] 识别完成 - {{ log.fileName }}</div>
               <div class="highlight-row"><span class="k">annotationId:</span> <span class="v">{{ log.fields.annotationId }}</span></div>
               <div class="highlight-row"><span class="k">qiaopiAnnotation:</span> <span class="v break-all">{{ log.fields.qiaopiAnnotation }}</span></div>
               <div class="highlight-row"><span class="k">parse_success:</span> <span class="v">{{ log.fields.parseSuccess }}</span></div>
@@ -118,41 +120,24 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, nextTick } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
-import { ArrowLeft, Loading, PictureFilled  } from "@element-plus/icons-vue";
+import { ArrowLeft, Loading, PictureFilled } from "@element-plus/icons-vue";
 import { getAnnotationList, type AnnotationItem, uploadOcrImage } from "@/api/user";
 import { useUserStoreHook } from "@/store/modules/user";
 
 defineOptions({ name: "classinfoDetail" });
 
-const route = useRoute();
-const router = useRouter();
-const userStore = useUserStoreHook();
-
-const loading = ref(false);
-const list = ref<AnnotationItem[]>([]);
-const isBatchUploading = ref(false);
-const uploadInputRef = ref<HTMLInputElement | null>(null);
-const uploadStartAtRef = ref<number>(0);
-const nowTickRef = ref<number>(Date.now());
-const elapsedTimerRef = ref<number | null>(null);
-
-const showProgressPanel = ref(false);
-const progressPanelCollapsed = ref(false);
-const progressState = ref({ total: 0, done: 0, success: 0, fail: 0 });
-const progressPanelRef = ref<HTMLElement | null>(null);
-const panelPosition = ref({ left: 0, top: 0 });
-const panelPositionReady = ref(false);
-const isDraggingPanel = ref(false);
-
-let dragOffsetX = 0;
-let dragOffsetY = 0;
+type ExtendedAnnotationItem = AnnotationItem & {
+  title?: string;
+  status?: string;
+  createTime?: string;
+};
 
 type TextProgressLog = {
   id: number;
@@ -173,12 +158,41 @@ type HighlightProgressLog = {
 
 type ProgressLog = TextProgressLog | HighlightProgressLog;
 
+type SuccessHighlightFields = {
+  annotationId: string;
+  qiaopiAnnotation: string;
+  parseSuccess: string;
+  confidence: string;
+  columnCount: string;
+  totalTokens: string;
+};
+
+const route = useRoute();
+const router = useRouter();
+const userStore = useUserStoreHook();
+
+const loading = ref(false);
+const list = ref<ExtendedAnnotationItem[]>([]);
+const isBatchUploading = ref(false);
+const uploadInputRef = ref<HTMLInputElement | null>(null);
+const uploadStartAtRef = ref<number>(0);
+const nowTickRef = ref<number>(Date.now());
+const elapsedTimerRef = ref<number | null>(null);
+const showProgressPanel = ref(false);
+const progressPanelCollapsed = ref(false);
+const progressState = ref({ total: 0, done: 0, success: 0, fail: 0 });
+const progressPanelRef = ref<HTMLElement | null>(null);
+const panelPosition = ref({ left: 0, top: 0 });
+const panelPositionReady = ref(false);
+const isDraggingPanel = ref(false);
 const progressLogs = ref<ProgressLog[]>([]);
+
+let dragOffsetX = 0;
+let dragOffsetY = 0;
 let progressLogId = 1;
 
 const projectId = route.params.projectId as string;
 const userId = computed(() => userStore.userId);
-
 const annotatedCount = computed(() => list.value.filter(i => i.annotated).length);
 const progressPercent = computed(() => {
   const total = progressState.value.total;
@@ -186,12 +200,10 @@ const progressPercent = computed(() => {
   if (total <= 0) return 0;
   return Math.round((done / total) * 100);
 });
-
 const totalElapsedLabel = computed(() => {
   if (!uploadStartAtRef.value) return "00:00.000";
   return formatDuration(nowTickRef.value - uploadStartAtRef.value);
 });
-
 const progressPanelStyle = computed(() => {
   if (!panelPositionReady.value) return undefined;
   return {
@@ -201,6 +213,19 @@ const progressPanelStyle = computed(() => {
     bottom: "auto"
   };
 });
+
+function getImageTitle(item: ExtendedAnnotationItem) {
+  return item.title || `侨批图像 ${item.id}`;
+}
+
+function getStatusInfo(item: ExtendedAnnotationItem) {
+  const status = String(item.status || "").toLowerCase();
+  if (["processing", "pending", "running", "ai_processing"].some(value => status.includes(value))) {
+    return { label: "AI处理中", className: "processing" };
+  }
+  if (item.annotated) return { label: "已完成", className: "done" };
+  return { label: "未标注", className: "" };
+}
 
 function goToAnnotationNew() {
   if (isBatchUploading.value) {
@@ -244,15 +269,6 @@ function stopElapsedTimer() {
   }
 }
 
-type SuccessHighlightFields = {
-  annotationId: string;
-  qiaopiAnnotation: string;
-  parseSuccess: string;
-  confidence: string;
-  columnCount: string;
-  totalTokens: string;
-};
-
 function extractSuccessHighlights(result: any): SuccessHighlightFields {
   const payload = result?.data ?? {};
   const annotation = payload?.aiResult?.annotation ?? {};
@@ -261,11 +277,11 @@ function extractSuccessHighlights(result: any): SuccessHighlightFields {
   const tokenUsage = payload?.aiResult?.token_usage ?? {};
 
   return {
-    annotationId: String(payload?.annotationId ?? "-") ,
-    qiaopiAnnotation: String(payload?.qiaopiAnnotation ?? "-") ,
-    parseSuccess: String(annotation?.parse_success ?? "-") ,
-    confidence: String(metadata?.confidence ?? "-") ,
-    columnCount: String(Array.isArray(columnAnnotations) ? columnAnnotations.length : "-") ,
+    annotationId: String(payload?.annotationId ?? "-"),
+    qiaopiAnnotation: String(payload?.qiaopiAnnotation ?? "-"),
+    parseSuccess: String(annotation?.parse_success ?? "-"),
+    confidence: String(metadata?.confidence ?? "-"),
+    columnCount: String(Array.isArray(columnAnnotations) ? columnAnnotations.length : "-"),
     totalTokens: String(tokenUsage?.total_tokens ?? "-")
   };
 }
@@ -415,7 +431,7 @@ async function handleUploadFiles(event: Event) {
   uploadStartAtRef.value = Date.now();
   startElapsedTimer();
   appendProgressLog(
-    `开始上传，项目ID=${projectId}，共 ${imageFiles.length} 张图片（后端串行，前端将逐张等待响应）`,
+    `开始上传，项目ID=${projectId}，共 ${imageFiles.length} 张图片`,
     "info"
   );
   updateProgressPanel(imageFiles.length, 0, 0, 0);
@@ -481,9 +497,8 @@ async function fetchList() {
   }
 }
 
-onMounted(() => fetchList());
-
 onMounted(() => {
+  fetchList();
   window.addEventListener("resize", onWindowResize);
 });
 
@@ -496,57 +511,59 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .detail-page {
-  padding: 0 4px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
-.page-header {
+.page-hero {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--app-space-6);
+  margin-bottom: var(--app-space-8);
 }
 
-.page-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--el-text-color-primary);
+.hero-copy {
+  margin-top: var(--app-space-6);
 }
 
-.page-sub {
-  font-size: 13px;
-  color: var(--el-text-color-secondary);
-  margin-left: 4px;
-}
-
-.add-btn {
-  margin-left: auto;
+.hero-copy .archive-subtitle {
+  margin: var(--app-space-3) 0 0;
 }
 
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
-  min-height: 200px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--app-space-4);
+  min-height: 240px;
 }
 
 .image-card {
-  border-radius: 8px;
   overflow: hidden;
-  border: 1px solid var(--el-border-color-light);
-  background: var(--el-bg-color);
-  transition: box-shadow 0.2s, transform 0.2s;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-card);
+  background: var(--app-surface);
+  box-shadow: var(--app-shadow-soft);
+  cursor: pointer;
+  transition:
+    transform var(--app-transition),
+    border-color var(--app-transition),
+    box-shadow var(--app-transition);
 }
 
 .image-card:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
+  border-color: var(--app-border-strong);
+  box-shadow: var(--app-shadow);
 }
 
 .image-wrap {
   position: relative;
   width: 100%;
-  padding-top: 75%; /* 4:3 比例 */
-  background: var(--el-fill-color-light);
+  aspect-ratio: 4 / 3;
+  background:
+    linear-gradient(135deg, var(--app-primary-soft), transparent),
+    var(--app-bg-soft);
 }
 
 .image {
@@ -554,7 +571,6 @@ onBeforeUnmount(() => {
   inset: 0;
   width: 100%;
   height: 100%;
-  cursor: pointer;
 }
 
 .image-slot {
@@ -564,49 +580,60 @@ onBeforeUnmount(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: var(--app-space-2);
+  color: var(--app-text-subtle);
   font-size: 12px;
-  color: var(--el-text-color-placeholder);
 }
 
 .image-slot .el-icon {
   font-size: 28px;
 }
 
-.status-tag {
+.image-wrap .status-dot {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 1;
+  top: var(--app-space-3);
+  right: var(--app-space-3);
+  padding: 5px 10px;
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--app-surface), transparent 10%);
+  backdrop-filter: blur(12px);
 }
 
 .image-footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 8px 10px;
-  font-size: 12px;
-  color: var(--el-text-color-secondary);
-  border-top: 1px solid var(--el-border-color-lighter);
+  gap: var(--app-space-3);
+  padding: var(--app-space-4);
+  border-top: 1px solid var(--app-border);
 }
 
-.image-id {
-  font-weight: 500;
-  color: var(--el-text-color-primary);
+.image-footer h2 {
+  margin: 0 0 var(--app-space-1);
+  color: var(--app-text);
+  font-family: var(--app-font-serif);
+  font-size: 16px;
+}
+
+.image-footer span,
+.image-footer time {
+  color: var(--app-text-subtle);
+  font-family: var(--app-font-mono);
+  font-size: 12px;
 }
 
 .upload-progress-panel {
   position: fixed;
   right: 18px;
   bottom: 18px;
-  width: min(540px, calc(100vw - 24px));
+  width: min(560px, calc(100vw - 24px));
   max-height: calc(100vh - 90px);
-  border-radius: 10px;
-  border: 1px solid #334155;
-  background: #0f172a;
-  color: #e2e8f0;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-card);
+  background: var(--app-surface);
+  color: var(--app-text);
   z-index: 2200;
-  box-shadow: 0 14px 38px rgba(2, 6, 23, 0.45);
+  box-shadow: var(--app-shadow);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -617,9 +644,8 @@ onBeforeUnmount(() => {
 }
 
 .upload-progress-header {
-  padding: 10px 12px;
-  background: #111827;
-  border-bottom: 1px solid #334155;
+  padding: var(--app-space-3) var(--app-space-4);
+  border-bottom: 1px solid var(--app-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -627,24 +653,20 @@ onBeforeUnmount(() => {
   user-select: none;
 }
 
-.upload-progress-panel.dragging {
-  box-shadow: 0 18px 42px rgba(2, 6, 23, 0.58);
-}
-
 .upload-progress-panel.dragging .upload-progress-header {
   cursor: grabbing;
 }
 
 .upload-progress-title {
+  color: var(--app-text);
   font-size: 13px;
   font-weight: 700;
-  color: #93c5fd;
 }
 
 .upload-progress-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--app-space-2);
 }
 
 .upload-progress-body {
@@ -656,79 +678,72 @@ onBeforeUnmount(() => {
 .progress-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  padding: 10px 12px 8px;
+  gap: var(--app-space-3);
+  padding: var(--app-space-3) var(--app-space-4) var(--app-space-2);
+  color: var(--app-text-muted);
+  font-family: var(--app-font-mono);
   font-size: 12px;
-  color: #93c5fd;
 }
 
 .progress-bar-wrap {
-  margin: 0 12px 8px;
-  height: 10px;
+  height: 8px;
+  margin: 0 var(--app-space-4) var(--app-space-3);
   border-radius: 999px;
-  background: #1e293b;
+  background: var(--app-primary-soft);
   overflow: hidden;
 }
 
 .progress-bar {
   height: 100%;
   width: 0;
-  background: linear-gradient(90deg, #22c55e, #14b8a6);
+  background: var(--app-accent);
   transition: width 0.25s ease;
 }
 
 .progress-logs {
-  padding: 8px 12px 12px;
+  padding: var(--app-space-3) var(--app-space-4) var(--app-space-4);
   overflow-y: auto;
   max-height: calc(100vh - 250px);
-  font-family: Consolas, "Courier New", monospace;
+  color: var(--app-text-muted);
+  font-family: var(--app-font-mono);
   font-size: 12px;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .log-item {
-  margin-bottom: 4px;
+  margin-bottom: var(--app-space-1);
   white-space: pre-wrap;
   word-break: break-word;
 }
 
 .log-item.ok {
-  color: #34d399;
+  color: var(--app-status);
 }
 
 .log-item.err {
-  color: #f87171;
-}
-
-.log-item.info {
-  color: #93c5fd;
+  color: var(--app-accent);
 }
 
 .highlight-card {
-  margin: 6px 0 10px;
-  padding: 10px 12px;
-  border-radius: 6px;
-  border: 1px solid #1d4ed8;
-  background: #0b1f3d;
-  color: #dbeafe;
+  margin: var(--app-space-2) 0 var(--app-space-3);
+  padding: var(--app-space-3);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-control);
+  background: var(--app-primary-soft);
 }
 
-.highlight-title {
-  color: #93c5fd;
+.highlight-title,
+.k {
+  color: var(--app-text);
   font-weight: 700;
-  margin-bottom: 4px;
 }
 
 .highlight-row {
   margin: 2px 0;
 }
 
-.k {
-  color: #60a5fa;
-}
-
 .v {
-  color: #bfdbfe;
+  color: var(--app-text-muted);
 }
 
 .break-all {
@@ -736,6 +751,11 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 768px) {
+  .page-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .upload-progress-panel {
     left: 8px;
     right: 8px;

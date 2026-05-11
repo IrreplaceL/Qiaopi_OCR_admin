@@ -4,9 +4,12 @@ import { setupStore } from "@/store";
 import { createApp } from "vue";
 import ElementPlus from "element-plus";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
+import { initTheme } from "@/utils/theme";
+import "element-plus/dist/index.css";
 import "./style/reset.scss";
 import "./style/index.scss";
-import "element-plus/dist/index.css";
+
+initTheme();
 
 const app = createApp(App);
 

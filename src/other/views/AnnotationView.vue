@@ -2,7 +2,10 @@
   <div ref="annotationContainerRef" class="annotation-container">
     <!-- 顶部工具栏 -->
     <header class="toolbar">
-      <div class="toolbar-title">侨批文献标注系统</div>
+      <div class="toolbar-title">
+        <span class="toolbar-kicker">Qiaopi Archive</span>
+        <strong>侨批文献对照标注工作台</strong>
+      </div>
       <div class="toolbar-actions">
         <input
           v-if="!isDetailMode"
@@ -14,11 +17,11 @@
         />
         <button
           v-if="!isDetailMode"
-          class="btn btn-secondary"
+          class="btn btn-ghost"
           :disabled="isUploading"
           @click="triggerFileUpload"
         >
-          {{ isUploading ? '识别中...' : '上传图片' }}
+          {{ isUploading ? '识别中...' : '上传图像' }}
         </button>
         <div v-if="imageUrl" class="zoom-controls">
           <button class="btn btn-icon" @click="zoomOut" title="缩小">
@@ -59,7 +62,7 @@
         </button>
         <button
           v-if="isDetailMode"
-          class="btn btn-warning"
+          class="btn btn-ghost"
           @click="backToProjectList"
           title="返回项目标注列表"
         >
@@ -72,12 +75,13 @@
         </button>
         <button
           v-if="isDetailMode && imageLoaded"
-          class="btn btn-secondary"
+          class="btn btn-ghost"
           :disabled="isSaving"
           @click="addAnnotationBox"
         >
           新增框
         </button>
+        <button class="btn btn-ghost theme-toggle" @click="toggleTheme">{{ themeLabel }}</button>
         <button class="btn btn-primary" @click="openSaveConfirm" :disabled="!annotationData.length || isSaving">保存标注</button>
       </div>
     </header>
@@ -284,8 +288,39 @@
           </button>
         </div>
 
-        <div v-show="!isInfoCollapsed" class="info-content" @wheel.stop>
-          <div v-if="structuredInfo" class="info-section">
+        <div v-show="!isInfoCollapsed" class="info-tabs" role="tablist">
+          <button
+            v-for="tab in infoTabs"
+            :key="tab.key"
+            type="button"
+            :class="['info-tab', { active: activeInfoTab === tab.key }]"
+            @click="activeInfoTab = tab.key"
+          >
+            {{ tab.label }}
+          </button>
+        </div>
+
+        <div v-show="!isInfoCollapsed" :class="['info-content', `tab-${activeInfoTab}`]" @wheel.stop>
+          <div class="info-section ocr-current-section">
+            <div class="section-title">当前列校注</div>
+            <template v-if="selectedLine">
+              <div class="info-item">
+                <span class="info-label">列号</span>
+                <span class="info-value">第 {{ selectedLine.colId }} 列</span>
+              </div>
+              <div class="info-item stacked">
+                <span class="info-label">OCR 原文</span>
+                <span class="info-value serif">{{ selectedLine.content || selectedLine.ocr_text || '未识别' }}</span>
+              </div>
+              <div class="info-item stacked">
+                <span class="info-label">校正文本</span>
+                <span class="info-value serif">{{ getPreferredText(selectedLine) || '未校正' }}</span>
+              </div>
+            </template>
+            <div v-else class="empty-hint">选择任一列后查看 OCR 对照</div>
+          </div>
+
+          <div v-if="structuredInfo" class="info-section metadata-section">
             <div class="section-title">基础元数据</div>
             <div class="info-form-grid">
               <label class="info-field">
@@ -319,12 +354,12 @@
             </div>
           </div>
 
-          <div v-if="structuredInfo" class="info-section">
+          <div v-if="structuredInfo" class="info-section summary-section">
             <div class="section-title">核心内容摘要</div>
             <textarea v-model="structuredInfo.coreEvent" class="form-control compact" rows="4" placeholder="请输入核心内容摘要"></textarea>
           </div>
 
-          <div class="info-section">
+          <div class="info-section classical-section">
             <div class="section-title with-action">
               <span>文言词汇解释</span>
               <button class="btn btn-mini" @click="addClassicalTerm">新增</button>
@@ -337,7 +372,7 @@
             </div>
           </div>
 
-          <div class="info-section">
+          <div class="info-section dialect-section">
             <div class="section-title with-action">
               <span>方言俗字注释</span>
               <button class="btn btn-mini" @click="addDialectNote">新增</button>
@@ -350,7 +385,7 @@
             </div>
           </div>
 
-          <div class="info-section warning-section">
+          <div class="info-section warning-section review-section">
             <div class="section-title with-action">
               <span>需要人工复核</span>
               <button class="btn btn-mini" @click="addNeedReviewItem">新增</button>
@@ -429,7 +464,7 @@
 
           <!-- 置信度信息 -->
           </template>
-          <div v-if="structuredInfo?.confidence" class="info-section">
+          <div v-if="structuredInfo?.confidence" class="info-section confidence-section">
             <div class="section-title">📊 识别置信度</div>
             <div class="confidence-wrap">
               <div class="confidence-track">
@@ -449,7 +484,7 @@
           </div>
 
           <!-- Token 使用情况 -->
-          <div v-if="tokenUsage" class="info-section">
+          <div v-if="tokenUsage" class="info-section token-section">
             <div class="section-title">💰 Token 使用情况</div>
             <div class="info-item">
               <span class="info-label">提示词：</span>
@@ -486,6 +521,7 @@ import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserStoreHook } from '@/store/modules/user'
+import { useTheme } from '@/utils/theme'
 import {
   processImage,
   saveAnnotation,
@@ -527,6 +563,7 @@ const annotationOrder = ref([])
 const route = useRoute()
 const router = useRouter()
 const userStore = useUserStoreHook()
+const { themeLabel, toggleTheme } = useTheme()
 
 // 新增：结构化信息
 const structuredInfo = ref(null)
@@ -534,6 +571,7 @@ const classicalTerms = ref([])
 const dialectNotes = ref([])
 const needReviewItems = ref([])
 const tokenUsage = ref(null)
+const activeInfoTab = ref('ocr')
 const isInfoCollapsed = ref(false)
 const syncingScroll = ref(false)
 const activeBoxEdit = ref(null)
@@ -541,6 +579,12 @@ const editPanelPosition = ref(null)
 const editPanelDrag = ref(null)
 const COORD_SYSTEM_SIZE = 1000
 const MIN_BOX_SIZE = 12
+const infoTabs = [
+  { key: 'ocr', label: 'OCR' },
+  { key: 'structured', label: '结构化' },
+  { key: 'dialect', label: '方言注释' },
+  { key: 'ai', label: 'AI建议' }
+]
 
 const projectId = computed(() => route.params.projectId)
 const userId = computed(() => userStore.userId)
@@ -1345,9 +1389,8 @@ const updateText = () => {
 }
 
 const confidenceColor = (score) => {
-  if (score >= 0.9) return '#10b981'
-  if (score >= 0.7) return '#f59e0b'
-  return '#ef4444'
+  if (score >= 0.7) return 'var(--app-status)'
+  return 'var(--app-accent)'
 }
 
 const createDefaultStructuredInfo = () => ({

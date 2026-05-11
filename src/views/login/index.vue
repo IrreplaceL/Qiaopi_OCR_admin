@@ -1,12 +1,21 @@
 <template>
   <main class="login-page">
+    <button class="archive-button theme-toggle login-theme" type="button" @click="toggleTheme">
+      {{ themeLabel }}
+    </button>
+
     <section class="login-hero">
       <div class="login-brand">
-        <span class="brand-mark">侨</span>
-        <div>
-          <h1>侨批图像标注系统</h1>
-          <p>面向侨批 OCR、列级校注与结构化复核的业务工作台</p>
-        </div>
+        <span class="archive-kicker">AI Digital Humanities</span>
+        <h1>侨批数字人文档案平台</h1>
+        <p>
+          面向侨批文献 OCR、列级校注与结构化复核的现代化标注工作台。
+        </p>
+      </div>
+      <div class="archive-notes">
+        <span>原文影像</span>
+        <span>OCR 对照</span>
+        <span>人工校勘</span>
       </div>
     </section>
 
@@ -14,8 +23,11 @@
       <el-card class="login-card" shadow="never">
         <template #header>
           <div class="card-header">
-            <h2>{{ currentForm === "login" ? "登录" : "注册账号" }}</h2>
-            <el-button link type="primary" @click="toggleForm">
+            <div>
+              <span class="archive-kicker">{{ currentForm === "login" ? "Sign in" : "Register" }}</span>
+              <h2>{{ currentForm === "login" ? "进入工作台" : "创建账号" }}</h2>
+            </div>
+            <el-button link @click="toggleForm">
               {{ currentForm === "login" ? "注册" : "返回登录" }}
             </el-button>
           </div>
@@ -73,12 +85,14 @@ import type { FormInstance, FormRules } from "element-plus";
 import { ElMessage } from "element-plus";
 import { register } from "@/api/user";
 import { useUserStoreHook } from "@/store/modules/user";
+import { useTheme } from "@/utils/theme";
 
 defineOptions({ name: "Login" });
 
 const route = useRoute();
 const router = useRouter();
 const userStore = useUserStoreHook();
+const { themeLabel, toggleTheme } = useTheme();
 const loading = ref(false);
 const formRef = ref<FormInstance>();
 const currentForm = ref<"login" | "register">("login");
@@ -158,83 +172,102 @@ async function submit() {
 
 <style scoped>
 .login-page {
+  position: relative;
   min-height: 100vh;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 460px;
+  grid-template-columns: minmax(0, 1fr) minmax(380px, 520px);
   background:
-    linear-gradient(rgba(23, 32, 51, 0.78), rgba(23, 32, 51, 0.72)),
-    url("@/assets/login/bg.png") center / cover no-repeat;
+    radial-gradient(circle at 20% 16%, var(--app-accent-soft), transparent 30%),
+    var(--app-bg);
+}
+
+.login-theme {
+  position: fixed;
+  top: var(--app-space-6);
+  right: var(--app-space-6);
+  z-index: 5;
+  background: var(--app-surface-subtle);
+  backdrop-filter: blur(14px);
 }
 
 .login-hero {
   display: flex;
-  align-items: center;
-  padding: 72px;
-  color: #fff;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: clamp(48px, 8vw, 96px);
 }
 
 .login-brand {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  max-width: 620px;
+  max-width: 680px;
 }
 
-.brand-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  flex: 0 0 auto;
-  border-radius: 10px;
-  background: #f59e0b;
-  color: #101827;
-  font-size: 28px;
-  font-weight: 900;
-}
-
-h1 {
-  margin: 0;
-  font-size: 36px;
-  line-height: 1.2;
+.login-brand h1 {
+  margin: var(--app-space-4) 0 0;
+  color: var(--app-text);
+  font-family: var(--app-font-serif);
+  font-size: clamp(44px, 7vw, 82px);
+  font-weight: 700;
   letter-spacing: 0;
+  line-height: 1.04;
 }
 
-p {
-  margin: 14px 0 0;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 16px;
+.login-brand p {
+  max-width: 560px;
+  margin: var(--app-space-6) 0 0;
+  color: var(--app-text-muted);
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+.archive-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-3);
+}
+
+.archive-notes span {
+  padding: var(--app-space-2) var(--app-space-3);
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  background: var(--app-surface-subtle);
+  color: var(--app-text-muted);
+  font-size: 13px;
 }
 
 .login-panel {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px;
-  background: rgba(255, 255, 255, 0.94);
+  padding: var(--app-space-8);
+  border-left: 1px solid var(--app-border);
+  background: color-mix(in srgb, var(--app-surface), transparent 22%);
+  backdrop-filter: blur(18px);
 }
 
 .login-card {
   width: 100%;
-  border-radius: 8px;
+  border-radius: var(--app-radius-card);
+  box-shadow: var(--app-shadow);
 }
 
 .card-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: var(--app-space-4);
 }
 
 h2 {
-  margin: 0;
-  font-size: 22px;
-  color: #172033;
+  margin: var(--app-space-2) 0 0;
+  color: var(--app-text);
+  font-family: var(--app-font-serif);
+  font-size: 26px;
 }
 
 .submit-btn {
   width: 100%;
-  margin-top: 8px;
+  margin-top: var(--app-space-2);
 }
 
 @media (max-width: 860px) {
@@ -243,13 +276,15 @@ h2 {
   }
 
   .login-hero {
-    min-height: 260px;
-    padding: 40px 24px 20px;
+    min-height: 420px;
+    padding: 72px var(--app-space-6) var(--app-space-6);
   }
 
   .login-panel {
     align-items: flex-start;
-    padding: 20px;
+    padding: var(--app-space-6);
+    border-left: 0;
+    border-top: 1px solid var(--app-border);
   }
 }
 </style>
