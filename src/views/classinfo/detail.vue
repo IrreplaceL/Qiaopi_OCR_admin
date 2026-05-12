@@ -130,6 +130,7 @@ import { ElMessage } from "element-plus";
 import { ArrowLeft, Loading, PictureFilled } from "@element-plus/icons-vue";
 import { getAnnotationList, type AnnotationItem, uploadOcrImage } from "@/api/user";
 import { useUserStoreHook } from "@/store/modules/user";
+import { READONLY_MESSAGE, assertWritable } from "@/utils/permission";
 
 defineOptions({ name: "classinfoDetail" });
 
@@ -193,6 +194,10 @@ let progressLogId = 1;
 
 const projectId = route.params.projectId as string;
 const userId = computed(() => userStore.userId);
+const currentUser = computed(() => ({
+  id: userStore.userId,
+  role: userStore.role
+}));
 const annotatedCount = computed(() => list.value.filter(i => i.annotated).length);
 const progressPercent = computed(() => {
   const total = progressState.value.total;
@@ -228,6 +233,12 @@ function getStatusInfo(item: ExtendedAnnotationItem) {
 }
 
 function goToAnnotationNew() {
+  try {
+    assertWritable(currentUser.value);
+  } catch {
+    ElMessage.warning(READONLY_MESSAGE);
+    return;
+  }
   if (isBatchUploading.value) {
     ElMessage.warning("正在上传处理中，请稍候");
     return;
@@ -410,6 +421,14 @@ async function handleUploadFiles(event: Event) {
   const input = event.target as HTMLInputElement;
   const files = Array.from(input.files ?? []);
   if (!files.length) return;
+
+  try {
+    assertWritable(currentUser.value);
+  } catch {
+    ElMessage.warning(READONLY_MESSAGE);
+    input.value = "";
+    return;
+  }
 
   if (!userId.value) {
     ElMessage.error("缺少 userId，无法上传");

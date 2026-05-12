@@ -2,13 +2,14 @@ import Cookies from "js-cookie";
 import { useUserStoreHook } from "@/store/modules/user";
 
 export interface DataInfo<T> {
-  id?: string;
+  id?: string | number;
   accessToken: string;
   expires: T;
   refreshToken: string;
   avatar?: string;
   username?: string;
   nickname?: string;
+  role?: string;
   roles?: string[];
   permissions?: string[];
 }
@@ -60,6 +61,7 @@ export function setToken(data: DataInfo<Date | number | string>) {
     avatar: data.avatar ?? "",
     username: data.username ?? "",
     nickname: data.nickname ?? "",
+    role: data.role ?? "",
     roles: data.roles ?? [],
     permissions: data.permissions ?? []
   };

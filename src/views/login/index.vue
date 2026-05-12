@@ -72,6 +72,15 @@
           <el-button class="submit-btn" type="primary" :loading="loading" @click="submit">
             {{ currentForm === "login" ? "登录系统" : "创建账号" }}
           </el-button>
+          <el-button
+            v-if="currentForm === 'login'"
+            class="guest-btn"
+            :loading="guestLoading"
+            :disabled="loading"
+            @click="loginAsGuest"
+          >
+            游客登录
+          </el-button>
         </el-form>
       </el-card>
     </section>
@@ -94,6 +103,7 @@ const router = useRouter();
 const userStore = useUserStoreHook();
 const { themeLabel, toggleTheme } = useTheme();
 const loading = ref(false);
+const guestLoading = ref(false);
 const formRef = ref<FormInstance>();
 const currentForm = ref<"login" | "register">("login");
 
@@ -166,6 +176,24 @@ async function submit() {
     ElMessage.error(error?.message || "请求失败，请检查网络连接");
   } finally {
     loading.value = false;
+  }
+}
+
+async function loginAsGuest() {
+  guestLoading.value = true;
+  try {
+    const res = await userStore.loginAsGuest();
+    if (res.code !== 200) {
+      ElMessage.error(res.msg || "游客登录失败");
+      return;
+    }
+    ElMessage.success("已以游客身份进入");
+    const redirect = typeof route.query.redirect === "string" ? route.query.redirect : "";
+    await router.push(redirect || "/classinfo/index");
+  } catch (error: any) {
+    ElMessage.error(error?.message || "游客登录失败，请检查网络连接");
+  } finally {
+    guestLoading.value = false;
   }
 }
 </script>
@@ -268,6 +296,11 @@ h2 {
 .submit-btn {
   width: 100%;
   margin-top: var(--app-space-2);
+}
+
+.guest-btn {
+  width: 100%;
+  margin: var(--app-space-3) 0 0;
 }
 
 @media (max-width: 860px) {

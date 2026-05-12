@@ -73,14 +73,14 @@
             <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
           </svg>
         </button>
-        <button
-          v-if="isDetailMode && imageLoaded"
-          class="btn btn-ghost"
-          :disabled="isSaving"
-          @click="addAnnotationBox"
-        >
-          新增框
-        </button>
+          <button
+            v-if="isDetailMode && imageLoaded"
+            class="btn btn-ghost"
+            :disabled="isSaving"
+            @click="addAnnotationBox"
+          >
+            新增框
+          </button>
         <button class="btn btn-ghost theme-toggle" @click="toggleTheme">{{ themeLabel }}</button>
         <button class="btn btn-primary" @click="openSaveConfirm" :disabled="!annotationData.length || isSaving">保存标注</button>
       </div>
@@ -522,6 +522,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserStoreHook } from '@/store/modules/user'
 import { useTheme } from '@/utils/theme'
+import { READONLY_MESSAGE, assertWritable } from '@/utils/permission'
 import {
   processImage,
   saveAnnotation,
@@ -588,6 +589,10 @@ const infoTabs = [
 
 const projectId = computed(() => route.params.projectId)
 const userId = computed(() => userStore.userId)
+const currentUser = computed(() => ({
+  id: userStore.userId,
+  role: userStore.role
+}))
 const annotationId = computed(() => route.params.annotationId)
 const isDetailMode = computed(() => Boolean(annotationId.value))
 const currentAnnotationIndex = computed(() => {
@@ -982,12 +987,26 @@ const deleteSelectedBox = async () => {
 
 // 文件上传相关
 const triggerFileUpload = () => {
+  try {
+    assertWritable(currentUser.value)
+  } catch {
+    ElMessage.warning(READONLY_MESSAGE)
+    return
+  }
   fileInputRef.value?.click()
 }
 
 const handleFileChange = async (event) => {
   const file = event.target.files?.[0]
   if (!file) return
+
+  try {
+    assertWritable(currentUser.value)
+  } catch {
+    ElMessage.warning(READONLY_MESSAGE)
+    event.target.value = ''
+    return
+  }
 
   if (!file.type.startsWith('image/')) {
     ElMessage.warning('请选择图片文件')
@@ -1008,6 +1027,7 @@ const uploadAndProcess = async (file) => {
   isUploading.value = true
 
   try {
+    assertWritable(currentUser.value)
     if (!projectId.value || !userId.value) {
       throw new Error('缺少 projectId 或 userId，无法发起 OCR 请求')
     }
@@ -1467,6 +1487,13 @@ const removeNeedReviewItem = (index) => {
 }
 
 const openSaveConfirm = () => {
+  try {
+    assertWritable(currentUser.value)
+  } catch {
+    ElMessage.warning(READONLY_MESSAGE)
+    return
+  }
+
   if (!annotationData.value.length) {
     ElMessage.warning('没有标注数据可以保存')
     return
@@ -1484,6 +1511,13 @@ const closeSaveConfirm = () => {
 }
 
 const save = async () => {
+  try {
+    assertWritable(currentUser.value)
+  } catch {
+    ElMessage.warning(READONLY_MESSAGE)
+    return
+  }
+
   if (!annotationData.value.length || !annotationId.value) {
     ElMessage.warning('当前无可保存标注')
     return
@@ -1493,6 +1527,7 @@ const save = async () => {
   isSaving.value = true
   try {
     await saveAnnotation(annotationData.value, {
+      userId: userId.value,
       annotationId: annotationId.value,
       imageWidth: imageWidth.value,
       imageHeight: imageHeight.value,

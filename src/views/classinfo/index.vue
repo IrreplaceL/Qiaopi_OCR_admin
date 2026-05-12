@@ -61,13 +61,14 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, onMounted } from "vue";
+import { computed, reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import type { FormInstance } from "element-plus";
 import { createProject, getProjectList, type ProjectItem } from "@/api/user";
 import { useUserStoreHook } from "@/store/modules/user";
 import { useRouter } from "vue-router";
+import { READONLY_MESSAGE, assertWritable } from "@/utils/permission";
 
 defineOptions({ name: "classinfo" });
 
@@ -78,6 +79,10 @@ const submitting = ref(false);
 const dialogVisible = ref(false);
 const formRef = ref<FormInstance>();
 const projectList = ref<ProjectItem[]>([]);
+const currentUser = computed(() => ({
+  id: userStore.userId,
+  role: userStore.role
+}));
 
 const form = reactive({
   projectName: "",
@@ -117,12 +122,25 @@ async function fetchProjects() {
 }
 
 function openCreateDialog() {
+  try {
+    assertWritable(currentUser.value);
+  } catch {
+    ElMessage.warning(READONLY_MESSAGE);
+    return;
+  }
   form.projectName = "";
   form.description = "";
   dialogVisible.value = true;
 }
 
 async function submitCreate() {
+  try {
+    assertWritable(currentUser.value);
+  } catch {
+    ElMessage.warning(READONLY_MESSAGE);
+    return;
+  }
+
   const valid = await formRef.value?.validate().catch(() => false);
   if (!valid) return;
 

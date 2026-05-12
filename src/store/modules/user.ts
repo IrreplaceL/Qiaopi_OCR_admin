@@ -2,8 +2,10 @@ import { defineStore } from "pinia";
 import { store } from "@/store";
 import {
   type UserAuthRequest,
+  type UserInfo,
   type UserResult,
   type RefreshTokenResult,
+  guestLogin,
   getLogin,
   refreshTokenApi
 } from "@/api/user";
@@ -23,49 +25,80 @@ type UserState = {
   avatar: string;
   username: string;
   nickname: string;
+  role: string;
   roles: string[];
   permissions: string[];
 };
+
+function normalizeUserInfo(userData: UserInfo) {
+  const id = userData.id ?? "";
+  const role = userData.role || userData.roles?.[0] || "user";
+  const tokenValue = String(userData.accessToken ?? id ?? role);
+
+  return {
+    ...userData,
+    id,
+    avatar: userData.avatar || "",
+    nickname: userData.nickname || userData.username,
+    role,
+    roles: userData.roles || [role],
+    permissions: userData.permissions || [],
+    accessToken: tokenValue,
+    refreshToken: userData.refreshToken || tokenValue,
+    expires:
+      userData.expires ||
+      new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+  };
+}
 
 export const useUserStore = defineStore({
   id: "qiaopi-user",
   state: (): UserState => {
     const userInfo = readUserInfo();
     return {
-      userId: userInfo.id ?? "",
+      userId: String(userInfo.id ?? ""),
       avatar: userInfo.avatar ?? "",
       username: userInfo.username ?? "",
       nickname: userInfo.nickname ?? "",
+      role: userInfo.role ?? userInfo.roles?.[0] ?? "",
       roles: userInfo.roles ?? [],
       permissions: userInfo.permissions ?? []
     };
   },
+  getters: {
+    isGuest: state => state.role === "guest" || state.userId === "0",
+    isAdmin: state => state.role === "admin",
+    currentUser: state => ({
+      id: state.userId,
+      username: state.username,
+      nickname: state.nickname,
+      role: state.role,
+      roles: state.roles
+    })
+  },
   actions: {
     setUserInfo(data: Partial<DataInfo<number | Date>>) {
-      this.userId = data.id ?? "";
+      this.userId = String(data.id ?? "");
       this.avatar = data.avatar ?? "";
       this.username = data.username ?? "";
       this.nickname = data.nickname ?? data.username ?? "";
+      this.role = data.role ?? data.roles?.[0] ?? "";
       this.roles = data.roles ?? [];
       this.permissions = data.permissions ?? [];
     },
     async loginByUsername(data: UserAuthRequest) {
       const result: UserResult = await getLogin(data);
       if (result?.code === 200) {
-        const userData = result.data;
-        const normalized = {
-          ...userData,
-          id: userData.id || "",
-          avatar: userData.avatar || "",
-          nickname: userData.nickname || userData.username,
-          roles: userData.roles || (userData.role ? [userData.role] : ["user"]),
-          permissions: userData.permissions || [],
-          accessToken: userData.accessToken || userData.id || "",
-          refreshToken: userData.refreshToken || userData.id || "",
-          expires:
-            userData.expires ||
-            new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-        };
+        const normalized = normalizeUserInfo(result.data);
+        setToken(normalized);
+        this.setUserInfo(normalized);
+      }
+      return result;
+    },
+    async loginAsGuest() {
+      const result: UserResult = await guestLogin();
+      if (result?.code === 200) {
+        const normalized = normalizeUserInfo(result.data);
         setToken(normalized);
         this.setUserInfo(normalized);
       }
@@ -77,6 +110,7 @@ export const useUserStore = defineStore({
         avatar: "",
         username: "",
         nickname: "",
+        role: "",
         roles: [],
         permissions: []
       });

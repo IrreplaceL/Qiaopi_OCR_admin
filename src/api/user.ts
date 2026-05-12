@@ -1,33 +1,37 @@
 import { http } from "@/utils/http";
 import { apiUrl } from "@/api/base";
 
+export type UserRole = "admin" | "user" | "guest";
+
+export type UserInfo = {
+  /** 用户id */
+  id?: string | number;
+  /** 创建时间 */
+  createTime?: string;
+  /** 头像 */
+  avatar?: string;
+  /** 用户名 */
+  username: string;
+  /** 昵称 */
+  nickname?: string;
+  /** 当前登录用户的角色（单个，后端返回） */
+  role?: UserRole | string;
+  /** 当前登录用户的角色列表 */
+  roles?: Array<string>;
+  /** 按钮级别权限 */
+  permissions?: Array<string>;
+  /** `token` */
+  accessToken?: string;
+  /** 用于调用刷新`accessToken`的接口时所需的`token` */
+  refreshToken?: string;
+  /** `accessToken`的过期时间（格式'xxxx/xx/xx xx:xx:xx'） */
+  expires?: Date;
+};
+
 export type UserResult = {
   code: number;
   msg: string;
-  data: {
-    /** 用户id */
-    id?: string;
-    /** 创建时间 */
-    createTime?: string;
-    /** 头像 */
-    avatar?: string;
-    /** 用户名 */
-    username: string;
-    /** 昵称 */
-    nickname?: string;
-    /** 当前登录用户的角色（单个，后端返回） */
-    role?: string;
-    /** 当前登录用户的角色列表 */
-    roles?: Array<string>;
-    /** 按钮级别权限 */
-    permissions?: Array<string>;
-    /** `token` */
-    accessToken?: string;
-    /** 用于调用刷新`accessToken`的接口时所需的`token` */
-    refreshToken?: string;
-    /** `accessToken`的过期时间（格式'xxxx/xx/xx xx:xx:xx'） */
-    expires?: Date;
-  };
+  data: UserInfo;
 };
 
 export type RefreshTokenResult = {
@@ -48,9 +52,20 @@ export type UserAuthRequest = {
   password: string;
 };
 
+function ensureWritableUserId(userId: string | number) {
+  if (String(userId) === "0") {
+    throw new Error("游客只有只读权限");
+  }
+}
+
 /** 登录 */
 export const getLogin = (data?: UserAuthRequest) => {
   return http.request<UserResult>("post", "/user/login", { data });
+};
+
+/** 游客登录 */
+export const guestLogin = () => {
+  return http.request<UserResult>("post", "/user/guest-login");
 };
 
 /** 注册 */
@@ -98,6 +113,7 @@ export const getProjectList = (userId: string) => {
 
 /** 创建项目组 */
 export const createProject = (data: CreateProjectRequest) => {
+  ensureWritableUserId(data.userId);
   return http.request<CreateProjectResult>("post", "/project/create", { data });
 };
 
@@ -165,6 +181,7 @@ export const uploadOcrImage = async (
   params: { projectId: string | number; userId: string | number }
 ) => {
   const { projectId, userId } = params;
+  ensureWritableUserId(userId);
   const query = new URLSearchParams({
     projectId: String(projectId),
     userId: String(userId)

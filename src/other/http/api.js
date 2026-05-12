@@ -99,6 +99,9 @@ export async function processImage(file, { projectId, userId }) {
   if (!projectId || !userId) {
     throw new Error('缺少 projectId 或 userId')
   }
+  if (String(userId) === '0') {
+    throw new Error('游客只有只读权限')
+  }
 
   const formData = new FormData()
   formData.append('file', file)
@@ -210,6 +213,7 @@ function firstNonBlankText(...values) {
 export async function saveAnnotation(annotationData, params) {
   const {
     annotationId,
+    userId,
     imageWidth,
     imageHeight,
     imageInput,
@@ -224,6 +228,10 @@ export async function saveAnnotation(annotationData, params) {
   } = params
 
   const numericAnnotationId = Number(annotationId)
+  if (String(userId ?? '') === '0') {
+    throw new Error('游客只有只读权限')
+  }
+
   const columnAnnotations = annotationData.map(item => {
     const [x1, y1, x2, y2] = item.bbox || [item.coordX1, item.coordY1, item.coordX2, item.coordY2]
     return {
@@ -242,6 +250,7 @@ export async function saveAnnotation(annotationData, params) {
   })
 
   const payload = {
+    userId,
     success,
     imageInput,
     errorMsg,
