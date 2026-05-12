@@ -51,15 +51,18 @@
         </div>
         <p>{{ item.description || "暂无描述" }}</p>
         <footer>
-          <span>ID {{ item.id }}</span>
-          <time>{{ item.createTime }}</time>
+          <div>
+            <span>ID {{ item.id }}</span>
+            <time>{{ item.createTime }}</time>
+          </div>
+          <el-button link :icon="Edit" @click.stop="openEditDialog(item)">编辑</el-button>
         </footer>
       </article>
     </div>
 
     <el-dialog
       v-model="dialogVisible"
-      title="创建项目"
+      :title="dialogTitle"
       width="480px"
       :close-on-click-modal="false"
     >
@@ -78,7 +81,7 @@
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" :loading="submitting" @click="submitCreate">确定</el-button>
+        <el-button type="primary" :loading="submitting" @click="submitProject">确定</el-button>
       </template>
     </el-dialog>
   </section>
@@ -87,12 +90,13 @@
 <script setup lang="ts">
 import { computed, reactive, ref, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { Check, Close, Delete, Plus } from "@element-plus/icons-vue";
+import { Check, Close, Delete, Edit, Plus } from "@element-plus/icons-vue";
 import type { FormInstance } from "element-plus";
 import {
   createProject,
   deleteProjects,
   getProjectList,
+  updateProject,
   type ProjectItem
 } from "@/api/user";
 import { useUserStoreHook } from "@/store/modules/user";
@@ -111,10 +115,15 @@ const formRef = ref<FormInstance>();
 const projectList = ref<ProjectItem[]>([]);
 const selectionMode = ref(false);
 const selectedProjectIds = ref<string[]>([]);
+const dialogMode = ref<"create" | "edit">("create");
+const editingProjectId = ref<string | number>("");
 const currentUser = computed(() => ({
   id: userStore.userId,
   role: userStore.role
 }));
+const dialogTitle = computed(() =>
+  dialogMode.value === "create" ? "创建项目" : "编辑项目"
+);
 
 const form = reactive({
   projectName: "",
@@ -194,10 +203,31 @@ function openCreateDialog() {
   }
   form.projectName = "";
   form.description = "";
+  dialogMode.value = "create";
+  editingProjectId.value = "";
   dialogVisible.value = true;
 }
 
-async function submitCreate() {
+function openEditDialog(item: ProjectItem) {
+  try {
+    assertWritable(currentUser.value);
+  } catch {
+    ElMessage.warning(READONLY_MESSAGE);
+    return;
+  }
+  if (!isProjectOwner(item)) {
+    ElMessage.warning("只能修改自己拥有的项目组");
+    return;
+  }
+
+  dialogMode.value = "edit";
+  editingProjectId.value = item.id;
+  form.projectName = item.projectName;
+  form.description = item.description || "";
+  dialogVisible.value = true;
+}
+
+async function submitProject() {
   try {
     assertWritable(currentUser.value);
   } catch {
@@ -210,20 +240,34 @@ async function submitCreate() {
 
   submitting.value = true;
   try {
-    const res = await createProject({
+    const payload = {
       projectName: form.projectName,
       userId: userStore.userId,
       description: form.description
-    });
+    };
+    const res =
+      dialogMode.value === "create"
+        ? await createProject(payload)
+        : await updateProject({
+            ...payload,
+            projectId: editingProjectId.value
+          });
     if (res.code === 200) {
-      ElMessage.success("项目创建成功");
       dialogVisible.value = false;
-      projectList.value.unshift(res.data);
+      if (dialogMode.value === "create") {
+        projectList.value.unshift(res.data);
+        ElMessage.success("项目创建成功");
+      } else {
+        projectList.value = projectList.value.map(item =>
+          String(item.id) === String(editingProjectId.value) ? res.data : item
+        );
+        ElMessage.success("项目已更新");
+      }
     } else {
-      ElMessage.error(res.msg || "创建失败");
+      ElMessage.error(res.msg || (dialogMode.value === "create" ? "创建失败" : "更新失败"));
     }
-  } catch {
-    ElMessage.error("请求失败，请检查网络");
+  } catch (error: any) {
+    ElMessage.error(error?.message || "请求失败，请检查网络");
   } finally {
     submitting.value = false;
   }
@@ -409,11 +453,22 @@ onMounted(() => fetchProjects());
 
 .project-card footer {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: var(--app-space-3);
   color: var(--app-text-subtle);
   font-family: var(--app-font-mono);
   font-size: 12px;
+}
+
+.project-card footer div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-1);
+}
+
+.project-card footer :deep(.el-button) {
+  font-family: var(--app-font-sans);
 }
 
 @media (max-width: 720px) {

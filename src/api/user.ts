@@ -101,6 +101,10 @@ export type CreateProjectRequest = {
   description: string;
 };
 
+export type UpdateProjectRequest = CreateProjectRequest & {
+  projectId: string | number;
+};
+
 export type CreateProjectResult = {
   code: number;
   msg: string;
@@ -152,6 +156,12 @@ export const getProjectList = (userId: string) => {
 export const createProject = (data: CreateProjectRequest) => {
   ensureWritableUserId(data.userId);
   return http.request<CreateProjectResult>("post", "/project/create", { data });
+};
+
+/** 更新项目组 */
+export const updateProject = (data: UpdateProjectRequest) => {
+  ensureWritableUserId(data.userId);
+  return http.request<CreateProjectResult>("post", "/project/update", { data });
 };
 
 /** 删除项目组 */
