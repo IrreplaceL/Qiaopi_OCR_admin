@@ -247,6 +247,12 @@ export const exportAnnotations = async (data: AnnotationExportRequest) => {
   return { blob, disposition };
 };
 
+/** 删除标注 */
+export const deleteAnnotations = (data: BatchDeleteRequest) => {
+  ensureWritableUserId(data.userId);
+  return http.request<BasicResult>("post", "/annotation/delete", { data });
+};
+
 // ---- 标注详情 ----
 
 export type AnnotationDetailItem = {

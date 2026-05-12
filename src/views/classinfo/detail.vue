@@ -2,7 +2,7 @@
   <section class="detail-page">
     <div class="page-hero">
       <div>
-        <button class="archive-button ghost" type="button" @click="router.back()">
+        <button class="archive-button ghost" type="button" @click="goToProjectGroups">
           <el-icon><ArrowLeft /></el-icon>
           返回
         </button>
@@ -17,8 +17,8 @@
       <div class="hero-actions">
         <el-radio-group v-model="annotationFilter" @change="fetchList">
           <el-radio-button label="all">未筛选</el-radio-button>
-          <el-radio-button label="unannotated">未识别</el-radio-button>
-          <el-radio-button label="annotated">已识别</el-radio-button>
+          <el-radio-button label="unannotated">未标注</el-radio-button>
+          <el-radio-button label="annotated">已标注</el-radio-button>
         </el-radio-group>
         <el-button :icon="selectionMode ? Close : Check" @click="toggleSelectionMode">
           {{ selectionMode ? "退出多选" : "多选" }}
@@ -34,6 +34,15 @@
             </el-dropdown-menu>
           </template>
         </el-dropdown>
+        <el-button
+          v-if="selectionMode"
+          type="danger"
+          :icon="Delete"
+          :loading="deleting"
+          @click="deleteSelectedAnnotations"
+        >
+          删除所选
+        </el-button>
         <el-button type="primary" class="add-btn" @click="goToAnnotationNew">
           新增标注图像
         </el-button>
@@ -154,16 +163,18 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import {
   ArrowLeft,
   Check,
   Close,
+  Delete,
   Download,
   Loading,
   PictureFilled
 } from "@element-plus/icons-vue";
 import {
+  deleteAnnotations,
   exportAnnotations,
   getAnnotationList,
   type AnnotationExportFormat,
@@ -223,6 +234,7 @@ const selectionMode = ref(false);
 const selectedAnnotationIds = ref<string[]>([]);
 const isBatchUploading = ref(false);
 const exporting = ref(false);
+const deleting = ref(false);
 const uploadInputRef = ref<HTMLInputElement | null>(null);
 const uploadStartAtRef = ref<number>(0);
 const nowTickRef = ref<number>(Date.now());
@@ -303,6 +315,10 @@ function goToAnnotationDetail(id: string) {
   router.push(`/classinfo/detail/${projectId}/annotation/${id}`);
 }
 
+function goToProjectGroups() {
+  router.push("/classinfo/index");
+}
+
 function handleAnnotationCardClick(item: ExtendedAnnotationItem) {
   if (selectionMode.value) {
     toggleAnnotationSelection(item.id);
@@ -350,6 +366,55 @@ async function handleExportCommand(command: string | number | object) {
     ElMessage.error(error?.message || "导出失败");
   } finally {
     exporting.value = false;
+  }
+}
+
+async function deleteSelectedAnnotations() {
+  if (!selectedAnnotationIds.value.length) {
+    ElMessage.warning("请先选择要删除的标注");
+    return;
+  }
+
+  try {
+    assertWritable(currentUser.value);
+  } catch {
+    ElMessage.warning(READONLY_MESSAGE);
+    return;
+  }
+
+  try {
+    await ElMessageBox.confirm(
+      "删除后不可恢复，是否确定删除所选标注？",
+      "删除标注",
+      {
+        confirmButtonText: "删除",
+        cancelButtonText: "取消",
+        type: "warning"
+      }
+    );
+  } catch {
+    return;
+  }
+
+  deleting.value = true;
+  try {
+    const res = await deleteAnnotations({
+      userId: userStore.userId,
+      ids: selectedAnnotationIds.value
+    });
+    if (res.code !== 200) {
+      ElMessage.error(res.msg || "删除标注失败");
+      return;
+    }
+    const deletedIds = new Set(selectedAnnotationIds.value);
+    list.value = list.value.filter(item => !deletedIds.has(String(item.id)));
+    selectedAnnotationIds.value = [];
+    selectionMode.value = false;
+    ElMessage.success("标注已删除");
+  } catch (error: any) {
+    ElMessage.error(error?.message || "删除标注失败");
+  } finally {
+    deleting.value = false;
   }
 }
 
