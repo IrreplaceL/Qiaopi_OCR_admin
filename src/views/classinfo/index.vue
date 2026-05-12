@@ -25,6 +25,10 @@
           <span class="status-dot processing">档案项目</span>
         </div>
         <h2>{{ item.projectName }}</h2>
+        <div class="project-owner">
+          <span>所有者</span>
+          <strong>{{ getOwnerLabel(item) }}</strong>
+        </div>
         <p>{{ item.description || "暂无描述" }}</p>
         <footer>
           <span>ID {{ item.id }}</span>
@@ -98,6 +102,10 @@ const rules = {
 
 function goToDetail(id: string | number) {
   router.push(`/classinfo/detail/${id}`);
+}
+
+function getOwnerLabel(item: ProjectItem) {
+  return item.ownerName || (item.ownerId ? `用户 ${item.ownerId}` : "未知");
 }
 
 async function fetchProjects() {
@@ -244,6 +252,20 @@ onMounted(() => fetchProjects());
   font-family: var(--app-font-serif);
   font-size: 22px;
   line-height: 1.35;
+}
+
+.project-owner {
+  display: flex;
+  align-items: center;
+  gap: var(--app-space-2);
+  margin-top: var(--app-space-3);
+  color: var(--app-text-muted);
+  font-size: 13px;
+}
+
+.project-owner strong {
+  color: var(--app-text);
+  font-weight: 700;
 }
 
 .project-card p {

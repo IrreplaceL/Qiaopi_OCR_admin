@@ -85,6 +85,7 @@ export type ProjectItem = {
   projectName: string;
   description: string;
   ownerId: string;
+  ownerName?: string;
   createTime: string;
 };
 
