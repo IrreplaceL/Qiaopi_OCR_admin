@@ -1835,21 +1835,50 @@
 
 @media (max-width: 540px) {
   .toolbar {
+    position: relative;
     padding: 8px 10px;
+  }
+
+  .toolbar-title strong {
+    font-size: 17px;
   }
 
   .toolbar-actions {
     display: flex;
+    flex-wrap: wrap;
+    overflow: visible;
     gap: 8px;
   }
 
   .toolbar-actions .btn,
   .toolbar-actions .zoom-controls {
+    flex: 1 1 auto;
     width: auto;
+    min-width: 0;
+  }
+
+  .toolbar-actions .btn {
+    min-height: 36px;
+    padding: 7px 10px;
+    font-size: 13px;
+  }
+
+  .toolbar-actions .btn-icon {
+    min-width: 52px;
   }
 
   .zoom-controls {
+    flex: 1 1 180px;
     justify-content: flex-start;
+  }
+
+  .zoom-level {
+    min-width: 42px;
+  }
+
+  .btn-primary {
+    flex-basis: 120px;
+    min-width: 116px;
   }
 
   .main-content-three-columns {
@@ -1878,7 +1907,4 @@
     max-height: none;
   }
 
-  .btn-primary {
-    min-width: 116px;
-  }
 }
