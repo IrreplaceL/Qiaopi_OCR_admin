@@ -107,6 +107,17 @@ export type CreateProjectResult = {
   data: ProjectItem;
 };
 
+export type BatchDeleteRequest = {
+  userId: string | number;
+  ids: Array<string | number>;
+};
+
+export type BasicResult = {
+  code: number;
+  msg: string;
+  data?: unknown;
+};
+
 export type AiPromptConfig = {
   id?: number;
   promptKey: string;
@@ -133,6 +144,12 @@ export const getProjectList = (userId: string) => {
 export const createProject = (data: CreateProjectRequest) => {
   ensureWritableUserId(data.userId);
   return http.request<CreateProjectResult>("post", "/project/create", { data });
+};
+
+/** 删除项目组 */
+export const deleteProjects = (data: BatchDeleteRequest) => {
+  ensureWritableUserId(data.userId);
+  return http.request<BasicResult>("post", "/project/delete", { data });
 };
 
 /** 获取侨批 AI 提示词 */

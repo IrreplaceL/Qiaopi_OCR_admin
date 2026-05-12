@@ -8,7 +8,21 @@
           管理 OCR 识别、人工校注与结构化复核任务，为每批侨批文献建立清晰的标注工作流。
         </p>
       </div>
-      <el-button type="primary" :icon="Plus" @click="openCreateDialog">创建项目</el-button>
+      <div class="hero-actions">
+        <el-button :icon="selectionMode ? Close : Check" @click="toggleSelectionMode">
+          {{ selectionMode ? "退出多选" : "多选" }}
+        </el-button>
+        <el-button
+          v-if="selectionMode"
+          type="danger"
+          :icon="Delete"
+          :loading="deleting"
+          @click="deleteSelectedProjects"
+        >
+          删除所选
+        </el-button>
+        <el-button type="primary" :icon="Plus" @click="openCreateDialog">创建项目</el-button>
+      </div>
     </div>
 
     <div v-loading="loading" class="project-grid">
@@ -17,11 +31,17 @@
       <article
         v-for="item in projectList"
         :key="item.id"
-        class="project-card"
-        @click="goToDetail(item.id)"
+        :class="['project-card', { selected: isProjectSelected(item.id) }]"
+        @click="handleProjectCardClick(item)"
       >
         <div class="project-card-top">
           <span class="project-mark">侨</span>
+          <el-checkbox
+            v-if="selectionMode"
+            :model-value="isProjectSelected(item.id)"
+            @click.stop
+            @change="toggleProjectSelection(item.id)"
+          />
           <span class="status-dot processing">档案项目</span>
         </div>
         <h2>{{ item.projectName }}</h2>
@@ -66,10 +86,15 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref, onMounted } from "vue";
-import { ElMessage } from "element-plus";
-import { Plus } from "@element-plus/icons-vue";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { Check, Close, Delete, Plus } from "@element-plus/icons-vue";
 import type { FormInstance } from "element-plus";
-import { createProject, getProjectList, type ProjectItem } from "@/api/user";
+import {
+  createProject,
+  deleteProjects,
+  getProjectList,
+  type ProjectItem
+} from "@/api/user";
 import { useUserStoreHook } from "@/store/modules/user";
 import { useRouter } from "vue-router";
 import { READONLY_MESSAGE, assertWritable } from "@/utils/permission";
@@ -80,9 +105,12 @@ const router = useRouter();
 const userStore = useUserStoreHook();
 const loading = ref(false);
 const submitting = ref(false);
+const deleting = ref(false);
 const dialogVisible = ref(false);
 const formRef = ref<FormInstance>();
 const projectList = ref<ProjectItem[]>([]);
+const selectionMode = ref(false);
+const selectedProjectIds = ref<string[]>([]);
 const currentUser = computed(() => ({
   id: userStore.userId,
   role: userStore.role
@@ -104,8 +132,36 @@ function goToDetail(id: string | number) {
   router.push(`/classinfo/detail/${id}`);
 }
 
+function handleProjectCardClick(item: ProjectItem) {
+  if (selectionMode.value) {
+    toggleProjectSelection(item.id);
+    return;
+  }
+  goToDetail(item.id);
+}
+
 function getOwnerLabel(item: ProjectItem) {
   return item.ownerName || (item.ownerId ? `用户 ${item.ownerId}` : "未知");
+}
+
+function isProjectOwner(item: ProjectItem) {
+  return String(item.ownerId ?? "") === String(userStore.userId);
+}
+
+function isProjectSelected(id: string | number) {
+  return selectedProjectIds.value.includes(String(id));
+}
+
+function toggleSelectionMode() {
+  selectionMode.value = !selectionMode.value;
+  selectedProjectIds.value = [];
+}
+
+function toggleProjectSelection(id: string | number) {
+  const normalizedId = String(id);
+  selectedProjectIds.value = isProjectSelected(normalizedId)
+    ? selectedProjectIds.value.filter(item => item !== normalizedId)
+    : [...selectedProjectIds.value, normalizedId];
 }
 
 async function fetchProjects() {
@@ -173,6 +229,63 @@ async function submitCreate() {
   }
 }
 
+async function deleteSelectedProjects() {
+  if (!selectedProjectIds.value.length) {
+    ElMessage.warning("请先选择要删除的项目组");
+    return;
+  }
+
+  try {
+    assertWritable(currentUser.value);
+  } catch {
+    ElMessage.warning(READONLY_MESSAGE);
+    return;
+  }
+
+  const selectedProjects = projectList.value.filter(item =>
+    selectedProjectIds.value.includes(String(item.id))
+  );
+  if (selectedProjects.some(item => !isProjectOwner(item))) {
+    ElMessage.warning("只能删除自己拥有的项目组");
+    return;
+  }
+
+  try {
+    await ElMessageBox.confirm(
+      "项目组所属的标注也会一并删除，是否确定删除？",
+      "删除项目组",
+      {
+        confirmButtonText: "删除",
+        cancelButtonText: "取消",
+        type: "warning"
+      }
+    );
+  } catch {
+    return;
+  }
+
+  deleting.value = true;
+  try {
+    const res = await deleteProjects({
+      userId: userStore.userId,
+      ids: selectedProjectIds.value
+    });
+    if (res.code !== 200) {
+      ElMessage.error(res.msg || "删除项目组失败");
+      return;
+    }
+    const deletedIds = new Set(selectedProjectIds.value);
+    projectList.value = projectList.value.filter(item => !deletedIds.has(String(item.id)));
+    selectedProjectIds.value = [];
+    selectionMode.value = false;
+    ElMessage.success("项目组已删除");
+  } catch (error: any) {
+    ElMessage.error(error?.message || "删除项目组失败");
+  } finally {
+    deleting.value = false;
+  }
+}
+
 onMounted(() => fetchProjects());
 </script>
 
@@ -193,6 +306,14 @@ onMounted(() => fetchProjects());
 .projects-hero .archive-subtitle {
   max-width: 620px;
   margin: var(--app-space-3) 0 0;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--app-space-3);
 }
 
 .project-grid {
@@ -222,6 +343,11 @@ onMounted(() => fetchProjects());
   transform: translateY(-2px);
   border-color: var(--app-border-strong);
   box-shadow: var(--app-shadow);
+}
+
+.project-card.selected {
+  border-color: var(--app-accent);
+  box-shadow: 0 0 0 2px var(--app-accent-soft), var(--app-shadow-soft);
 }
 
 .project-card-top {
@@ -294,6 +420,10 @@ onMounted(() => fetchProjects());
   .projects-hero {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .hero-actions {
+    justify-content: flex-start;
   }
 }
 </style>
