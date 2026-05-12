@@ -434,6 +434,7 @@
   top: 0;
   left: 0;
   pointer-events: all;
+  touch-action: none;
 }
 
 .bbox-rect {
@@ -441,6 +442,7 @@
   stroke: var(--app-text-muted);
   stroke-width: 2;
   cursor: pointer;
+  touch-action: none;
   transition: all 0.2s;
 }
 
@@ -474,6 +476,7 @@
   stroke: var(--app-status);
   stroke-width: 2;
   cursor: nwse-resize;
+  touch-action: none;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
 }
 
@@ -787,6 +790,12 @@
   color: #1f2937;
 }
 
+.edit-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .btn-close {
   background: none;
   border: none;
@@ -804,6 +813,41 @@
 
 .btn-close:hover {
   color: #1f2937;
+}
+
+.edit-float-ball {
+  position: fixed;
+  right: 18px;
+  bottom: 22px;
+  z-index: 105;
+  width: 54px;
+  height: 54px;
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  background: var(--app-primary);
+  color: var(--app-bg);
+  box-shadow: var(--app-shadow);
+  cursor: pointer;
+  font-family: var(--app-font-mono);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.edit-float-ball::after {
+  content: "编辑";
+  position: absolute;
+  left: 50%;
+  top: -24px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: var(--app-surface);
+  color: var(--app-text-muted);
+  padding: 3px 8px;
+  box-shadow: var(--app-shadow-soft);
+  font-family: var(--app-font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .edit-body {

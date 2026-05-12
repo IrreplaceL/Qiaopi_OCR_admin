@@ -159,6 +159,7 @@
                   :class="['bbox-rect', getBoxColorClass(item.colId), { 'bbox-active': highlightedLineId === item.colId }]"
                   @click.stop="handleBboxClick(item)"
                   @mousedown.stop.prevent="startBoxDrag($event, item)"
+                  @touchstart.stop.prevent="startBoxDrag($event, item)"
                   @mouseenter="handleBboxHover(item.colId)"
                   @mouseleave="handleBboxLeave"
                 />
@@ -172,6 +173,7 @@
                   :height="handle.size"
                   :class="['bbox-handle', `handle-${handle.name}`]"
                   @mousedown.stop.prevent="startBoxResize($event, item, handle.name)"
+                  @touchstart.stop.prevent="startBoxResize($event, item, handle.name)"
                 />
                 <text
                   :x="getDisplayRect(item).x + 5"
@@ -241,10 +243,13 @@
         </div>
 
         <!-- 编辑面板 -->
-        <div v-if="selectedLine" class="edit-panel" :style="editPanelStyle">
-          <div class="edit-header" @mousedown="startEditPanelDrag">
+        <div v-if="selectedLine && !isEditPanelMinimized" class="edit-panel" :style="editPanelStyle">
+          <div class="edit-header" @mousedown="startEditPanelDrag" @touchstart="startEditPanelDrag">
             <h4>编辑第 {{ selectedLine.colId }} 列</h4>
-            <button class="btn-close" @mousedown.stop @click="closeEditPanel">×</button>
+            <div class="edit-header-actions">
+              <button class="btn-close" title="收起为悬浮球" @mousedown.stop @touchstart.stop @click="minimizeEditPanel">-</button>
+              <button class="btn-close" title="关闭" @mousedown.stop @touchstart.stop @click="closeEditPanel">×</button>
+            </div>
           </div>
           <div class="edit-body">
             <div class="form-group">
@@ -278,6 +283,14 @@
             <button class="btn btn-danger full-width" @click="deleteSelectedBox">删除此列</button>
           </div>
         </div>
+        <button
+          v-if="selectedLine && isEditPanelMinimized"
+          class="edit-float-ball"
+          type="button"
+          @click="restoreEditPanel"
+        >
+          {{ selectedLine.colId }}
+        </button>
       </section>
 
       <!-- 右侧：结构化信息面板 -->
@@ -579,6 +592,7 @@ const syncingScroll = ref(false)
 const activeBoxEdit = ref(null)
 const editPanelPosition = ref(null)
 const editPanelDrag = ref(null)
+const isEditPanelMinimized = ref(false)
 const COORD_SYSTEM_SIZE = 1000
 const MIN_BOX_SIZE = 12
 const infoTabs = [
@@ -756,7 +770,11 @@ const ensureColumnClientKey = (item) => {
 
 const getResizeHandles = (item) => {
   const rect = getDisplayRect(item)
-  const size = Math.max(8, Math.min(12, 10 / zoomLevel.value))
+  const isTouchPointer = window.matchMedia?.('(pointer: coarse)').matches
+  const baseSize = isTouchPointer ? 24 : 10
+  const maxSize = isTouchPointer ? 28 : 12
+  const minSize = isTouchPointer ? 18 : 8
+  const size = Math.max(minSize, Math.min(maxSize, baseSize / zoomLevel.value))
   const half = size / 2
   const midX = rect.x + rect.width / 2
   const midY = rect.y + rect.height / 2
@@ -775,13 +793,20 @@ const getResizeHandles = (item) => {
   ]
 }
 
+const getClientPoint = (event) => {
+  const touch = event.touches?.[0] || event.changedTouches?.[0]
+  if (touch) return { clientX: touch.clientX, clientY: touch.clientY }
+  return { clientX: event.clientX, clientY: event.clientY }
+}
+
 const getPointerImagePoint = (event) => {
   const overlay = imageWrapperRef.value?.querySelector('.bbox-overlay')
   if (!overlay) return null
 
   const rect = overlay.getBoundingClientRect()
-  const displayX = (event.clientX - rect.left) / zoomLevel.value
-  const displayY = (event.clientY - rect.top) / zoomLevel.value
+  const point = getClientPoint(event)
+  const displayX = (point.clientX - rect.left) / zoomLevel.value
+  const displayY = (point.clientY - rect.top) / zoomLevel.value
 
   return {
     x: displayX / scaleRatio.value,
@@ -793,50 +818,72 @@ const stopBoxEdit = () => {
   activeBoxEdit.value = null
   window.removeEventListener('mousemove', handleBoxEditMove)
   window.removeEventListener('mouseup', stopBoxEdit)
+  window.removeEventListener('touchmove', handleBoxEditMove)
+  window.removeEventListener('touchend', stopBoxEdit)
+  window.removeEventListener('touchcancel', stopBoxEdit)
 }
 
 const handleEditPanelDrag = (event) => {
   if (!editPanelDrag.value) return
 
   const { offsetX, offsetY, width, height } = editPanelDrag.value
+  const point = getClientPoint(event)
   editPanelPosition.value = clampEditPanelPosition(
-    event.clientX - offsetX,
-    event.clientY - offsetY,
+    point.clientX - offsetX,
+    point.clientY - offsetY,
     width,
     height
   )
+  event.preventDefault?.()
 }
 
 const stopEditPanelDrag = () => {
   editPanelDrag.value = null
   window.removeEventListener('mousemove', handleEditPanelDrag)
   window.removeEventListener('mouseup', stopEditPanelDrag)
+  window.removeEventListener('touchmove', handleEditPanelDrag)
+  window.removeEventListener('touchend', stopEditPanelDrag)
+  window.removeEventListener('touchcancel', stopEditPanelDrag)
 }
 
 const startEditPanelDrag = (event) => {
-  if (event.button !== 0) return
+  if (event.button !== undefined && event.button !== 0) return
   if (event.target?.closest?.('button,input,textarea,select')) return
 
   const panel = event.target?.closest?.('.edit-panel')
   if (!panel) return
 
   const rect = panel.getBoundingClientRect()
+  const point = getClientPoint(event)
   editPanelPosition.value = { x: rect.left, y: rect.top }
   editPanelDrag.value = {
-    offsetX: event.clientX - rect.left,
-    offsetY: event.clientY - rect.top,
+    offsetX: point.clientX - rect.left,
+    offsetY: point.clientY - rect.top,
     width: rect.width,
     height: rect.height
   }
 
   window.addEventListener('mousemove', handleEditPanelDrag)
   window.addEventListener('mouseup', stopEditPanelDrag)
+  window.addEventListener('touchmove', handleEditPanelDrag, { passive: false })
+  window.addEventListener('touchend', stopEditPanelDrag)
+  window.addEventListener('touchcancel', stopEditPanelDrag)
   event.preventDefault()
 }
 
 const closeEditPanel = () => {
   stopEditPanelDrag()
+  isEditPanelMinimized.value = false
   selectedLine.value = null
+}
+
+const minimizeEditPanel = () => {
+  stopEditPanelDrag()
+  isEditPanelMinimized.value = true
+}
+
+const restoreEditPanel = () => {
+  isEditPanelMinimized.value = false
 }
 
 const startBoxDrag = (event, item) => {
@@ -854,6 +901,9 @@ const startBoxDrag = (event, item) => {
   }
   window.addEventListener('mousemove', handleBoxEditMove)
   window.addEventListener('mouseup', stopBoxEdit)
+  window.addEventListener('touchmove', handleBoxEditMove, { passive: false })
+  window.addEventListener('touchend', stopBoxEdit)
+  window.addEventListener('touchcancel', stopBoxEdit)
 }
 
 const startBoxResize = (event, item, handle) => {
@@ -872,11 +922,15 @@ const startBoxResize = (event, item, handle) => {
   }
   window.addEventListener('mousemove', handleBoxEditMove)
   window.addEventListener('mouseup', stopBoxEdit)
+  window.addEventListener('touchmove', handleBoxEditMove, { passive: false })
+  window.addEventListener('touchend', stopBoxEdit)
+  window.addEventListener('touchcancel', stopBoxEdit)
 }
 
 const handleBoxEditMove = (event) => {
   const edit = activeBoxEdit.value
   if (!edit) return
+  event.preventDefault?.()
 
   const point = getPointerImagePoint(event)
   if (!point) return
