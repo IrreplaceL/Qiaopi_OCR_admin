@@ -20,17 +20,20 @@
             <strong>{{ promptConfig?.promptName || "侨批 AI 标注提示词" }}</strong>
             <span>{{ promptConfig?.promptKey || "qiaopi_annotation_prompt" }}</span>
           </div>
-          <el-tag :type="userStore.isAdmin ? 'success' : 'info'" effect="plain">
+          <span :class="['permission-badge', { writable: userStore.isAdmin }]">
             {{ userStore.isAdmin ? "admin 可保存" : "只读查看" }}
-          </el-tag>
+          </span>
         </div>
       </template>
 
+      <div class="prompt-markdown" v-html="renderedPrompt"></div>
       <el-input
+        v-if="userStore.isAdmin"
         v-model="promptContent"
+        class="prompt-editor"
         type="textarea"
-        :autosize="{ minRows: 18, maxRows: 32 }"
-        placeholder="正在加载提示词..."
+        :autosize="{ minRows: 12, maxRows: 22 }"
+        placeholder="请使用 Markdown 格式编辑提示词..."
       />
 
       <footer class="settings-meta">
@@ -42,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
 import {
   getQiaopiPrompt,
@@ -58,6 +61,43 @@ const loading = ref(false);
 const saving = ref(false);
 const promptConfig = ref<AiPromptConfig | null>(null);
 const promptContent = ref("");
+const renderedPrompt = computed(() => renderMarkdown(promptContent.value));
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function renderInlineMarkdown(value: string) {
+  return escapeHtml(value)
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/`(.+?)`/g, "<code>$1</code>");
+}
+
+function renderMarkdown(markdown: string) {
+  if (!markdown.trim()) {
+    return '<p class="empty-prompt">暂无提示词内容</p>';
+  }
+
+  return markdown
+    .split(/\r?\n/)
+    .map(line => {
+      if (line.startsWith("#### ")) return `<h4>${renderInlineMarkdown(line.slice(5))}</h4>`;
+      if (line.startsWith("### ")) return `<h3>${renderInlineMarkdown(line.slice(4))}</h3>`;
+      if (line.startsWith("## ")) return `<h2>${renderInlineMarkdown(line.slice(3))}</h2>`;
+      if (line.startsWith("# ")) return `<h1>${renderInlineMarkdown(line.slice(2))}</h1>`;
+      if (/^\s*[-*]\s+/.test(line)) {
+        return `<p class="md-list-item">${renderInlineMarkdown(line.replace(/^\s*[-*]\s+/, ""))}</p>`;
+      }
+      if (!line.trim()) return '<div class="md-space"></div>';
+      return `<p>${renderInlineMarkdown(line)}</p>`;
+    })
+    .join("");
+}
 
 async function loadPrompt() {
   loading.value = true;
@@ -152,6 +192,90 @@ onMounted(() => {
   color: var(--app-text-muted);
   font-family: var(--app-font-mono);
   font-size: 12px;
+}
+
+.permission-badge {
+  flex: 0 0 auto;
+  max-width: 96px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--app-space-3);
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  color: var(--app-text-muted);
+  font-family: var(--app-font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.permission-badge.writable {
+  border-color: color-mix(in srgb, var(--app-status), transparent 55%);
+  color: var(--app-status);
+}
+
+.prompt-markdown {
+  min-height: 420px;
+  max-height: 58vh;
+  overflow: auto;
+  padding: var(--app-space-4);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-control);
+  background: var(--app-surface);
+  color: var(--app-text);
+  font-family: var(--app-font-serif);
+  line-height: 1.85;
+}
+
+.prompt-markdown :deep(h1),
+.prompt-markdown :deep(h2),
+.prompt-markdown :deep(h3),
+.prompt-markdown :deep(h4),
+.prompt-markdown :deep(p) {
+  margin: 0 0 var(--app-space-3);
+}
+
+.prompt-markdown :deep(h1),
+.prompt-markdown :deep(h2),
+.prompt-markdown :deep(h3),
+.prompt-markdown :deep(h4) {
+  font-family: var(--app-font-serif);
+  color: var(--app-text);
+}
+
+.prompt-markdown :deep(code) {
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: var(--app-primary-soft);
+  font-family: var(--app-font-mono);
+  font-size: 0.92em;
+}
+
+.prompt-markdown :deep(.md-list-item) {
+  padding-left: var(--app-space-4);
+  position: relative;
+}
+
+.prompt-markdown :deep(.md-list-item)::before {
+  position: absolute;
+  left: 0;
+  content: "•";
+  color: var(--app-accent);
+}
+
+.prompt-markdown :deep(.md-space) {
+  height: var(--app-space-2);
+}
+
+.prompt-markdown :deep(.empty-prompt) {
+  color: var(--app-text-subtle);
+}
+
+.prompt-editor {
+  margin-top: var(--app-space-4);
 }
 
 .settings-meta {
