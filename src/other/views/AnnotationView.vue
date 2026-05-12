@@ -118,6 +118,7 @@
           <div class="image-wrapper" ref="imageWrapperRef" :style="{ transform: `scale(${zoomLevel})` }">
             <img
               v-if="imageUrl"
+              :key="imageUrl"
               :src="imageUrl"
               alt="侨批"
               class="qiaopi-image"
@@ -1658,8 +1659,18 @@ const handleFirstInteractionFullscreen = async () => {
 
 const reloadDetailByRoute = async (id) => {
   if (!id) return
+  imageLoaded.value = false
+  imageUrl.value = ''
+  annotationData.value = []
+  rawData.value = null
+  structuredInfo.value = null
+  classicalTerms.value = []
+  dialectNotes.value = []
+  needReviewItems.value = []
+  tokenUsage.value = null
   selectedLine.value = null
   highlightedLineId.value = null
+  await nextTick()
   await loadExistingAnnotation(id)
 }
 

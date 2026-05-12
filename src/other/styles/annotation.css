@@ -1687,3 +1687,145 @@
 .save-confirm-dialog p {
   color: var(--app-text-muted);
 }
+
+@media (max-width: 900px) {
+  .annotation-container {
+    height: auto;
+    min-height: 100vh;
+    max-height: none;
+    overflow: auto;
+  }
+
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: auto;
+    min-height: 58px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--app-space-3);
+    padding: var(--app-space-3);
+  }
+
+  .toolbar-actions {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: var(--app-space-2);
+  }
+
+  .toolbar-actions .btn,
+  .toolbar-actions .zoom-controls {
+    flex: 0 1 auto;
+  }
+
+  .main-content-three-columns {
+    height: auto;
+    min-height: calc(100vh - 58px);
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    padding: var(--app-space-3);
+  }
+
+  .column-left,
+  .column-middle,
+  .column-right {
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .column-middle,
+  .image-panel {
+    border-left: 1px solid var(--app-border);
+    border-right: 1px solid var(--app-border);
+  }
+
+  .image-panel,
+  .annotation-panel {
+    min-height: min(78vh, 720px);
+  }
+
+  .info-panel {
+    min-height: 420px;
+    max-height: none;
+  }
+
+  .info-panel.collapsed {
+    flex: 0 0 auto;
+    min-width: 0;
+    min-height: 64px;
+  }
+
+  .image-container,
+  .text-canvas-container {
+    min-height: calc(78vh - 58px);
+    padding: var(--app-space-3);
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .image-wrapper,
+  .text-canvas-wrapper {
+    transform-origin: top left;
+  }
+
+  .info-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .info-content {
+    max-height: 70vh;
+    overflow: auto;
+  }
+
+  .edit-panel {
+    left: 8px !important;
+    right: 8px;
+    top: 72px !important;
+    width: auto;
+    max-width: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .toolbar {
+    padding: var(--app-space-2);
+  }
+
+  .toolbar-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .toolbar-actions .btn,
+  .toolbar-actions .zoom-controls {
+    width: 100%;
+  }
+
+  .zoom-controls {
+    justify-content: space-between;
+  }
+
+  .main-content-three-columns {
+    padding: var(--app-space-2);
+    gap: var(--app-space-2);
+  }
+
+  .panel-header {
+    min-height: 52px;
+    padding: var(--app-space-3);
+  }
+
+  .image-panel,
+  .annotation-panel {
+    min-height: 70vh;
+  }
+
+  .image-container,
+  .text-canvas-container {
+    min-height: calc(70vh - 52px);
+  }
+}

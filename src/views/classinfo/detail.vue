@@ -161,7 +161,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -252,13 +252,13 @@ let dragOffsetX = 0;
 let dragOffsetY = 0;
 let progressLogId = 1;
 
-const projectId = route.params.projectId as string;
+const projectId = computed(() => route.params.projectId as string);
 const userId = computed(() => userStore.userId);
 const currentUser = computed(() => ({
   id: userStore.userId,
   role: userStore.role
 }));
-const annotatedCount = computed(() => list.value.filter(i => i.annotated).length);
+const annotatedCount = computed(() => list.value.filter(i => i.annotated === true).length);
 const filterAnnotatedValue = computed(() => {
   if (annotationFilter.value === "annotated") return true;
   if (annotationFilter.value === "unannotated") return false;
@@ -312,7 +312,7 @@ function goToAnnotationNew() {
 }
 
 function goToAnnotationDetail(id: string) {
-  router.push(`/classinfo/detail/${projectId}/annotation/${id}`);
+  router.push(`/classinfo/detail/${projectId.value}/annotation/${id}`);
 }
 
 function goToProjectGroups() {
@@ -618,7 +618,7 @@ async function handleUploadFiles(event: Event) {
   uploadStartAtRef.value = Date.now();
   startElapsedTimer();
   appendProgressLog(
-    `开始上传，项目ID=${projectId}，共 ${imageFiles.length} 张图片`,
+    `开始上传，项目ID=${projectId.value}，共 ${imageFiles.length} 张图片`,
     "info"
   );
   updateProgressPanel(imageFiles.length, 0, 0, 0);
@@ -633,7 +633,7 @@ async function handleUploadFiles(event: Event) {
 
       try {
         const result = await uploadOcrImage(file, {
-          projectId,
+          projectId: projectId.value,
           userId: userId.value
         });
 
@@ -671,7 +671,7 @@ async function handleUploadFiles(event: Event) {
 async function fetchList() {
   loading.value = true;
   try {
-    const res = await getAnnotationList(projectId, filterAnnotatedValue.value);
+    const res = await getAnnotationList(projectId.value, filterAnnotatedValue.value);
     if (res.code === 200) {
       list.value = res.data ?? [];
       const visibleIds = new Set(list.value.map(item => String(item.id)));
@@ -688,8 +688,17 @@ async function fetchList() {
   }
 }
 
+watch(
+  projectId,
+  () => {
+    selectedAnnotationIds.value = [];
+    selectionMode.value = false;
+    fetchList();
+  },
+  { immediate: true }
+);
+
 onMounted(() => {
-  fetchList();
   window.addEventListener("resize", onWindowResize);
 });
 
