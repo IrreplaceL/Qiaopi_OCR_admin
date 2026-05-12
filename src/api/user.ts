@@ -118,6 +118,14 @@ export type BasicResult = {
   data?: unknown;
 };
 
+export type AnnotationExportFormat = "json" | "html";
+
+export type AnnotationExportRequest = {
+  userId?: string | number;
+  ids: Array<string | number>;
+  format: AnnotationExportFormat;
+};
+
 export type AiPromptConfig = {
   id?: number;
   promptKey: string;
@@ -196,6 +204,37 @@ export const getAnnotationList = (
   return http.request<AnnotationListResult>("get", "/annotation/list", {
     params
   });
+};
+
+/** 导出标注 */
+export const exportAnnotations = async (data: AnnotationExportRequest) => {
+  const response = await fetch(apiUrl("/annotation/export"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+  const blob = await response.blob();
+  const contentType = response.headers.get("content-type") || "";
+  const disposition = response.headers.get("content-disposition");
+  const hasAttachment = Boolean(disposition);
+
+  if (!response.ok || (!hasAttachment && contentType.includes("application/json"))) {
+    const text = await blob.text();
+    try {
+      const result = JSON.parse(text);
+      throw new Error(result?.msg || "导出失败");
+    } catch (error: any) {
+      if (error instanceof SyntaxError) {
+        throw new Error(text || "导出失败");
+      }
+      if (error?.message) {
+        throw error;
+      }
+      throw new Error(text || "导出失败");
+    }
+  }
+
+  return { blob, disposition };
 };
 
 // ---- 标注详情 ----

@@ -20,6 +20,20 @@
           <el-radio-button label="unannotated">未识别</el-radio-button>
           <el-radio-button label="annotated">已识别</el-radio-button>
         </el-radio-group>
+        <el-button :icon="selectionMode ? Close : Check" @click="toggleSelectionMode">
+          {{ selectionMode ? "退出多选" : "多选" }}
+        </el-button>
+        <el-dropdown v-if="selectionMode" trigger="click" @command="handleExportCommand">
+          <el-button :icon="Download" :loading="exporting">
+            导出所选
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="json">导出 JSON</el-dropdown-item>
+              <el-dropdown-item command="html">导出 HTML</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
         <el-button type="primary" class="add-btn" @click="goToAnnotationNew">
           新增标注图像
         </el-button>
@@ -40,10 +54,17 @@
       <article
         v-for="item in list"
         :key="item.id"
-        class="image-card"
-        @click="goToAnnotationDetail(item.id)"
+        :class="['image-card', { selected: isAnnotationSelected(item.id) }]"
+        @click="handleAnnotationCardClick(item)"
       >
         <div class="image-wrap">
+          <el-checkbox
+            v-if="selectionMode"
+            class="selection-checkbox"
+            :model-value="isAnnotationSelected(item.id)"
+            @click.stop
+            @change="toggleAnnotationSelection(item.id)"
+          />
           <el-image
             :src="item.imageUrl"
             :preview-disabled="true"
@@ -134,10 +155,24 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
-import { ArrowLeft, Loading, PictureFilled } from "@element-plus/icons-vue";
-import { getAnnotationList, type AnnotationItem, uploadOcrImage } from "@/api/user";
+import {
+  ArrowLeft,
+  Check,
+  Close,
+  Download,
+  Loading,
+  PictureFilled
+} from "@element-plus/icons-vue";
+import {
+  exportAnnotations,
+  getAnnotationList,
+  type AnnotationExportFormat,
+  type AnnotationItem,
+  uploadOcrImage
+} from "@/api/user";
 import { useUserStoreHook } from "@/store/modules/user";
 import { READONLY_MESSAGE, assertWritable } from "@/utils/permission";
+import { downloadBlob, getFileNameFromDisposition } from "@/utils/download";
 
 defineOptions({ name: "classinfoDetail" });
 
@@ -184,7 +219,10 @@ const userStore = useUserStoreHook();
 const loading = ref(false);
 const list = ref<ExtendedAnnotationItem[]>([]);
 const annotationFilter = ref<AnnotationFilter>("all");
+const selectionMode = ref(false);
+const selectedAnnotationIds = ref<string[]>([]);
 const isBatchUploading = ref(false);
+const exporting = ref(false);
 const uploadInputRef = ref<HTMLInputElement | null>(null);
 const uploadStartAtRef = ref<number>(0);
 const nowTickRef = ref<number>(Date.now());
@@ -263,6 +301,56 @@ function goToAnnotationNew() {
 
 function goToAnnotationDetail(id: string) {
   router.push(`/classinfo/detail/${projectId}/annotation/${id}`);
+}
+
+function handleAnnotationCardClick(item: ExtendedAnnotationItem) {
+  if (selectionMode.value) {
+    toggleAnnotationSelection(item.id);
+    return;
+  }
+  goToAnnotationDetail(item.id);
+}
+
+function isAnnotationSelected(id: string | number) {
+  return selectedAnnotationIds.value.includes(String(id));
+}
+
+function toggleSelectionMode() {
+  selectionMode.value = !selectionMode.value;
+  selectedAnnotationIds.value = [];
+}
+
+function toggleAnnotationSelection(id: string | number) {
+  const normalizedId = String(id);
+  selectedAnnotationIds.value = isAnnotationSelected(normalizedId)
+    ? selectedAnnotationIds.value.filter(item => item !== normalizedId)
+    : [...selectedAnnotationIds.value, normalizedId];
+}
+
+async function handleExportCommand(command: string | number | object) {
+  const format = String(command) as AnnotationExportFormat;
+  if (!["json", "html"].includes(format)) return;
+  if (!selectedAnnotationIds.value.length) {
+    ElMessage.warning("请先选择要导出的标注");
+    return;
+  }
+
+  exporting.value = true;
+  try {
+    const { blob, disposition } = await exportAnnotations({
+      userId: userStore.userId || 0,
+      ids: selectedAnnotationIds.value,
+      format
+    });
+    const fileName =
+      getFileNameFromDisposition(disposition) || `qiaopi_annotations.${format}`;
+    downloadBlob(blob, fileName);
+    ElMessage.success("导出已开始");
+  } catch (error: any) {
+    ElMessage.error(error?.message || "导出失败");
+  } finally {
+    exporting.value = false;
+  }
 }
 
 function nowTimeLabel() {
@@ -521,6 +609,10 @@ async function fetchList() {
     const res = await getAnnotationList(projectId, filterAnnotatedValue.value);
     if (res.code === 200) {
       list.value = res.data ?? [];
+      const visibleIds = new Set(list.value.map(item => String(item.id)));
+      selectedAnnotationIds.value = selectedAnnotationIds.value.filter(id =>
+        visibleIds.has(id)
+      );
     } else {
       ElMessage.error(res.msg || "获取标注列表失败");
     }
@@ -599,6 +691,11 @@ onBeforeUnmount(() => {
   box-shadow: var(--app-shadow);
 }
 
+.image-card.selected {
+  border-color: var(--app-accent);
+  box-shadow: 0 0 0 2px var(--app-accent-soft), var(--app-shadow-soft);
+}
+
 .image-wrap {
   position: relative;
   width: 100%;
@@ -613,6 +710,18 @@ onBeforeUnmount(() => {
   inset: 0;
   width: 100%;
   height: 100%;
+}
+
+.selection-checkbox {
+  position: absolute;
+  top: var(--app-space-3);
+  left: var(--app-space-3);
+  z-index: 2;
+  padding: 4px 7px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-small);
+  background: color-mix(in srgb, var(--app-surface), transparent 10%);
+  backdrop-filter: blur(12px);
 }
 
 .image-slot {
