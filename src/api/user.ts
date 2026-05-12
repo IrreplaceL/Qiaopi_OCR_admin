@@ -106,6 +106,23 @@ export type CreateProjectResult = {
   data: ProjectItem;
 };
 
+export type AiPromptConfig = {
+  id?: number;
+  promptKey: string;
+  promptName: string;
+  promptContent: string;
+  enabled: boolean;
+  updateUserId?: number;
+  createTime?: string;
+  updateTime?: string;
+};
+
+export type PromptConfigResult = {
+  code: number;
+  msg: string;
+  data: AiPromptConfig;
+};
+
 /** 获取项目组列表 */
 export const getProjectList = (userId: string) => {
   return http.request<ProjectListResult>("get", `/project/list/${userId}`);
@@ -115,6 +132,22 @@ export const getProjectList = (userId: string) => {
 export const createProject = (data: CreateProjectRequest) => {
   ensureWritableUserId(data.userId);
   return http.request<CreateProjectResult>("post", "/project/create", { data });
+};
+
+/** 获取侨批 AI 提示词 */
+export const getQiaopiPrompt = () => {
+  return http.request<PromptConfigResult>("get", "/prompt/qiaopi");
+};
+
+/** 更新侨批 AI 提示词 */
+export const updateQiaopiPrompt = (data: {
+  userId: string | number;
+  promptContent: string;
+}) => {
+  ensureWritableUserId(data.userId);
+  return http.request<PromptConfigResult>("post", "/prompt/qiaopi/update", {
+    data
+  });
 };
 
 // ---- 标注相关 API ----

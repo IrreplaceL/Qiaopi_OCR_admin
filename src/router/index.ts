@@ -30,6 +30,12 @@ const routes: RouteRecordRaw[] = [
         name: "classinfoDetail",
         component: () => import("@/views/classinfo/detail.vue"),
         meta: { title: "项目标注列表" }
+      },
+      {
+        path: "/settings",
+        name: "settings",
+        component: () => import("@/views/settings/index.vue"),
+        meta: { title: "设置" }
       }
     ]
   },

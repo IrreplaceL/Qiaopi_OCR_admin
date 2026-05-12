@@ -21,6 +21,7 @@
           </el-button>
           <template #dropdown>
             <el-dropdown-menu>
+              <el-dropdown-item command="settings" :icon="Setting">设置</el-dropdown-item>
               <el-dropdown-item command="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -37,7 +38,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRouter } from "vue-router";
-import { ArrowDown, FolderOpened, User } from "@element-plus/icons-vue";
+import { ArrowDown, FolderOpened, Setting, User } from "@element-plus/icons-vue";
 import { useUserStoreHook } from "@/store/modules/user";
 import { useTheme } from "@/utils/theme";
 
@@ -51,6 +52,11 @@ function goHome() {
 }
 
 function handleUserCommand(command: string) {
+  if (command === "settings") {
+    router.push("/settings");
+    return;
+  }
+
   if (command === "logout") {
     userStore.logOut();
   }
