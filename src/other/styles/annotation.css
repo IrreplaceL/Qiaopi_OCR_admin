@@ -603,11 +603,16 @@
   height: 85%;
   text-align: center;
   padding: 2px;
+  white-space: nowrap;
 }
 
 .item-text.vertical-text {
   writing-mode: vertical-rl;
   text-orientation: upright;
+  line-height: 1;
+  letter-spacing: 0;
+  width: 76%;
+  height: 92%;
   /* 字体大小由 JavaScript 动态计算 */
 }
 

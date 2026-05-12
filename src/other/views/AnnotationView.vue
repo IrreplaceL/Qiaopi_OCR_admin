@@ -572,7 +572,7 @@ const classicalTerms = ref([])
 const dialectNotes = ref([])
 const needReviewItems = ref([])
 const tokenUsage = ref(null)
-const activeInfoTab = ref('ocr')
+const activeInfoTab = ref('structured')
 const isInfoCollapsed = ref(false)
 const syncingScroll = ref(false)
 const activeBoxEdit = ref(null)
@@ -581,10 +581,10 @@ const editPanelDrag = ref(null)
 const COORD_SYSTEM_SIZE = 1000
 const MIN_BOX_SIZE = 12
 const infoTabs = [
-  { key: 'ocr', label: 'OCR' },
   { key: 'structured', label: '结构化' },
   { key: 'dialect', label: '方言注释' },
-  { key: 'ai', label: 'AI建议' }
+  { key: 'ai', label: 'AI建议' },
+  { key: 'ocr', label: 'OCR' }
 ]
 
 const projectId = computed(() => route.params.projectId)
@@ -648,12 +648,11 @@ const getTextFontSize = (item) => {
   const charCount = Math.max(1, getPreferredText(item).length)
 
   if (textDirection.value === 'vertical') {
-    // 竖排文字：宽度决定字体大小，高度决定能放几个字
-    // 字体大小 = 框宽度 * 0.7（留一些边距）
-    // 但不能超过 (框高度 * 0.85) / 字数
-    const maxByWidth = width * 0.7
-    const maxByHeight = (height * 0.85) / charCount
-    return Math.max(6, Math.min(maxByWidth, maxByHeight, 20)) + 'px'
+    const usableWidth = Math.max(1, width * 0.72)
+    const usableHeight = Math.max(1, height * 0.9)
+    const maxByWidth = usableWidth
+    const maxByHeight = usableHeight / charCount
+    return Math.max(4, Math.min(maxByWidth, maxByHeight, 20)) + 'px'
   } else {
     // 横排文字：高度决定字体大小，宽度决定能放几个字
     const maxByHeight = height * 0.7
