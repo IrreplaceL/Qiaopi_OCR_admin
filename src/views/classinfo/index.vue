@@ -84,12 +84,27 @@
         <el-button type="primary" :loading="submitting" @click="submitProject">确定</el-button>
       </template>
     </el-dialog>
+
+    <div v-if="deleteConfirmVisible" class="confirm-overlay" @click.self="closeDeleteConfirm">
+      <div class="confirm-dialog" role="dialog" aria-modal="true" aria-label="删除项目组确认">
+        <button class="confirm-close" type="button" @click="closeDeleteConfirm">×</button>
+        <span class="archive-kicker">Delete Project</span>
+        <h3>删除项目组</h3>
+        <p>项目组所属的标注也会一并删除，是否确定删除？</p>
+        <div class="confirm-actions">
+          <el-button :disabled="deleting" @click="closeDeleteConfirm">取消</el-button>
+          <el-button type="danger" :loading="deleting" @click="confirmDeleteProjects">
+            删除
+          </el-button>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { computed, reactive, ref, onMounted } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage } from "element-plus";
 import { Check, Close, Delete, Edit, Plus } from "@element-plus/icons-vue";
 import type { FormInstance } from "element-plus";
 import {
@@ -111,6 +126,7 @@ const loading = ref(false);
 const submitting = ref(false);
 const deleting = ref(false);
 const dialogVisible = ref(false);
+const deleteConfirmVisible = ref(false);
 const formRef = ref<FormInstance>();
 const projectList = ref<ProjectItem[]>([]);
 const selectionMode = ref(false);
@@ -294,20 +310,15 @@ async function deleteSelectedProjects() {
     return;
   }
 
-  try {
-    await ElMessageBox.confirm(
-      "项目组所属的标注也会一并删除，是否确定删除？",
-      "删除项目组",
-      {
-        confirmButtonText: "删除",
-        cancelButtonText: "取消",
-        type: "warning"
-      }
-    );
-  } catch {
-    return;
-  }
+  deleteConfirmVisible.value = true;
+}
 
+function closeDeleteConfirm() {
+  if (deleting.value) return;
+  deleteConfirmVisible.value = false;
+}
+
+async function confirmDeleteProjects() {
   deleting.value = true;
   try {
     const res = await deleteProjects({
@@ -322,6 +333,7 @@ async function deleteSelectedProjects() {
     projectList.value = projectList.value.filter(item => !deletedIds.has(String(item.id)));
     selectedProjectIds.value = [];
     selectionMode.value = false;
+    deleteConfirmVisible.value = false;
     ElMessage.success("项目组已删除");
   } catch (error: any) {
     ElMessage.error(error?.message || "删除项目组失败");
@@ -469,6 +481,66 @@ onMounted(() => fetchProjects());
 
 .project-card footer :deep(.el-button) {
   font-family: var(--app-font-sans);
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--app-space-6);
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: blur(2px);
+}
+
+.confirm-dialog {
+  position: relative;
+  width: min(92vw, 460px);
+  padding: var(--app-space-6);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-card);
+  background: var(--app-surface);
+  box-shadow: var(--app-shadow);
+}
+
+.confirm-close {
+  position: absolute;
+  top: var(--app-space-3);
+  right: var(--app-space-3);
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--app-text-muted);
+  cursor: pointer;
+}
+
+.confirm-close:hover {
+  background: var(--app-hover);
+  color: var(--app-text);
+}
+
+.confirm-dialog h3 {
+  margin: var(--app-space-2) 0 var(--app-space-3);
+  color: var(--app-text);
+  font-family: var(--app-font-serif);
+  font-size: 24px;
+}
+
+.confirm-dialog p {
+  margin: 0;
+  color: var(--app-text-muted);
+  line-height: 1.8;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--app-space-3);
+  margin-top: var(--app-space-6);
 }
 
 @media (max-width: 720px) {
