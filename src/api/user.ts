@@ -133,9 +133,17 @@ export type AnnotationListResult = {
 };
 
 /** 根据项目 id 获取标注列表 */
-export const getAnnotationList = (projectId: string | number) => {
+export const getAnnotationList = (
+  projectId: string | number,
+  annotated?: boolean
+) => {
+  const params: { projectId: string | number; annotated?: boolean } = { projectId };
+  if (typeof annotated === "boolean") {
+    params.annotated = annotated;
+  }
+
   return http.request<AnnotationListResult>("get", "/annotation/list", {
-    params: { projectId }
+    params
   });
 };
 

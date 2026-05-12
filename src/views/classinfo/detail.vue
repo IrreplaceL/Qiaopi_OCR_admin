@@ -14,9 +14,16 @@
           </p>
         </div>
       </div>
-      <el-button type="primary" class="add-btn" @click="goToAnnotationNew">
-        新增标注图像
-      </el-button>
+      <div class="hero-actions">
+        <el-radio-group v-model="annotationFilter" @change="fetchList">
+          <el-radio-button label="all">未筛选</el-radio-button>
+          <el-radio-button label="unannotated">未识别</el-radio-button>
+          <el-radio-button label="annotated">已识别</el-radio-button>
+        </el-radio-group>
+        <el-button type="primary" class="add-btn" @click="goToAnnotationNew">
+          新增标注图像
+        </el-button>
+      </div>
       <input
         ref="uploadInputRef"
         type="file"
@@ -140,6 +147,8 @@ type ExtendedAnnotationItem = AnnotationItem & {
   createTime?: string;
 };
 
+type AnnotationFilter = "all" | "unannotated" | "annotated";
+
 type TextProgressLog = {
   id: number;
   kind: "text";
@@ -174,6 +183,7 @@ const userStore = useUserStoreHook();
 
 const loading = ref(false);
 const list = ref<ExtendedAnnotationItem[]>([]);
+const annotationFilter = ref<AnnotationFilter>("all");
 const isBatchUploading = ref(false);
 const uploadInputRef = ref<HTMLInputElement | null>(null);
 const uploadStartAtRef = ref<number>(0);
@@ -199,6 +209,11 @@ const currentUser = computed(() => ({
   role: userStore.role
 }));
 const annotatedCount = computed(() => list.value.filter(i => i.annotated).length);
+const filterAnnotatedValue = computed(() => {
+  if (annotationFilter.value === "annotated") return true;
+  if (annotationFilter.value === "unannotated") return false;
+  return undefined;
+});
 const progressPercent = computed(() => {
   const total = progressState.value.total;
   const done = progressState.value.done;
@@ -503,7 +518,7 @@ async function handleUploadFiles(event: Event) {
 async function fetchList() {
   loading.value = true;
   try {
-    const res = await getAnnotationList(projectId);
+    const res = await getAnnotationList(projectId, filterAnnotatedValue.value);
     if (res.code === 200) {
       list.value = res.data ?? [];
     } else {
@@ -540,6 +555,14 @@ onBeforeUnmount(() => {
   justify-content: space-between;
   gap: var(--app-space-6);
   margin-bottom: var(--app-space-8);
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--app-space-3);
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .hero-copy {
@@ -773,6 +796,11 @@ onBeforeUnmount(() => {
   .page-hero {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .hero-actions {
+    width: 100%;
+    justify-content: flex-start;
   }
 
   .upload-progress-panel {
