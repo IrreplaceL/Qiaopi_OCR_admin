@@ -13,11 +13,16 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/",
     component: Layout,
-    redirect: "/classinfo/index",
     children: [
       {
+        path: "",
+        name: "home",
+        component: () => import("@/views/home/index.vue"),
+        meta: { title: "首页" }
+      },
+      {
         path: "/welcome",
-        redirect: "/classinfo/index"
+        redirect: "/"
       },
       {
         path: "/classinfo/index",

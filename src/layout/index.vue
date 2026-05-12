@@ -10,7 +10,8 @@
       </button>
 
       <nav class="app-nav">
-        <el-button text :icon="FolderOpened" @click="goHome">项目组</el-button>
+        <el-button text :icon="House" @click="goHome">首页</el-button>
+        <el-button text :icon="FolderOpened" @click="goProjects">项目组</el-button>
         <el-button text class="theme-toggle" @click="toggleTheme">
           {{ themeLabel }}
         </el-button>
@@ -38,7 +39,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRouter } from "vue-router";
-import { ArrowDown, FolderOpened, Setting, User } from "@element-plus/icons-vue";
+import { ArrowDown, FolderOpened, House, Setting, User } from "@element-plus/icons-vue";
 import { useUserStoreHook } from "@/store/modules/user";
 import { useTheme } from "@/utils/theme";
 
@@ -48,6 +49,10 @@ const { themeLabel, toggleTheme } = useTheme();
 const username = computed(() => userStore.nickname || userStore.username);
 
 function goHome() {
+  router.push("/");
+}
+
+function goProjects() {
   router.push("/classinfo/index");
 }
 
