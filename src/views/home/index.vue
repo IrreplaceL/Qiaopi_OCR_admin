@@ -10,6 +10,22 @@
       <div class="hero-actions">
         <el-button type="primary" @click="router.push('/classinfo/index')">进入项目组</el-button>
         <el-button @click="router.push('/settings')">查看提示词</el-button>
+        <a
+          class="github-link"
+          href="https://github.com/IrreplaceL/Qiaopi_OCR_admin"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="打开 GitHub 项目仓库"
+          title="GitHub 项目仓库"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.84 9.7.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.45-1.19-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.08 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05A9.36 9.36 0 0 1 12 6.93c.85 0 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.95-2.34 4.81-4.57 5.07.36.32.68.95.68 1.92 0 1.38-.01 2.5-.01 2.84 0 .27.18.59.69.49A10.13 10.13 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z"
+            />
+          </svg>
+          <span>GitHub</span>
+        </a>
       </div>
     </section>
 
@@ -91,8 +107,42 @@ const router = useRouter();
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--app-space-3);
   margin-top: var(--app-space-8);
+}
+
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 8px 15px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-control);
+  color: var(--app-text);
+  background: var(--app-surface);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.github-link svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.github-link:hover {
+  border-color: var(--app-accent);
+  box-shadow: var(--app-shadow-soft);
+  transform: translateY(-1px);
 }
 
 .home-grid {
