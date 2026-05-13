@@ -310,7 +310,11 @@ export const uploadOcrImage = async (
   });
 
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    const error = new Error(`HTTP error! status: ${response.status}`) as Error & {
+      status?: number;
+    };
+    error.status = response.status;
+    throw error;
   }
 
   const result = (await response.json()) as OcrUploadResult;

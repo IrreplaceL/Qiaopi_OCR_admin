@@ -247,6 +247,8 @@ const panelPosition = ref({ left: 0, top: 0 });
 const panelPositionReady = ref(false);
 const isDraggingPanel = ref(false);
 const progressLogs = ref<ProgressLog[]>([]);
+const UPLOAD_RECOVERY_POLL_INTERVAL_MS = 5000;
+const UPLOAD_RECOVERY_TIMEOUT_MS = 5 * 60 * 1000;
 
 let dragOffsetX = 0;
 let dragOffsetY = 0;
@@ -465,6 +467,77 @@ function extractSuccessHighlights(result: any): SuccessHighlightFields {
   };
 }
 
+function extractUploadAnnotationId(result: any) {
+  const payload = result?.data ?? {};
+  const id = payload?.annotationId ?? payload?.id;
+  return id == null ? "" : String(id);
+}
+
+function buildRecoveredUploadResult(item: ExtendedAnnotationItem): any {
+  return {
+    code: 200,
+    msg: "后端处理完成",
+    data: {
+      annotationId: item.id,
+      qiaopiAnnotation: item.imageUrl,
+      aiResult: {
+        annotation: {
+          parse_success: true,
+          column_annotations: []
+        },
+        token_usage: {}
+      }
+    }
+  };
+}
+
+function isRecoverableUploadError(error: any) {
+  const status = Number(error?.status);
+  const message = String(error?.message || error || "").toLowerCase();
+  return (
+    [502, 503, 504, 524].includes(status) ||
+    /timeout|timed out|gateway|504|502|503|524|failed to fetch|network/.test(message)
+  );
+}
+
+function sleep(ms: number) {
+  return new Promise(resolve => window.setTimeout(resolve, ms));
+}
+
+async function loadAnnotationIdSnapshot() {
+  try {
+    const res = await getAnnotationList(projectId.value);
+    if (res.code === 200) {
+      return new Set((res.data ?? []).map(item => String(item.id)));
+    }
+  } catch {
+    // 当前列表仍可作为兜底快照，避免一次列表请求失败就中断上传。
+  }
+  return new Set(list.value.map(item => String(item.id)));
+}
+
+async function waitForRecoveredUpload(knownIds: Set<string>) {
+  const startedAt = Date.now();
+
+  while (Date.now() - startedAt < UPLOAD_RECOVERY_TIMEOUT_MS) {
+    await sleep(UPLOAD_RECOVERY_POLL_INTERVAL_MS);
+
+    try {
+      const res = await getAnnotationList(projectId.value);
+      if (res.code !== 200) continue;
+
+      const recovered = (res.data ?? []).find(item => !knownIds.has(String(item.id)));
+      if (recovered) {
+        return recovered;
+      }
+    } catch {
+      // 轮询期间可能正好遇到后端仍在忙，继续等下一轮。
+    }
+  }
+
+  return null;
+}
+
 function openProgressPanel() {
   showProgressPanel.value = true;
   progressPanelCollapsed.value = false;
@@ -624,6 +697,7 @@ async function handleUploadFiles(event: Event) {
   updateProgressPanel(imageFiles.length, 0, 0, 0);
 
   let successCount = 0;
+  const knownAnnotationIds = await loadAnnotationIdSnapshot();
 
   try {
     for (let i = 0; i < imageFiles.length; i += 1) {
@@ -638,12 +712,37 @@ async function handleUploadFiles(event: Event) {
         });
 
         successCount += 1;
+        const createdId = extractUploadAnnotationId(result);
+        if (createdId) {
+          knownAnnotationIds.add(createdId);
+        }
         const itemCost = Date.now() - itemStartAt;
         appendProgressLog(`第 ${i + 1} 张处理完成：${file.name}，耗时 ${formatDuration(itemCost)}`, "ok");
         appendSuccessHighlight(result, file.name, itemCost);
         appendProgressLog(`响应 JSON：${JSON.stringify(result, null, 2)}`, "ok");
         updateProgressPanel(imageFiles.length, i + 1, successCount, i + 1 - successCount);
       } catch (error: any) {
+        if (isRecoverableUploadError(error)) {
+          appendProgressLog(
+            `第 ${i + 1} 张请求已超时，但后端可能仍在处理：${file.name}。开始等待数据库新增记录...`,
+            "info"
+          );
+          const recovered = await waitForRecoveredUpload(knownAnnotationIds);
+          if (recovered) {
+            knownAnnotationIds.add(String(recovered.id));
+            successCount += 1;
+            const itemCost = Date.now() - itemStartAt;
+            const recoveredResult = buildRecoveredUploadResult(recovered);
+            appendProgressLog(
+              `第 ${i + 1} 张后端处理完成：${file.name}，annotationId=${recovered.id}，总耗时 ${formatDuration(itemCost)}`,
+              "ok"
+            );
+            appendSuccessHighlight(recoveredResult, file.name, itemCost);
+            updateProgressPanel(imageFiles.length, i + 1, successCount, i + 1 - successCount);
+            continue;
+          }
+        }
+
         const itemCost = Date.now() - itemStartAt;
         appendProgressLog(
           `第 ${i + 1} 张处理失败：${file.name}，耗时 ${formatDuration(itemCost)}，原因：${error?.message || String(error)}`,
