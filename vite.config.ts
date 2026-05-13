@@ -31,6 +31,8 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
         "/api": {
           target: VITE_API_PROXY_TARGET || "http://127.0.0.1:1031",
           changeOrigin: true,
+          timeout: 300000,
+          proxyTimeout: 300000,
           rewrite: path => path.replace(/^\/api/, "")
         }
       },

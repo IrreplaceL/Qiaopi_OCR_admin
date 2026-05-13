@@ -2,6 +2,11 @@
   "name": "qiaopi-annotation-system",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://github.com/IrreplaceL/Qiaopi_OCR_admin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IrreplaceL/Qiaopi_OCR_admin.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "NODE_OPTIONS=--max-old-space-size=4096 vite",

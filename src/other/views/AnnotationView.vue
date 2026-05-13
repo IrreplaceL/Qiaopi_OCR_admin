@@ -81,8 +81,17 @@
           >
             新增框
           </button>
+          <button
+            v-if="isDetailMode && imageLoaded"
+            class="btn btn-danger"
+            :disabled="!selectedLine || isSaving"
+            title="删除当前选中的标注框"
+            @click="deleteSelectedBox"
+          >
+            删除框
+          </button>
         <button class="btn btn-ghost theme-toggle" @click="toggleTheme">{{ themeLabel }}</button>
-        <button class="btn btn-primary" @click="openSaveConfirm" :disabled="!annotationData.length || isSaving">保存标注</button>
+        <button class="btn btn-primary" @click="openSaveConfirm" :disabled="!annotationId || isSaving">保存标注</button>
       </div>
     </header>
 
@@ -1037,6 +1046,7 @@ const deleteSelectedBox = async () => {
   selectedLine.value = null
   highlightedLineId.value = null
   sortAndRenumberColumns()
+  ElMessage.success('标注框已删除，保存标注后生效')
 }
 
 // 文件上传相关
@@ -1548,10 +1558,6 @@ const openSaveConfirm = () => {
     return
   }
 
-  if (!annotationData.value.length) {
-    ElMessage.warning('没有标注数据可以保存')
-    return
-  }
   if (!annotationId.value) {
     ElMessage.warning('详情模式下才能保存标注')
     return
@@ -1572,7 +1578,7 @@ const save = async () => {
     return
   }
 
-  if (!annotationData.value.length || !annotationId.value) {
+  if (!annotationId.value) {
     ElMessage.warning('当前无可保存标注')
     return
   }

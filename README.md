@@ -1,5 +1,7 @@
 # 侨批图像标注系统
 
+GitHub：<https://github.com/IrreplaceL/Qiaopi_OCR_admin>
+
 侨批图像标注系统是一个面向侨批文献 OCR、人工校注和列级标注的前端工作台。项目已从 pure-admin 模板收束为轻量业务壳，保留登录注册、项目组、图片列表、OCR 上传和标注详情编辑等核心流程。
 
 ## 技术栈
