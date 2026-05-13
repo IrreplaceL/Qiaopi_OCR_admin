@@ -165,16 +165,16 @@
                   :y="getDisplayRect(item).y"
                   :width="getDisplayRect(item).width"
                   :height="getDisplayRect(item).height"
-                  :class="['bbox-rect', getBoxColorClass(item.colId), { 'bbox-active': highlightedLineId === item.colId }]"
+                  :class="['bbox-rect', getBoxColorClass(item.colId), { 'bbox-active': isSelectedLine(item) }]"
                   @click.stop="handleBboxClick(item)"
                   @mousedown.stop.prevent="startBoxDrag($event, item)"
-                  @touchstart.stop.prevent="startBoxDrag($event, item)"
+                  @touchstart.stop="startBoxDrag($event, item)"
                   @mouseenter="handleBboxHover(item.colId)"
                   @mouseleave="handleBboxLeave"
                 />
                 <rect
                   v-for="handle in getResizeHandles(item)"
-                  v-show="highlightedLineId === item.colId"
+                  v-show="isSelectedLine(item)"
                   :key="`${item.colId}-${handle.name}`"
                   :x="handle.x"
                   :y="handle.y"
@@ -182,7 +182,7 @@
                   :height="handle.size"
                   :class="['bbox-handle', `handle-${handle.name}`]"
                   @mousedown.stop.prevent="startBoxResize($event, item, handle.name)"
-                  @touchstart.stop.prevent="startBoxResize($event, item, handle.name)"
+                  @touchstart.stop="startBoxResize($event, item, handle.name)"
                 />
                 <text
                   :x="getDisplayRect(item).x + 5"
@@ -256,7 +256,7 @@
           <div class="edit-header" @mousedown="startEditPanelDrag" @touchstart="startEditPanelDrag">
             <h4>编辑第 {{ selectedLine.colId }} 列</h4>
             <div class="edit-header-actions">
-              <button class="btn-close" title="收起为悬浮球" @mousedown.stop @touchstart.stop @click="minimizeEditPanel">-</button>
+              <button class="btn-close btn-minimize" title="收起为悬浮球" aria-label="收起编辑面板" @mousedown.stop @touchstart.stop @click="minimizeEditPanel">收起</button>
               <button class="btn-close" title="关闭" @mousedown.stop @touchstart.stop @click="closeEditPanel">×</button>
             </div>
           </div>
@@ -777,6 +777,11 @@ const ensureColumnClientKey = (item) => {
   return item.__clientKey
 }
 
+const isSelectedLine = (item) => {
+  if (!selectedLine.value || !item) return false
+  return ensureColumnClientKey(selectedLine.value) === ensureColumnClientKey(item)
+}
+
 const getResizeHandles = (item) => {
   const rect = getDisplayRect(item)
   const isTouchPointer = window.matchMedia?.('(pointer: coarse)').matches
@@ -897,11 +902,19 @@ const restoreEditPanel = () => {
 
 const startBoxDrag = (event, item) => {
   if (!imageLoaded.value) return
-  const point = getPointerImagePoint(event)
-  if (!point) return
-
+  const wasSelected = isSelectedLine(item)
   selectedLine.value = item
   highlightedLineId.value = item.colId
+
+  if (!wasSelected) {
+    scrollToLine(item.colId)
+    return
+  }
+
+  const point = getPointerImagePoint(event)
+  if (!point) return
+  event.preventDefault?.()
+
   activeBoxEdit.value = {
     mode: 'move',
     item,
@@ -917,8 +930,15 @@ const startBoxDrag = (event, item) => {
 
 const startBoxResize = (event, item, handle) => {
   if (!imageLoaded.value) return
+  if (!isSelectedLine(item)) {
+    selectedLine.value = item
+    highlightedLineId.value = item.colId
+    return
+  }
+
   const point = getPointerImagePoint(event)
   if (!point) return
+  event.preventDefault?.()
 
   selectedLine.value = item
   highlightedLineId.value = item.colId
